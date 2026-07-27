@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DotFieldLens — integration test harness</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #3a2f28; }
+  #hero {
+    position: relative; width: 100vw; height: 100vh; overflow: hidden;
+    background:
+      repeating-linear-gradient(45deg, #4a3d33 0 2px, #3a2f28 2px 40px),
+      linear-gradient(180deg, #5a4a3d, #2a221c);
+  }
+  /* stand-in for the hero's existing video/joinery layer beneath the lens */
+  #mockContent {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #E8DCC8; font: 700 64px/1 system-ui; opacity: 0.35; pointer-events: none;
+  }
+  #dustCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #label {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font: 12px/1.4 monospace; color: #E8DCC8; background: rgba(0,0,0,0.5);
+    padding: 8px 12px; border-radius: 4px; pointer-events: none; max-width: 480px;
+  }
+</style>
+</head>
+<body>
+<div id="hero">
+  <div id="mockContent">MOCK HERO CONTENT (video/joinery layer stand-in)</div>
+  <canvas id="dustCanvas"></canvas>
+</div>
+<div id="label">
+  Move cursor over the dark hero area. You should see a ~220px circular
+  lens of dim dots following it, brightening/trailing while moving, fading
+  fast when still. Outside the lens: fully transparent — the mock content
+  text underneath should stay visible everywhere the lens isn't.
+</div>
+
+<script type="module">
+import { DotFieldLens } from './dot-field-lens.js';
+
+const hero = document.getElementById('hero');
+const canvas = document.getElementById('dustCanvas');
+const lens = new DotFieldLens(canvas, {});
+window.__lens = lens; // exposed for debugging/testing only
+
+function doResize() {
+  const rect = hero.getBoundingClientRect();
+  lens.resize(rect.width, rect.height, Math.min(window.devicePixelRatio || 1, 2));
+}
+window.addEventListener('resize', doResize);
+doResize();
+
+hero.addEventListener('pointermove', (e) => {
+  const rect = hero.getBoundingClientRect();
+  lens.setCursor(e.clientX - rect.left, e.clientY - rect.top, true);
+});
+hero.addEventListener('pointerleave', () => lens.setCursor(0, 0, false));
+
+let last = performance.now();
+function raf(now) {
+  const dt = Math.min((now - last) / 1000, 1 / 15);
+  last = now;
+  lens.tick(dt);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+</script>
+</body>
+</html>

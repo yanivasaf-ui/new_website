@@ -20,37 +20,34 @@
   </style>
 </helmet>
 <div style="min-height:100vh; background:#EFE6D8">
-  <sc-if value="{{ heroFx }}" hint-placeholder-val="{{ true }}">
-    <canvas ref="{{ trailCanvasRef }}" aria-hidden="true" style="position:fixed; inset:0; width:100vw; height:100vh; pointer-events:none; z-index:15"></canvas>
-  </sc-if>
-  <nav data-dot-trail-suppress="" style="position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:30; display:flex; align-items:center; gap:clamp(12px,2.6vw,40px); max-width:94vw; height:clamp(56px,7.2vw,66px); padding:0 clamp(7px,1.2vw,10px) 0 clamp(17px,3vw,26px); border-radius:999px; background:#15130F; box-shadow:0 6px 30px rgba(21,19,15,0.28); font-size:16.5px">
-    <a href="#" style="display:inline-flex; align-items:center; align-self:stretch; font-weight:600; font-size:clamp(16px,2.2vw,19px); color:#F1EAE0; letter-spacing:-0.02em; white-space:nowrap" style-hover="color:#FFFFFF">Asaf Yaniv</a>
-    <span ref="{{ navLabelRef }}" aria-live="polite" style="flex:1; min-width:clamp(180px,21vw,300px); text-align:center; font-weight:600; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:#F1EAE0; opacity:0.72; white-space:nowrap; will-change:transform, clip-path">Feel good today</span>
-    <a href="https://cal.com/asaf-yaniv-77u2an/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#15130F; background:#F1EAE0; padding:0 clamp(18px,2.8vw,26px); border-radius:999px; font-weight:600; font-size:clamp(15px,1.9vw,16.5px); white-space:nowrap; transition:background 0.15s ease" style-hover="background:#FFFFFF; color:#15130F">Let’s talk</a>
+  <nav style="position:absolute; top:0; left:0; right:0; z-index:20; display:flex; align-items:center; justify-content:space-between; padding:24px clamp(24px,4vw,56px); font-size:16.5px">
+    <a href="#" style="font-weight:600; font-size:19px; color:#2E2B27; letter-spacing:-0.02em">Asaf Yaniv</a>
+    <div style="display:flex; align-items:center; gap:clamp(18px,3vw,40px)">
+      <a href="#how" style="color:#2E2B27; opacity:0.8; font-weight:500" style-hover="opacity:1; color:#2E2B27">How it works</a>
+      <a href="#" style="color:#2E2B27; opacity:0.8; font-weight:500" style-hover="opacity:1; color:#2E2B27">About</a>
+      <a href="#" style="display:inline-flex; align-items:center; height:54px; color:#F1EAE0; background:#22335C; padding:0 28px; border-radius:999px; font-weight:600" style-hover="background:#1A2848; color:#F1EAE0">Let’s talk</a>
+    </div>
   </nav>
 
-  <sc-if value="{{ desktopLayout }}" hint-placeholder-val="{{ true }}">
-  <section id="hero" ref="{{ heroRef }}" onPointerMove="{{ onMove }}" onPointerDown="{{ onDown }}" onPointerLeave="{{ onLeave }}" data-screen-label="Hero" data-dot-trail-suppress="" style="position:relative; isolation:isolate; width:100%; aspect-ratio:2464/1376; min-height:560px; overflow:hidden; cursor:default">
+  <section ref="{{ heroRef }}" onPointerMove="{{ onMove }}" onPointerDown="{{ onDown }}" onPointerLeave="{{ onLeave }}" data-screen-label="Hero" style="position:relative; isolation:isolate; width:100%; aspect-ratio:2464/1376; min-height:560px; overflow:hidden; cursor:default">
     <img src="uploads/hero_surface-1784918905919.png" alt="Three handcrafted textile characters assembling a modular structure from geometric blocks" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; user-select:none; -webkit-user-drag:none; transform:translateX(-3.5%) scale(1.09); transform-origin:center">
-    <video ref="{{ xrayRef }}" src="uploads/magnific_video-upscale_xgr6IX5jfW-compressed.mp4" poster="uploads/magnific_edit-the-supplied-xray-he_cDWpaOV0eP.png" autoPlay="{{ heroFx }}" preload="{{ xrayPreload }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; user-select:none; opacity:0; pointer-events:none; transform:translateX(-3.5%) scale(1.09); transform-origin:center"></video>
-    <sc-if value="{{ heroFx }}" hint-placeholder-val="{{ true }}">
-      <canvas ref="{{ lensCanvasRef }}" aria-hidden="true" style="position:absolute; left:0; top:0; pointer-events:none; z-index:3"></canvas>
-    </sc-if>
-    <sc-if value="{{ heroFx }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute; inset:0; -webkit-mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%), #000 calc(var(--lr,0px) - 32px), transparent var(--lr,0px)); mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%), #000 calc(var(--lr,0px) - 32px), transparent var(--lr,0px))">
+      <video ref="{{ xrayRef }}" src="uploads/magnific_make-the-particles-move-i_NZ92ysd6D9.mp4" poster="uploads/magnific_edit-the-supplied-xray-he_cDWpaOV0eP.png" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; user-select:none; transform:translateX(-3.5%) scale(1.09); transform-origin:center"></video>
+    </div>
     <div ref="{{ idleRef }}" aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; transition:opacity 0.35s ease">
       <div style="position:absolute; inset:0; -webkit-mask-image:radial-gradient(circle at 50% 64%, #000 30px, transparent 44px); mask-image:radial-gradient(circle at 50% 64%, #000 30px, transparent 44px)">
-        <video src="uploads/magnific_video-upscale_xgr6IX5jfW-compressed.mp4" poster="uploads/magnific_edit-the-supplied-xray-he_cDWpaOV0eP.png" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; transform:translateX(-3.5%) scale(1.09); transform-origin:center"></video>
+        <video src="uploads/magnific_make-the-particles-move-i_NZ92ysd6D9.mp4" poster="uploads/magnific_edit-the-supplied-xray-he_cDWpaOV0eP.png" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; transform:translateX(-3.5%) scale(1.09); transform-origin:center"></video>
       </div>
       <div style="position:absolute; left:50%; top:64%; width:88px; height:88px; transform:translate(-50%,-50%); border-radius:50%; border:1.5px solid rgba(34,51,92,0.4); box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 16px rgba(46,43,39,0.10)"></div>
 
     </div>
-    </sc-if>
+    <div ref="{{ ringRef }}" aria-hidden="true" style="position:absolute; left:0; top:0; width:220px; height:220px; margin:-110px 0 0 -110px; border-radius:50%; pointer-events:none; opacity:0; border:1px solid rgba(46,43,39,0.22); box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), inset -8px -14px 30px rgba(255,255,255,0.10), 0 4px 24px rgba(46,43,39,0.10); transform:translate(-500px,-500px)"></div>
 
-    <div style="position:absolute; left:3.5vw; right:0; top:0; bottom:0; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; z-index:10; padding:clamp(96px,11vh,140px) 0 clamp(48px,8vh,96px) 0; pointer-events:none">
-      <h1 style="font-weight:600; font-size:clamp(54px,6.5vw,132px); line-height:0.92; letter-spacing:-0.045em; margin:0; color:#2E2B27; max-width:71vw; text-wrap:balance; pointer-events:auto">I build <span style="color: rgb(107, 43, 58);">AI</span> <br>into the way <br>your company works.</h1>
+    <div style="position:absolute; left:3.5vw; right:0; top:0; bottom:0; display:flex; flex-direction:column; align-items:flex-start; z-index:10; padding:clamp(96px,11vh,140px) 0 clamp(48px,8vh,96px) 0; pointer-events:none">
+      <h1 style="font-weight:600; font-size:clamp(54px,6.5vw,132px); line-height:0.92; letter-spacing:-0.045em; margin:0; color:#2E2B27; max-width:71vw; text-wrap:balance; pointer-events:auto">I build <span style="color:#777A75">AI</span> into the way your company works.</h1>
       <div style="display:flex; flex-direction:column; gap:38px; pointer-events:auto; margin-top:clamp(32px,5vh,64px)">
-        
-        
+        <p style="font-size:clamp(24px,2.35vw,37px); font-weight:500; line-height:1.24; letter-spacing:-0.015em; margin:0; color:#2E2B27; max-width:min(860px,50vw); text-wrap:pretty">I start with what your company actually needs, then build a connected system that improves every time it works.</p>
+        <a href="#how" style="display:inline-flex; align-items:center; align-self:flex-start; height:66px; background:#22335C; color:#F1EAE0; font-weight:600; font-size:19.5px; padding:0 34px; border-radius:999px; white-space:nowrap; transition:background 0.15s ease" style-hover="background:#1A2848; color:#F1EAE0">See how I build ↓</a>
       </div>
     </div>
 
@@ -61,11 +58,11 @@
 
   <section id="problem" data-screen-label="The problem" style="position:relative; width:100%; aspect-ratio:1376/840; overflow:hidden">
     <img src="uploads/magnific_create-a-highresolution-w_rl1ShEZxtc.png" alt="A weary textile character in a mustard jacket holding two well-made blocks whose connectors can't fit together" draggable="false" style="position:absolute; top:0; left:-4vw; width:108vw; height:100%; object-fit:cover; object-position:center; user-select:none; -webkit-user-drag:none">
-    <h2 data-dot-trail-suppress="" data-reveal-words="" style="position:absolute; left:7vw; top:52%; transform:translateY(-50%); font-weight:500; letter-spacing:-0.04em; font-size:clamp(30px,3.8vw,76px); line-height:1.02; margin:0; color:#2E2B27; max-width:27vw; z-index:5">You’re better<br>with AI.<span style="display:block; height:0.55em"></span>Just not as good<br>as you could be.</h2>
-    <div data-dot-trail-suppress="" data-reveal-words="" style="position:absolute; right:3.5vw; top:50%; transform:translateY(-50%); max-width:min(30vw,620px); display:flex; flex-direction:column; gap:clamp(28px,3.5vh,48px); font-size:clamp(24px,2.4vw,40px); font-weight:500; letter-spacing:-0.02em; line-height:1.22; color:#2E2B27; z-index:5">
+    <h2 style="position:absolute; left:7vw; top:52%; transform:translateY(-50%); font-weight:500; letter-spacing:-0.04em; font-size:clamp(30px,3.8vw,76px); line-height:1.02; margin:0; color:#2E2B27; max-width:27vw; z-index:5">You’re better<br>with AI.<span style="display:block; height:0.55em"></span>Just not as good<br>as you could be.</h2>
+    <div style="position:absolute; right:3.5vw; top:50%; transform:translateY(-50%); max-width:min(30vw,620px); display:flex; flex-direction:column; gap:clamp(28px,3.5vh,48px); font-size:clamp(24px,2.4vw,40px); font-weight:500; letter-spacing:-0.02em; line-height:1.22; color:#2E2B27; z-index:5">
       <p style="margin:0; font-size:clamp(28px,3vw,62px)">Each agent knows its task.</p>
-      <p style="margin:0; font-size:clamp(28px,3vw,62px)">None of them know each other.</p>
-      <p style="margin:0; font-size:clamp(26px,2.75vw,57px)">More agents just means more to manage.</p>
+      <p style="margin:0; font-size:clamp(28px,3vw,62px)">You still have to carry the context between agents and platforms.</p>
+      <p style="margin:0; font-size:clamp(26px,2.75vw,57px)">Correct one, and the others never learn.</p>
     </div>
     <div aria-hidden="true" style="position:absolute; left:0; right:0; top:-90px; height:180px; pointer-events:none; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent); z-index:6"></div>
   </section>
@@ -76,7 +73,7 @@
     <div style="position:sticky; top:0; width:100%; height:100vh; overflow:hidden; background:linear-gradient(to right, #E8DFD4, #C8BBAD 50%, #A59889)">
       <img src="uploads/magnific_this-is-great-take-the-ch_rl1UTvVxtc.png" alt="A friendly textile character with glasses presenting with an open hand" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:45% bottom; user-select:none; -webkit-user-drag:none">
       <div aria-hidden="true" style="position:absolute; left:0; right:0; top:calc(100vh - 130px); height:260px; pointer-events:none; backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 40%, #000 60%, transparent), linear-gradient(to right, transparent 45%, #000 55%); -webkit-mask-composite:source-in; mask-image:linear-gradient(to bottom, transparent, #000 40%, #000 60%, transparent), linear-gradient(to right, transparent 45%, #000 55%); mask-composite:intersect; z-index:2"></div>
-      <h2 data-reveal-words="" style="position:absolute; left:43vw; top:calc(50vh - 182px); transform:translateY(-100%); font-weight:500; letter-spacing:-0.04em; font-size:clamp(44px,7.5vw,150px); line-height:0.96; margin:0; color:#2E2B27; z-index:4">How I Build</h2>
+      <h2 style="position:absolute; left:43vw; top:calc(50vh - 182px); transform:translateY(-100%); font-weight:500; letter-spacing:-0.04em; font-size:clamp(44px,7.5vw,150px); line-height:0.96; margin:0; color:#2E2B27; z-index:4">How I Build</h2>
       <div ref="{{ panelRegionRef }}" style="position:absolute; left:43vw; top:calc(50vh - 110px); width:53vw; overflow:hidden; border-radius:40px; z-index:5">
         <div ref="{{ hp0Ref }}" style="position:relative; background:#15130F; border-radius:40px; display:flex; flex-direction:column; padding:56px">
           <h3 style="font-weight:600; letter-spacing:-0.035em; font-size:clamp(48px,4.2vw,80px); line-height:0.95; margin:0; color:#F2EBDD">The Company<br><span style="color:#8A8578">Core</span></h3>
@@ -99,177 +96,34 @@
     </div>
   </section>
 
-  <section id="proof" data-screen-label="Website as proof" style="position:relative; width:100%; overflow:hidden; z-index:2">
+  <section id="proof" data-screen-label="Website as proof" style="position:relative; width:100%; aspect-ratio:2048/1152; overflow:hidden; z-index:2">
+    <img src="uploads/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.png" alt="Three textile characters gathered around a vintage monitor showing this website" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; user-select:none; -webkit-user-drag:none">
     <div aria-hidden="true" style="position:absolute; left:0; right:0; top:-70px; height:140px; pointer-events:none; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 42%, #000 58%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 42%, #000 58%, transparent); z-index:6"></div>
-    <div style="display:grid; min-height:56.25vw">
-      <img src="uploads/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.png" alt="Three textile characters gathered around a vintage monitor showing this website" draggable="false" style="grid-area:1/1; width:100%; height:100%; object-fit:cover; object-position:center; user-select:none; -webkit-user-drag:none">
-      <div style="grid-area:1/1; display:flex; align-items:center; padding-left:7vw; z-index:5">
-        <div data-dot-trail-suppress="" style="width:max-content; display:flex; flex-direction:column; align-items:flex-start; gap:30px">
-          <p data-reveal-words="" style="margin:0; width:max-content; font-weight:600; font-size:clamp(20px,1.9vw,44px); line-height:1.55; letter-spacing:-0.03em; color:#2E2B27; text-shadow:0 0 18px rgba(240,233,220,0.6)"><span style="display: block; font-size: clamp(36px, 4.2vw, 96px); letter-spacing: -0.035em; line-height: 1.1;">By the way,</span>this website moved<br>from the creative director<br>to a copywriter<br>to a designer,<br>with the operation lead<br>overseeing the whole thing.</p>
-          <div ref="{{ proofSubRef }}" style="opacity:0; transform:translateY(20px); display:flex; align-items:flex-start; gap:14px; max-width:min(500px, 28vw)"><p style="margin: 0; font-weight: 400; font-size: 32px; line-height: 1.45; color: #2E2B27; text-wrap: pretty">They’re all agents working from the same context and memory. I stepped in when something needed an actual decision.</p></div>
-        </div>
-      </div>
+    <div style="position:absolute; left:7vw; top:42%; transform:translateY(-50%); width:max-content; display:flex; flex-direction:column; align-items:flex-start; gap:30px; z-index:5">
+      <p ref="{{ proofHeadRef }}" style="opacity:0; transform:translateY(20px); margin:0; width:max-content; font-weight:600; font-size:clamp(20px,1.9vw,44px); line-height:1.55; letter-spacing:-0.03em; color:#2E2B27; text-shadow:0 0 18px rgba(240,233,220,0.6)"><span style="display: block; font-size: clamp(36px, 4.2vw, 96px); letter-spacing: -0.035em; line-height: 1.1;">By the way,</span>this website moved<br>from the creative director<br>to a copywriter<br>to a designer,<br>with the operation lead<br>overseeing the whole thing.</p>
+      <div ref="{{ proofSubRef }}" style="opacity:0; transform:translateY(20px); display:flex; align-items:flex-start; gap:14px; max-width:min(500px, 28vw)"><p style="margin: 0; font-weight: 400; font-size: 32px; line-height: 1.45; color: #2E2B27; text-wrap: pretty">They’re all agents i working from the same context and memory. I stepped in when something needed an actual decision.</p></div>
     </div>
   </section>
 
-  <section id="about" data-screen-label="About Asaf" style="position:relative; width:100%; background:#EFE6D8; padding:0 0 clamp(96px,12vh,160px); display:flex; flex-direction:column; overflow:hidden">
+  <section id="about" data-screen-label="About Asaf" style="position:relative; width:100%; padding:clamp(72px,9vh,120px) 0 clamp(96px,12vh,160px); display:flex; flex-direction:column">
     <div aria-hidden="true" style="position:absolute; left:0; right:0; top:-70px; height:140px; pointer-events:none; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 42%, #000 58%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 42%, #000 58%, transparent); z-index:6"></div>
-    <div style="position:relative; width:100%; padding-top:clamp(64px,9vh,120px); display:flex; flex-direction:column; align-items:center; z-index:1">
-      <p data-reveal-words="" style="margin:0; font-size:clamp(28px,2.6vw,36px); font-weight:600; color:#2E2B27; letter-spacing:-0.02em">Hi, I’m</p>
-      <h2 data-reveal-words="" style="margin:-32px 0 0; font-weight:600; letter-spacing:-0.05em; font-size:clamp(150px,22vw,400px); line-height:0.9; color:#6B2B3A; text-align:center">Asaf</h2>
-    </div>
-    <div style="position:relative; width:75%; margin:clamp(-270px,-17vw,-130px) auto 0; z-index:2">
-      <div aria-hidden="true" style="position:absolute; left:50%; bottom:5%; transform:translateX(-50%); width:70%; height:4%; background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(46,43,39,0.32), transparent 72%); filter:blur(10px); z-index:0"></div>
-      <img src="uploads/asaf-cutout-transparent.png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="position:relative; display:block; width:100%; user-select:none; -webkit-user-drag:none; z-index:1">
-    </div>
-    <div style="width:calc(100% - 14vw); margin:clamp(24px,3.5vh,48px) auto 0; display:grid; grid-template-columns:minmax(0,58%) minmax(0,1fr); gap:72px; align-items:start; color:#2E2B27; text-wrap:pretty">
-      <div style="display:flex; flex-direction:column">
-        <p style="margin: 0; font-size: 30px; font-weight: 600; line-height: 1.6">Father of three (husband of one).</p>
-        <p style="margin: 14px 0 0; font-size: 30px; font-weight: 400; line-height: 1.6">I started my career performing around the world with <strong style="font-weight: 600;">Mayumana</strong>. <br>Then I moved into tech, joining <strong style="font-weight: 600;">Kaltura</strong> and later <strong style="font-weight: 600;">Artlist</strong>, <br>where I built and led creative and operations teams.</p>
-        <p data-reveal-words="" style="margin: 40px 0 0; font-size: 30px; font-weight: 500; line-height: 1.4">Creative and engineering always made sense together to me.</p>
-        <p style="margin: 32px 0 0; font-size: 30px; font-weight: 400; line-height: 1.6">So I studied Digital Media at <strong style="font-weight:600">NYU’s School of Engineering</strong>.</p><p style="margin: 24px 0 0; font-size: 30px; font-weight: 500; line-height: 1.4">It wasn’t the obvious choice. I spent years explaining it.</p>
-        
-      </div>
-      <div style="display:flex; flex-direction:column">
-        <div style="display:flex; align-items:flex-start; gap:18px">
-          
-          <p style="margin:0; font-weight:600; font-size:clamp(32px,3.4vw,52px); line-height:1.12; letter-spacing:-0.025em">Then <span style="color:#6B2B3A">AI</span> came along, and the two finally became the same job: understand what a company actually needs, then build the system that makes it possible.</p>
-        </div>
-        <p data-reveal-words="" style="margin:44px 0 0; font-weight:600; font-size:clamp(27px,1.75vw,32px); line-height:1.3">That’s what I do now.</p>
-      </div>
+    <h2 style="font-weight:600; letter-spacing:-0.045em; font-size:clamp(54px,4.8vw,80px); line-height:0.96; margin:0 0 clamp(36px,5vh,48px); padding:0 7vw; color:#2E2B27">Hi, I’m <span style="color:#777A75">Asaf</span>.</h2>
+    <img src="uploads/Untitled design (10).png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="display:block; width:100%; user-select:none; -webkit-user-drag:none">
+    <div style="width:min(88vw,660px); margin:clamp(64px,9vh,96px) auto 0; display:flex; flex-direction:column; gap:20px; font-size:clamp(21px,1.3vw,25px); font-weight:400; line-height:1.6; color:#2E2B27; text-wrap:pretty">
+      <p style="margin:0; font-weight:600">Father of three (husband of one).</p>
+      <p style="margin:0">I started my career performing around the world with <strong style="font-weight:600">Mayumana</strong>. Then I moved into tech, joining <strong style="font-weight:600">Kaltura</strong> and later <strong style="font-weight:600">Artlist</strong>, where I built and led creative and operations teams.</p>
+      <p style="margin:0">Creative and engineering always made sense together to me.</p>
+      <p style="margin:0">So I studied Digital Media at <strong style="font-weight:600">NYU’s School of Engineering</strong>.</p>
+      <p style="margin:0">It wasn’t the obvious choice. I spent years explaining it.</p>
+      <p style="margin:0">Then <span style="color:#777A75; font-weight:600">AI</span> came along, and the two finally became the same job: understand what a company actually needs, then build the system that makes it possible.</p>
+      <div style="margin-top:26px; display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:6px"><g stroke="#2E2B27" stroke-width="1.6" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-weight:600; font-size:clamp(24px,1.5vw,29px)">That’s what I do now.</p></div>
     </div>
   </section>
-
-  <section id="talk" data-screen-label="Talk to me" style="position:relative; width:100%; background:#EFE6D8; padding:clamp(72px,10vh,140px) 7vw clamp(96px,13vh,180px); display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:clamp(40px,5vw,88px); align-items:center">
-    <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:28px; overflow:hidden; background:#15130F">
-      <video ref="{{ talkVideoRef }}" src="uploads/talk-selfie.mp4#t=0.05" preload="metadata" playsInline="{{ true }}" onClick="{{ onTalkVideoClick }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; cursor:pointer"></video>
-      <button ref="{{ playBtnRef }}" type="button" onClick="{{ onTalkPlay }}" aria-label="Play video" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:96px; height:96px; border-radius:50%; border:1.5px solid rgba(34,51,92,0.4); background:rgba(241,234,224,0.88); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; transition:background 0.15s ease, transform 0.15s ease; box-shadow:0 3px 20px rgba(46,43,39,0.18)" style-hover="background:#F1EAE0; transform:translate(-50%,-50%) scale(1.06)">
-        <svg width="30" height="34" viewBox="0 0 30 34" aria-hidden="true" style="margin-left:5px"><path d="M2 2.6 L28 17 L2 31.4 Z" fill="#22335C"></path></svg>
-      </button>
-    </div>
-    <a data-reveal-words="" href="https://cal.com/asaf-yaniv-77u2an/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-self:start; background:#22335C; color:#F1EAE0; border-radius:999px; padding:clamp(18px,2vw,34px) clamp(36px,4vw,72px); font-weight:600; font-size:clamp(40px,4.6vw,88px); line-height:1.05; letter-spacing:-0.04em; white-space:nowrap; text-decoration:none; transform-origin:left center; box-shadow:0 4px 28px rgba(34,51,92,0.22); transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#1A2848; color:#F1EAE0; transform:scale(1.025)">Talk to me.</a>
-  </section>
-  </sc-if>
-
-  <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
-  <section id="hero" data-screen-label="Hero" style="position:relative; width:100%; background:#EFE6D8">
-    <div style="position:relative; width:100%; aspect-ratio:4/5; overflow:hidden">
-      <img src="uploads/hero_surface-1784918905919.png" alt="Three handcrafted textile characters assembling a modular structure from geometric blocks" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:100% center; transform:translateY(10%) scale(1.16); transform-origin:center top; user-select:none">
-      <div aria-hidden="true" style="position:absolute; left:0; right:0; top:0; height:64%; background:linear-gradient(to bottom, #EFE6D8 0%, rgba(239,230,216,0.94) 38%, rgba(239,230,216,0.6) 66%, rgba(239,230,216,0) 100%)"></div>
-      <h1 style="position:absolute; left:22px; right:22px; top:96px; margin:0; font-weight:600; font-size:clamp(34px,9vw,54px); line-height:1.0; letter-spacing:-0.035em; color:#2E2B27; text-wrap:balance">I build <span style="color:#6B2B3A">AI</span> into the way your company works.</h1>
-    </div>
-  </section>
-
-  <section id="problem" data-screen-label="The problem" style="position:relative; width:100%; background:#EFE6D8">
-    <div style="padding:0 22px; padding-top:52px; padding-bottom:36px; display:flex; flex-direction:column; gap:30px">
-      <h2 data-reveal-words="" style="margin:0; font-weight:500; letter-spacing:-0.03em; font-size:clamp(30px,8vw,46px); line-height:1.06; color:#2E2B27">You’re better with AI.<br>Just not as good as you could be.</h2>
-      <div data-reveal-words="" style="display:flex; flex-direction:column; gap:18px; color:#2E2B27; font-weight:500; letter-spacing:-0.02em; line-height:1.18">
-        <p style="margin:0; font-size:clamp(24px,6.4vw,34px)">Each agent knows its task.</p>
-        <p style="margin:0; font-size:clamp(24px,6.4vw,34px)">None of them know each other.</p>
-        <p style="margin:0; font-size:clamp(22px,5.9vw,31px)">More agents just means more to manage.</p>
-      </div>
-    </div>
-    <img src="uploads/magnific_create-a-highresolution-w_rl1ShEZxtc.png" alt="A weary textile character in a mustard jacket holding two well-made blocks whose connectors can't fit together" draggable="false" style="display:block; width:100%; aspect-ratio:4/5; object-fit:cover; object-position:46% center; user-select:none">
-  </section>
-
-  <section id="how" data-screen-label="How I build" style="position:relative; width:100%; background:linear-gradient(to bottom, #E8DFD4, #C8BBAD)">
-    <div style="padding:0 22px; padding-top:52px; padding-bottom:48px; display:flex; flex-direction:column; gap:20px">
-      <h2 data-reveal-words="" style="margin:0 0 4px; font-weight:500; letter-spacing:-0.035em; font-size:clamp(38px,10vw,60px); line-height:0.98; color:#2E2B27">How I Build</h2>
-        <div style="background:#15130F; border-radius:26px; padding:26px 24px 30px; display:flex; flex-direction:column; gap:18px">
-          <h3 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(30px,7.6vw,42px); line-height:0.98; color:#F2EBDD">The Company<br><span style="color:#8A8578">Core</span></h3>
-          <div style="display:flex; align-items:flex-start; gap:14px"><svg width="22" height="22" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:3px"><g stroke="#F2EBDD" stroke-width="1.8" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:17.5px; line-height:1.4; color:#F2EBDD; opacity:0.92; text-wrap:pretty">Every agent starts from the same understanding of the business&nbsp; - how it talks, what it sells, what matters when a call has to be made.</p></div>
-        </div>
-        <div style="background:#241E17; border-radius:26px; padding:26px 24px 30px; display:flex; flex-direction:column; gap:18px">
-          <h3 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(30px,7.6vw,42px); line-height:0.98; color:#F2EBDD">Brain and<br><span style="color:#8A8578">Data</span></h3>
-          <div style="display:flex; align-items:flex-start; gap:14px"><svg width="22" height="22" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:3px"><g stroke="#F2EBDD" stroke-width="1.8" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:17.5px; line-height:1.4; color:#F2EBDD; opacity:0.92; text-wrap:pretty">I connect the tools and information already running the business, so agents can see what’s actually happening and act on it.</p></div>
-        </div>
-        <div style="background:#0C1424; border-radius:26px; padding:26px 24px 30px; display:flex; flex-direction:column; gap:18px">
-          <h3 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(30px,7.6vw,42px); line-height:0.98; color:#F2EBDD">Built Around<br><span style="color:#8A8578">You</span></h3>
-          <div style="display:flex; align-items:flex-start; gap:14px"><svg width="22" height="22" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:3px"><g stroke="#F2EBDD" stroke-width="1.8" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:17.5px; line-height:1.4; color:#F2EBDD; opacity:0.92; text-wrap:pretty">This is what the department actually uses, every day. Agents built around their real work. People still make the calls that matter.</p></div>
-        </div>
-        <div style="background:#1B1D20; border-radius:26px; padding:26px 24px 30px; display:flex; flex-direction:column; gap:18px">
-          <h3 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(30px,7.6vw,42px); line-height:0.98; color:#F2EBDD">It Gets<br><span style="color:#8A8578">Better</span></h3>
-          <div style="display:flex; align-items:flex-start; gap:14px"><svg width="22" height="22" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:3px"><g stroke="#F2EBDD" stroke-width="1.8" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:17.5px; line-height:1.4; color:#F2EBDD; opacity:0.92; text-wrap:pretty">Every execution and correction goes back into the system, so the next department starts with everything already learned.</p></div>
-        </div>
-    </div>
-  </section>
-
-  <section id="proof" data-screen-label="Website as proof" style="position:relative; width:100%; background:#EFE6D8">
-    <div style="padding:0 22px; padding-top:52px; padding-bottom:36px; display:flex; flex-direction:column; gap:24px">
-      <p data-reveal-words="" style="margin:0; font-weight:600; font-size:clamp(19px,5vw,24px); line-height:1.42; letter-spacing:-0.02em; color:#2E2B27"><span style="display:block; font-size:clamp(34px,9vw,52px); letter-spacing:-0.035em; line-height:1.05; margin-bottom:6px">By the way,</span>this website moved from the creative director to a copywriter to a designer, with the operation lead overseeing the whole thing.</p>
-      <p ref="{{ proofSubRef }}" style="opacity:0; transform:translateY(20px); margin:0; font-weight:400; font-size:18px; line-height:1.45; color:#2E2B27; text-wrap:pretty">They’re all agents working from the same context and memory. I stepped in when something needed an actual decision.</p>
-    </div>
-    <img src="uploads/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.png" alt="Three textile characters gathered around a vintage monitor showing this website" draggable="false" style="display:block; width:100%; aspect-ratio:1/1; object-fit:cover; object-position:86% center; user-select:none">
-  </section>
-
-  <section id="about" data-screen-label="About Asaf" style="position:relative; width:100%; background:#EFE6D8; padding-bottom:52px">
-    <div style="padding-top:96px; display:flex; flex-direction:column; align-items:center">
-      <p data-reveal-words="" style="margin:0; font-size:22px; font-weight:600; letter-spacing:-0.02em; color:#2E2B27">Hi, I’m</p>
-      <h2 data-reveal-words="" style="margin:-14px 0 0; font-weight:600; letter-spacing:-0.05em; font-size:clamp(96px,27vw,180px); line-height:0.9; color:#6B2B3A">Asaf</h2>
-    </div>
-    <div style="position:relative; width:94%; margin:-4vw auto 0">
-      <div aria-hidden="true" style="position:absolute; left:50%; bottom:5%; transform:translateX(-50%); width:70%; height:4%; background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(46,43,39,0.32), transparent 72%); filter:blur(10px)"></div>
-      <img src="uploads/asaf-cutout-transparent.png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="position:relative; display:block; width:100%; user-select:none">
-    </div>
-    <div style="padding:0 22px; padding-top:26px; display:flex; flex-direction:column; gap:20px; color:#2E2B27; text-wrap:pretty">
-      <p style="margin:0; font-size:19px; font-weight:600; line-height:1.45">Father of three (husband of one).</p>
-      <p style="margin:0; font-size:19px; font-weight:400; line-height:1.5">I started my career performing around the world with <strong style="font-weight:600">Mayumana</strong>. Then I moved into tech, joining <strong style="font-weight:600">Kaltura</strong> and later <strong style="font-weight:600">Artlist</strong>, where I built and led creative and operations teams.</p>
-      <p data-reveal-words="" style="margin:0; font-size:20px; font-weight:500; line-height:1.35">Creative and engineering always made sense together to me.</p>
-      <p style="margin:0; font-size:19px; font-weight:400; line-height:1.5">So I studied Digital Media at <strong style="font-weight:600">NYU’s School of Engineering</strong>.</p>
-      <p style="margin:0; font-size:19px; font-weight:500; line-height:1.4">It wasn’t the obvious choice. I spent years explaining it.</p>
-      <p style="margin:14px 0 0; font-weight:600; font-size:clamp(24px,6.2vw,30px); line-height:1.2; letter-spacing:-0.025em">Then <span style="color:#6B2B3A">AI</span> came along, and the two finally became the same job: understand what a company actually needs, then build the system that makes it possible.</p>
-      <p data-reveal-words="" style="margin:6px 0 0; font-weight:600; font-size:21px; line-height:1.3">That’s what I do now.</p>
-    </div>
-  </section>
-
-  <section id="talk" data-screen-label="Talk to me" style="position:relative; width:100%; box-sizing:border-box; background:#EFE6D8; padding:0 22px; padding-top:44px; padding-bottom:64px; display:flex; flex-direction:column; gap:34px">
-    <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:20px; overflow:hidden; background:#15130F">
-      <video ref="{{ talkVideoRef }}" src="uploads/talk-selfie.mp4#t=0.05" preload="metadata" playsInline="{{ true }}" onClick="{{ onTalkVideoClick }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover"></video>
-      <button ref="{{ playBtnRef }}" type="button" onClick="{{ onTalkPlay }}" aria-label="Play video" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:76px; height:76px; border-radius:50%; border:1.5px solid rgba(34,51,92,0.4); background:rgba(241,234,224,0.9); display:flex; align-items:center; justify-content:center; padding:0; box-shadow:0 3px 20px rgba(46,43,39,0.18)">
-        <svg width="24" height="27" viewBox="0 0 30 34" aria-hidden="true" style="margin-left:4px"><path d="M2 2.6 L28 17 L2 31.4 Z" fill="#22335C"></path></svg>
-      </button>
-    </div>
-    <a data-reveal-words="" href="https://cal.com/asaf-yaniv-77u2an/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; align-self:flex-start; background:#22335C; color:#F1EAE0; border-radius:999px; padding:18px 32px; font-weight:600; font-size:clamp(30px,8vw,44px); line-height:1.05; letter-spacing:-0.035em; white-space:nowrap; text-decoration:none; box-shadow:0 4px 24px rgba(34,51,92,0.22)" style-hover="background:#1A2848; color:#F1EAE0">Talk to me.</a>
-  </section>
-  </sc-if>
 </div>
-
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { revealAll: false, coarse: false, hintVisible: true, used: false, mobile: window.innerWidth < 860 };
-  startTalkVideo() {
-    const v = this.talkVideo;
-    if (!v) return;
-    this.showPlayBtn(false);
-    // Unmuted play() can be accepted and then silently stalled (paused===false but
-    // currentTime never advances) inside an iframe. Start muted — always permitted —
-    // then unmute as soon as playback is genuinely rolling.
-    v.volume = 1;
-    v.muted = false; // the joke is the dialogue — always ask for audio first
-
-    // A browser can accept play() and then silently refuse to advance rather than
-    // emit sound. Detect that (paused === false, currentTime frozen) and fall back
-    // to muted playback with native controls, so the clip still runs and the viewer
-    // has a real volume control instead of a dead frame.
-    const guard = () => {
-      const t0 = v.currentTime;
-      setTimeout(() => {
-        if (v.paused || v.currentTime > t0 + 0.03) return; // playing with sound
-        v.muted = true;
-        v.controls = true;
-        v.play();
-      }, 300);
-    };
-    const p = v.play();
-    if (p && p.then) p.then(guard).catch(() => this.showPlayBtn(true));
-    else guard();
-  }
-  showPlayBtn(visible) {
-    if (!this.playBtn) return;
-    this.playBtn.style.opacity = visible ? '1' : '0';
-    this.playBtn.style.pointerEvents = visible ? 'auto' : 'none';
-  }
+  state = { revealAll: false, coarse: false, hintVisible: true, used: false };
   componentDidMount() {
     this.hero = null; this.tx = -500; this.ty = -500; this.cx = -500; this.cy = -500;
     this.tr = 0; this.cr = 0; this.active = false; this.raf = null;
@@ -300,146 +154,8 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this.onHowScroll, { passive: true });
     setTimeout(this.onHowScroll, 200);
-    setTimeout(() => this.setupWordReveals(), 60);
-    this.navCopy = [
-      ['hero', 'Feel good today'],
-      ['problem', 'You’ve got a problem'],
-      ['how', 'This is how I do it'],
-      ['proof', 'They did it, not me'],
-      ['about', 'Fine, it’s about me'],
-      ['talk', 'Listen to these guys, not me'],
-    ];
-    this.onNavScroll = () => {
-      if (!this.navLabel) return;
-      this.navLabel.style.display = window.innerWidth < 760 ? 'none' : '';
-      // the trigger line is the nav pill's own bottom edge — the label changes
-      // only once a section's top has actually travelled under the nav
-      const nav = this.navLabel.closest('nav');
-      const probe = nav ? nav.getBoundingClientRect().bottom + 8 : 92;
-      let active = this.navCopy[0];
-      this.navCopy.forEach((entry) => {
-        const el = document.getElementById(entry[0]);
-        if (el && el.getBoundingClientRect().top <= probe) active = entry;
-      });
-      // a final section shorter than the viewport can never reach the trigger
-      // line, so the end of the document activates it outright
-      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-      if (atBottom) active = this.navCopy[this.navCopy.length - 1];
-      if (active[0] === this.navActive) return;
-      const first = this.navActive === undefined;
-      this.navActive = active[0];
-      if (first && this.navLabel.textContent.trim() === active[1]) return; // already correct on load
-      this.swapNavLabel(active[1]);
-    };
-    window.addEventListener('scroll', this.onNavScroll, { passive: true });
-    window.addEventListener('resize', this.onNavScroll);
-    setTimeout(this.onNavScroll, 80);
-    this.setState({ mobile: this.mobileNow });
-    this.onBreakpoint = () => {
-      const m = this.mobileNow;
-      if (m === this.state.mobile) return;
-      this.setState({ mobile: m });
-      // the swapped-in markup needs its word spans built again
-      setTimeout(() => {
-        this.revealGroups = [];
-        this.wordRevealsDone = false;
-        if (this.wordObservers) this.wordObservers.forEach((io) => io.disconnect());
-        this.setupWordReveals();
-        this.navActive = undefined;
-        if (this.onNavScroll) this.onNavScroll();
-      }, 80);
-    };
-    window.addEventListener('resize', this.onBreakpoint);
-    this.desktopEffects = this.fx;
-    if (this.desktopEffects) {
-      this.setupDotEffects();
-    } else {
-      // No cursor mechanic on touch — the hero photo stands on its own. The
-      // canvases and the idle indicator's video aren't rendered at all; detach
-      // the remaining x-ray source so no 1440p payload is fetched or decoded.
-      if (this.xray) {
-        this.xray.pause();
-        this.xray.removeAttribute('src');
-        this.xray.load();
-      }
-      if (this.state.hintVisible) this.setState({ hintVisible: false });
-    }
   }
-  async setupDotEffects() {
-    const { DotImageLens } = await import('./dot-image-lens.js');
-    const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
-
-    // 1. HERO — dots reveal the real x-ray footage. drawImage ignores CSS
-    // transforms and object-fit, so the canvas sits on the video's RENDERED
-    // rect and is fed a cover-cropped offscreen frame each tick.
-    if (this.lensCanvas && this.xray && this.hero) {
-      this.lensSrc = document.createElement('canvas');
-      this.lensSrcCtx = this.lensSrc.getContext('2d');
-      this.heroLens = new DotImageLens(this.lensCanvas, this.lensSrc, { lensRadiusPx: 90, lensFeatherPx: 30, splatRadiusPx: 44 });
-      this.resizeHeroLens = () => {
-        const hr = this.hero.getBoundingClientRect();
-        const vr = this.xray.getBoundingClientRect();
-        // the video's rect only decides WHERE the canvas is placed, so the dots
-        // register with the surface photo…
-        this.lensCanvas.style.transform = 'translate(' + (vr.left - hr.left) + 'px,' + (vr.top - hr.top) + 'px)';
-        this.lensCanvas.style.width = vr.width + 'px';
-        this.lensCanvas.style.height = vr.height + 'px';
-        // …but resolution and cursor mapping come from the canvas's OWN box.
-        const cr = this.lensCanvas.getBoundingClientRect();
-        this.lensBox = { x: cr.left - hr.left, y: cr.top - hr.top };
-        const dpr = DPR();
-        this.lensSrc.width = Math.max(1, Math.round(cr.width * dpr));
-        this.lensSrc.height = Math.max(1, Math.round(cr.height * dpr));
-        this.heroLens.resize(cr.width, cr.height, dpr);
-      };
-      this.resizeHeroLens();
-      this.lastLensTime = performance.now();
-    }
-
-    // 2. SITEWIDE — no image, so dots render in the wine accent colour.
-    if (this.trailCanvas) {
-      this.trail = new DotImageLens(this.trailCanvas, null, { showIdleLens: false, gridDensity: 140, splatRadiusPx: 40, lensRadiusPx: 40 });
-      this.resizeTrail = () => this.trail.resize(window.innerWidth, window.innerHeight, DPR());
-      this.resizeTrail();
-      this.onTrailMove = (e) => {
-        this.trail.setCursor(e.clientX, e.clientY, true);
-        const el = document.elementFromPoint(e.clientX, e.clientY);
-        this.trail.setSuppressed(!!(el && el.closest('[data-dot-trail-suppress]')));
-      };
-      window.addEventListener('pointermove', this.onTrailMove);
-      this.onTrailLeave = () => this.trail.setCursor(0, 0, false);
-      window.addEventListener('pointerleave', this.onTrailLeave);
-      this.lastTrailTime = performance.now();
-    }
-
-    this.onDotResize = () => { if (this.resizeHeroLens) this.resizeHeroLens(); if (this.resizeTrail) this.resizeTrail(); };
-    window.addEventListener('resize', this.onDotResize);
-  }
-  drawLensSource() {
-    const v = this.xray, c = this.lensSrc, ctx = this.lensSrcCtx;
-    if (!v || !c || !ctx || !v.videoWidth) return;
-    // object-fit: cover — crop the source to the destination aspect
-    const sa = v.videoWidth / v.videoHeight, da = c.width / c.height;
-    let sw = v.videoWidth, sh = v.videoHeight, sx = 0, sy = 0;
-    if (sa > da) { sw = v.videoHeight * da; sx = (v.videoWidth - sw) / 2; }
-    else { sh = v.videoWidth / da; sy = (v.videoHeight - sh) / 2; }
-    ctx.clearRect(0, 0, c.width, c.height);
-    ctx.drawImage(v, sx, sy, sw, sh, 0, 0, c.width, c.height);
-  }
-  componentWillUnmount() {
-    cancelAnimationFrame(this.raf); window.removeEventListener('scroll', this.onScrollHide); window.removeEventListener('scroll', this.onHowScroll);
-    if (this.proofObserver) this.proofObserver.disconnect();
-    if (this.wordObservers) this.wordObservers.forEach((io) => io.disconnect());
-    if (this.onRevealScroll) window.removeEventListener('scroll', this.onRevealScroll);
-    if (this.onNavScroll) { window.removeEventListener('scroll', this.onNavScroll); window.removeEventListener('resize', this.onNavScroll); }
-    if (this.onBreakpoint) window.removeEventListener('resize', this.onBreakpoint);
-    clearTimeout(this.navSwapT);
-    if (this.onDotResize) window.removeEventListener('resize', this.onDotResize);
-    if (this.onTrailMove) window.removeEventListener('pointermove', this.onTrailMove);
-    if (this.onTrailLeave) window.removeEventListener('pointerleave', this.onTrailLeave);
-    if (this.heroLens) this.heroLens.destroy();
-    if (this.trail) this.trail.destroy();
-  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); window.removeEventListener('scroll', this.onScrollHide); window.removeEventListener('scroll', this.onHowScroll); if (this.proofObserver) this.proofObserver.disconnect(); }
   inHotspot(e, rect) { return true; } // lens works across the whole hero
   overStructure(e, rect) {
     // structure + characters occupy the right ~44% of the frame
@@ -452,31 +168,15 @@ class Component extends DCLogic {
     if (e.clientY > rect.bottom || e.clientY < rect.top) { this.tr = 0; this.active = false; return; }
     this.tx = e.clientX - rect.left; this.ty = e.clientY - rect.top;
     if (this.cr < 4) { this.cx = this.tx; this.cy = this.ty; } // appear at pointer, not fly in
-    this.tr = this.overStructure(e, rect) ? 100 : 78; // grows over the structure
+    this.tr = this.overStructure(e, rect) ? 80 : 60; // grows over the structure
     this.active = true;
     if (!this.state.used) this.setState({ used: true });
     if (this.state.hintVisible && this.state.coarse === false) this.setState({ hintVisible: false });
   }
-  tickTrail() {
-    if (!this.trail) return;
-    const now = performance.now();
-    const dt = Math.min((now - (this.lastTrailTime || now)) / 1000, 1 / 15);
-    this.lastTrailTime = now;
-    this.trail.tick(dt);
-  }
   tick() {
-    this.tickTrail();
     const ease = this.reduced ? 1 : 0.22;
-    const moving = Math.abs(this.tx - this.cx) >= 0.1 || Math.abs(this.ty - this.cy) >= 0.1 || Math.abs(this.tr - this.cr) >= 0.1;
-    if (!moving && this.cr < 0.5) {
-      if (this.heroLens) {
-        this.lastLensTime = performance.now();
-        const b = this.lensBox || { x: 0, y: 0 };
-        this.drawLensSource();
-        this.heroLens.setCursor(this.cx - b.x, this.cy - b.y, false);
-        this.heroLens.tick(1 / 60);
-      }
-      this.raf = requestAnimationFrame(this.tick); return;
+    if (Math.abs(this.tx - this.cx) < 0.1 && Math.abs(this.ty - this.cy) < 0.1 && Math.abs(this.tr - this.cr) < 0.1) {
+      this.raf = requestAnimationFrame(this.tick); return; // idle — no style writes
     }
     this.cx += (this.tx - this.cx) * ease;
     this.cy += (this.ty - this.cy) * ease;
@@ -489,146 +189,13 @@ class Component extends DCLogic {
       if (this.ring) {
         this.ring.style.transform = 'translate(' + this.cx + 'px,' + this.cy + 'px) scale(' + Math.max(0.001, this.cr / 110) + ')';
         // ring base is 220px; scale tracks current radius so ring matches mask edge
-        this.ring.style.opacity = String(Math.min(1, this.cr / 100) * 0.7);
+        this.ring.style.opacity = String(Math.min(1, this.cr / 90));
       }
-    }
-    if (this.heroLens && !this.state.revealAll) {
-      const now = performance.now();
-      const dt = Math.min((now - (this.lastLensTime || now)) / 1000, 1 / 15);
-      this.lastLensTime = now;
-      this.drawLensSource();
-      const b = this.lensBox || { x: 0, y: 0 };
-      this.heroLens.cfg.lensRadiusPx = Math.max(0, this.cr);
-      this.heroLens.setCursor(this.cx - b.x, this.cy - b.y, this.active && this.cr > 2);
-      this.heroLens.tick(dt);
     }
     this.raf = requestAnimationFrame(this.tick);
   }
-  get mobileNow() { return window.innerWidth < 860; }
-  get fx() {
-    if (this._fx === undefined) {
-      this._fx = !(window.matchMedia('(pointer: coarse)').matches
-        || window.innerWidth < 1024
-        || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    }
-    return this._fx;
-  }
-  swapNavLabel(text) {
-    const el = this.navLabel;
-    if (!el) return;
-    const HIDDEN_BELOW = 'inset(-10% -10% 120% -10%)';
-    const HIDDEN_ABOVE = 'inset(120% -10% -10% -10%)';
-    const SHOWN = 'inset(-10%)';
-    const EASE = 'cubic-bezier(0.16,1,0.3,1)';
-    clearTimeout(this.navSwapT);
-    if (this.reduced) { el.textContent = text; return; }
-    // outgoing: exits upward through the mask
-    el.style.transition = 'transform 420ms ' + EASE + ', clip-path 420ms ' + EASE + ', -webkit-clip-path 420ms ' + EASE;
-    el.style.clipPath = HIDDEN_ABOVE;
-    el.style.webkitClipPath = HIDDEN_ABOVE;
-    el.style.transform = 'translateY(-100%)';
-    this.navSwapT = setTimeout(() => {
-      if (!this.navLabel) return;
-      // reset below the line with no transition, then enter upward
-      el.style.transition = 'none';
-      el.textContent = text;
-      el.style.clipPath = HIDDEN_BELOW;
-      el.style.webkitClipPath = HIDDEN_BELOW;
-      el.style.transform = 'translateY(100%)';
-      void el.offsetWidth;
-      el.style.transition = 'transform 460ms ' + EASE + ', clip-path 460ms ' + EASE + ', -webkit-clip-path 460ms ' + EASE;
-      el.style.clipPath = SHOWN;
-      el.style.webkitClipPath = SHOWN;
-      el.style.transform = 'translateY(0)';
-    }, 360);
-  }
-  setupWordReveals() {
-    if (this.wordRevealsDone) return;
-    this.wordRevealsDone = true;
-    const HIDDEN = 'inset(-10% -10% 120% -10%)';
-    const SHOWN = 'inset(-10%)';
-    const targets = Array.from(document.querySelectorAll('[data-reveal-words]'));
-    targets.forEach((root) => {
-      const words = [];
-      const split = (node) => {
-        Array.from(node.childNodes).forEach((child) => {
-          if (child.nodeType === 3) {
-            const parts = child.textContent.split(/(\s+)/);
-            if (!parts.some((p) => p.trim())) return;
-            const frag = document.createDocumentFragment();
-            parts.forEach((part) => {
-              if (!part) return;
-              if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
-              const w = document.createElement('span');
-              w.textContent = part;
-              words.push(w);
-              frag.appendChild(w);
-            });
-            node.replaceChild(frag, child);
-          } else if (child.nodeType === 1) {
-            if (child.tagName === 'BR') return;
-            // an inline element (a coloured span, a <strong>) travels as one word
-            if (!child.querySelector('*') && child.textContent.trim() && !child.textContent.trim().includes(' ')) {
-              words.push(child);
-            } else {
-              split(child);
-            }
-          }
-        });
-      };
-      split(root);
-      if (!words.length) return;
-      // whitespace-only text nodes get dropped by flex/grid layout — bake the
-      // space into each word span instead so the pattern survives any container
-      if (/flex|grid/.test(getComputedStyle(root).display)) {
-        words.forEach((w, i) => {
-          const next = w.nextSibling;
-          if (i < words.length - 1 && next && next.nodeType === 3 && !next.textContent.trim()) {
-            w.appendChild(document.createTextNode('\u00A0'));
-            next.remove();
-          }
-        });
-      }
-      words.forEach((w) => {
-        w.style.display = 'inline-block';
-        w.style.willChange = 'transform, clip-path';
-        if (this.reduced) return;
-        w.style.clipPath = HIDDEN;
-        w.style.webkitClipPath = HIDDEN;
-        w.style.transform = 'translateY(100%)';
-      });
-      if (this.reduced) return;
-      const step = Math.max(16, Math.min(50, Math.round(620 / words.length)));
-      const play = () => words.forEach((w, i) => {
-        const d = i * step;
-        w.style.transition = 'transform 660ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms, clip-path 660ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms, -webkit-clip-path 660ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms';
-        w.style.clipPath = SHOWN;
-        w.style.webkitClipPath = SHOWN;
-        w.style.transform = 'translateY(0)';
-      });
-      (this.revealGroups = this.revealGroups || []).push({ root, play, played: false });
-    });
-    if (!this.onRevealScroll) {
-      this.onRevealScroll = () => {
-        if (!this.revealGroups) return;
-        const H = window.innerHeight;
-        let pending = 0;
-        this.revealGroups.forEach((g) => {
-          if (g.played) return;
-          const r = g.root.getBoundingClientRect();
-          if (r.top < H * 0.88 && r.bottom > 0) { g.played = true; g.play(); } else pending++;
-        });
-        if (!pending) { window.removeEventListener('scroll', this.onRevealScroll); this.revealScrollBound = false; }
-      };
-    }
-    if (!this.revealScrollBound) {
-      window.addEventListener('scroll', this.onRevealScroll, { passive: true });
-      this.revealScrollBound = true;
-    }
-    this.onRevealScroll();
-  }
   setupProofReveal() {
-    if (this.proofObserver || !this.proofSub) return;
+    if (this.proofObserver || !this.proofHead || !this.proofSub) return;
     const section = document.getElementById('proof');
     if (!section) return;
     const show = (el, delay) => {
@@ -639,7 +206,8 @@ class Component extends DCLogic {
     this.proofObserver = new IntersectionObserver((entries) => {
       if (!entries.some(e => e.isIntersecting)) return;
       this.proofObserver.disconnect();
-      show(this.proofSub, 260);
+      show(this.proofHead, 0);
+      show(this.proofSub, 900);
     }, { threshold: 0.35 });
     this.proofObserver.observe(section);
   }
@@ -659,39 +227,16 @@ class Component extends DCLogic {
       hp3Ref: (el) => { this.hp3 = el; },
       showBridgeLabel: !this.state.used && !revealAll,
       ringRef: (el) => { this.ring = el; },
-      lensCanvasRef: (el) => { this.lensCanvas = el; },
-      trailCanvasRef: (el) => { this.trailCanvas = el; },
       xrayRef: (el) => { this.xray = el; },
-      navLabelRef: (el) => { this.navLabel = el; },
-      heroFx: this.fx,
-      mobile: this.state.mobile,
-      desktopLayout: !this.state.mobile,
-      xrayPreload: this.fx ? 'auto' : 'none',
-      talkVideoRef: (el) => {
-        this.talkVideo = el;
-        if (el && !el.dataset.wired) {
-          el.dataset.wired = '1';
-          const sync = () => this.showPlayBtn(el.paused);
-          el.addEventListener('play', sync);
-          el.addEventListener('pause', sync);
-          el.addEventListener('ended', () => { el.currentTime = 0; sync(); });
-        }
-      },
-      playBtnRef: (el) => { this.playBtn = el; if (el) el.style.transition += ', opacity 0.25s ease'; },
-      onTalkPlay: () => this.startTalkVideo(),
-      onTalkVideoClick: () => {
-        const v = this.talkVideo;
-        if (!v) return;
-        if (v.paused) this.startTalkVideo(); else v.pause();
-      },
+      proofHeadRef: (el) => { this.proofHead = el; this.setupProofReveal(); },
       proofSubRef: (el) => { this.proofSub = el; this.setupProofReveal(); },
       onMove: (e) => {
-        if (!this.desktopEffects || this.state.revealAll) return;
+        if (this.state.revealAll) return;
         if (e.pointerType === 'touch' && !this.touchActive) return;
         this.point(e);
       },
       onDown: (e) => {
-        if (!this.desktopEffects || this.state.revealAll) return;
+        if (this.state.revealAll) return;
         if (e.pointerType !== 'touch') return;
         const rect = this.hero.getBoundingClientRect();
         if (this.inHotspot(e, rect)) {
@@ -712,21 +257,15 @@ class Component extends DCLogic {
         if (this.xray) {
           if (next) {
             this.xray.style.webkitMaskImage = 'none'; this.xray.style.maskImage = 'none';
-            this.xray.style.opacity = '1';
             this.tr = 0; this.cr = 0;
-            if (this.heroLens) this.heroLens.destroy();
-            if (this.lensCanvas) this.lensCanvas.style.opacity = '0';
           } else {
             this.xray.style.webkitMaskImage = ''; this.xray.style.maskImage = '';
-            if (this.desktopEffects) this.xray.style.opacity = '0';
-            if (this.lensCanvas) this.lensCanvas.style.opacity = '1';
           }
         }
       }
     };
   }
 }
-
 </script>
 </body>
 </html>

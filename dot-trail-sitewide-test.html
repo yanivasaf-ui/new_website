@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sitewide DotFieldLens — suppression test</title>
+<style>
+  html, body { margin: 0; background: #3a2f28; color: #E8DCC8; font: 16px/1.6 system-ui; }
+  section { position: relative; padding: 80px 60px; min-height: 60vh; }
+  .hero { background: linear-gradient(180deg, #5a4a3d, #2a221c); }
+  .hero h1 { font-size: 56px; margin: 0; opacity: 0.9; }
+  .text-section { background: #EFE6D8; color: #2b241c; }
+  .text-section p { max-width: 640px; font-size: 20px; }
+  .divider-label {
+    position: absolute; top: 16px; left: 60px; font: 12px monospace;
+    text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;
+  }
+  #dotTrailCanvas {
+    position: fixed; inset: 0; width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 50;
+  }
+  #label {
+    position: fixed; top: 16px; right: 16px; z-index: 60; max-width: 360px;
+    font: 12px/1.4 monospace; color: #E8DCC8; background: rgba(0,0,0,0.6);
+    padding: 10px 14px; border-radius: 4px; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<canvas id="dotTrailCanvas"></canvas>
+<div id="label">
+  Move cursor anywhere on the page. Trail should show over the dark hero
+  area, but must NOT appear while hovering the cream text section below
+  — that section has data-dot-trail-suppress on it.
+</div>
+
+<section class="hero">
+  <div class="divider-label">hero — trail active</div>
+  <h1>MOCK HERO<br>(trail should work here)</h1>
+</section>
+
+<section class="text-section" data-dot-trail-suppress>
+  <div class="divider-label" style="opacity:0.4;">text section — trail suppressed</div>
+  <p>
+    This stands in for a body-copy section like About or How I Build.
+    Move your cursor over this paragraph — the dot trail must stay
+    completely invisible here, exactly like it would need to over real
+    body text, so it doesn't reintroduce the legibility problems already
+    solved elsewhere on the site.
+  </p>
+</section>
+
+<section class="hero" style="min-height: 100vh;">
+  <div class="divider-label">another non-text section — trail active again</div>
+  <h1>MOCK SECTION<br>(trail active again)</h1>
+</section>
+
+<script type="module">
+import { DotFieldLens } from './dot-field-lens.js';
+
+const canvas = document.getElementById('dotTrailCanvas');
+const lens = new DotFieldLens(canvas, { lensRadiusPx: 180 });
+window.__lens = lens; // debugging only — do not ship
+
+function doResize() {
+  lens.resize(window.innerWidth, window.innerHeight, Math.min(window.devicePixelRatio || 1, 2));
+}
+window.addEventListener('resize', doResize);
+doResize();
+
+window.addEventListener('pointermove', (e) => {
+  lens.setCursor(e.clientX, e.clientY, true);
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  const overSuppressedZone = !!(el && el.closest('[data-dot-trail-suppress]'));
+  lens.setSuppressed(overSuppressedZone);
+});
+window.addEventListener('pointerleave', () => lens.setCursor(0, 0, false));
+
+let last = performance.now();
+function raf(now) {
+  const dt = Math.min((now - last) / 1000, 1 / 15);
+  last = now;
+  lens.tick(dt);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+</script>
+</body>
+</html>

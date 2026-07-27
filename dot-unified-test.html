@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unified dot-image-reveal — lens + dissolve test</title>
+<style>
+  html, body { margin: 0; background: #2a221c; color: #E8DCC8; font: 14px/1.5 system-ui; }
+  .wrap { padding: 24px; }
+  h2 { font-size: 16px; margin: 32px 0 8px; }
+  .stage { position: relative; width: 900px; height: 500px; background: #444; }
+  canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  #label { font: 12px monospace; opacity: 0.7; max-width: 700px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="label">
+    TOP: cursor lens — move mouse over the stage, dots should reveal the
+    REAL photo underneath (not a flat color), with a trail while moving.<br>
+    BOTTOM: scroll dissolve, driven manually via a slider-equivalent
+    (buttons below) since this is a static test page.
+  </div>
+
+  <h2>Cursor lens (DotImageLens)</h2>
+  <div class="stage"><canvas id="lensCanvas"></canvas></div>
+
+  <h2>Section dissolve (DotSectionDissolve) — click to step progress</h2>
+  <div class="stage"><canvas id="dissolveCanvas"></canvas></div>
+  <button id="stepBtn">progress: 0</button>
+</div>
+
+<script type="module">
+import { DotImageLens } from './dot-image-lens.js';
+import { DotSectionDissolve } from './dot-section-dissolve.js';
+
+const img = new Image();
+img.src = './test-image.png';
+img.onload = () => {
+  // --- lens ---
+  const lensCanvas = document.getElementById('lensCanvas');
+  const lens = new DotImageLens(lensCanvas, img, { lensRadiusPx: 160 });
+  lens.resize(900, 500, Math.min(window.devicePixelRatio || 1, 2));
+  window.__lens = lens;
+
+  lensCanvas.parentElement.addEventListener('pointermove', (e) => {
+    const rect = lensCanvas.getBoundingClientRect();
+    lens.setCursor(e.clientX - rect.left, e.clientY - rect.top, true);
+  });
+  lensCanvas.parentElement.addEventListener('pointerleave', () => lens.setCursor(0, 0, false));
+
+  let last = performance.now();
+  function raf(now) {
+    const dt = Math.min((now - last) / 1000, 1 / 15);
+    last = now;
+    lens.tick(dt);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // --- dissolve ---
+  const dissolveCanvas = document.getElementById('dissolveCanvas');
+  const dissolve = new DotSectionDissolve(dissolveCanvas, img);
+  dissolve.resize(900, 500, Math.min(window.devicePixelRatio || 1, 2));
+  window.__dissolve = dissolve;
+
+  const btn = document.getElementById('stepBtn');
+  const steps = [0, 0.25, 0.5, 0.75, 1.0];
+  let stepIdx = 0;
+  function applyStep() {
+    dissolve.setProgress(steps[stepIdx]);
+    dissolve.render();
+    btn.textContent = 'progress: ' + steps[stepIdx] + ' (click to advance)';
+  }
+  applyStep();
+  btn.addEventListener('click', () => { stepIdx = (stepIdx + 1) % steps.length; applyStep(); });
+};
+</script>
+</body>
+</html>

@@ -30,6 +30,14 @@
  * imageEl must be a loaded <img> (or other CanvasImageSource) — this
  * canvas STANDS IN for that image; don't render a separate visible
  * <img> underneath it.
+ *
+ * TWO MODES, same class:
+ *   - Pass a real image (hero, section photos) -> dots reveal that
+ *     image's actual pixels.
+ *   - Pass null (everywhere else on the site — nav, buttons, plain
+ *     background) -> dots render in a flat accent color instead, same
+ *     trail/decay/lens mechanic, no image to composite. This is what
+ *     makes the sitewide cursor trail possible outside the hero.
  */
 import { renderDotMaskedImage } from './dot-image-reveal-core.js';
 
@@ -37,7 +45,7 @@ export class DotImageLens {
   constructor(canvas, image, options = {}) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    this.image = image;
+    this.image = image || null; // null = color-fallback mode, see class doc above
     this.cfg = {
       gridDensity:    options.gridDensity    ?? 90,
       decayPerSecond: options.decayPerSecond ?? 0.06,
@@ -45,6 +53,7 @@ export class DotImageLens {
       moveEpsilonPx:  options.moveEpsilonPx  ?? 1.5,
       lensRadiusPx:   options.lensRadiusPx   ?? 220,
       lensFeatherPx:  options.lensFeatherPx  ?? 60,
+      dotColor:       options.dotColor       ?? [0x6B, 0x2B, 0x3A], // used only when image is null
     };
     this.width = 0;
     this.height = 0;
@@ -141,7 +150,7 @@ export class DotImageLens {
     }
 
     this.lastFrameCursor = this.cursor;
-    renderDotMaskedImage(this.ctx, this.width, this.height, this.cols, this.rows, this.revealGrid, this.image);
+    renderDotMaskedImage(this.ctx, this.width, this.height, this.cols, this.rows, this.revealGrid, this.image, 0.62, this.cfg.dotColor);
   }
 
   destroy() {

@@ -35,10 +35,14 @@
  * @param {number} cols
  * @param {number} rows
  * @param {Float32Array} revealGrid - length cols*rows, values 0..1
- * @param {CanvasImageSource} image - the real image being revealed
+ * @param {CanvasImageSource|null} image - the real image being revealed,
+ *   or null/undefined to fall back to a flat dot color (see fallbackColor)
+ *   — use this for areas with no underlying image to reveal (i.e.
+ *   anywhere outside the hero / section-entrance photos).
  * @param {number} maxDotSizeFactor - fraction of a cell's min dimension, at full reveal
+ * @param {[number,number,number]} fallbackColor - RGB used when image is null
  */
-export function renderDotMaskedImage(ctx, width, height, cols, rows, revealGrid, image, maxDotSizeFactor = 0.62) {
+export function renderDotMaskedImage(ctx, width, height, cols, rows, revealGrid, image, maxDotSizeFactor = 0.62, fallbackColor = [0x6B, 0x2B, 0x3A]) {
   ctx.save();
   ctx.globalCompositeOperation = 'source-over';
   ctx.clearRect(0, 0, width, height);
@@ -47,21 +51,27 @@ export function renderDotMaskedImage(ctx, width, height, cols, rows, revealGrid,
   const cellH = height / rows;
   const maxRadius = Math.min(cellW, cellH) * maxDotSizeFactor;
 
-  ctx.fillStyle = '#fff'; // color is irrelevant — destination-in only keeps alpha shape
+  const [r, g, b] = fallbackColor;
+  ctx.fillStyle = image ? '#fff' : `rgb(${r}, ${g}, ${b})`; // '#fff' is irrelevant when compositing — only the alpha shape matters
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       const reveal = revealGrid[y * cols + x];
       if (reveal <= 0.02) continue;
       const cx = (x + 0.5) * cellW;
       const cy = (y + 0.5) * cellH;
-      const r = maxRadius * Math.min(1, reveal);
+      const rad = maxRadius * Math.min(1, reveal);
       ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.arc(cx, cy, rad, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
-  ctx.globalCompositeOperation = 'source-in';
-  ctx.drawImage(image, 0, 0, width, height);
+  if (image) {
+    // reveal mode — clip the real image to the dot shapes just drawn
+    ctx.globalCompositeOperation = 'source-in';
+    ctx.drawImage(image, 0, 0, width, height);
+  }
+  // else: no image — the colored dots drawn above ARE the final result,
+  // nothing further to composite (this is the sitewide/no-image mode)
   ctx.restore();
 }
