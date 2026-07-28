@@ -259,7 +259,7 @@ class Component extends DCLogic {
         v.muted = true;
         v.controls = true;
         v.play();
-      }, 300);
+      }, 900);
     };
     const p = v.play();
     if (p && p.then) p.then(guard).catch(() => this.showPlayBtn(true));
