@@ -342,6 +342,29 @@ class Component extends DCLogic {
     window.addEventListener('scroll', this.onNavScroll, { passive: true });
     window.addEventListener('resize', this.onNavScroll);
     setTimeout(this.onNavScroll, 80);
+    // mobile only: the pill is position:fixed and on a single-column layout it
+    // sits directly over headings/body text as they scroll past — retreat on
+    // scroll-down, reappear on scroll-up (or near top), so it stops blocking
+    // whatever text happens to pass under its band. Desktop's multi-column
+    // layout never puts text under the pill, so this is skipped there.
+    this.navLastY = window.scrollY;
+    this.onNavHide = () => {
+      if (window.innerWidth >= 760) return;
+      if (!this.navEl) {
+        this.navEl = this.navLabel ? this.navLabel.closest('nav') : document.querySelector('nav');
+        if (this.navEl) this.navEl.style.transition = 'transform 280ms cubic-bezier(0.22,0.61,0.36,1)';
+      }
+      if (!this.navEl) return;
+      const y = window.scrollY;
+      const dy = y - this.navLastY;
+      if (y < 40 || dy < -4) {
+        this.navEl.style.transform = 'translateX(-50%) translateY(0)';
+      } else if (dy > 4) {
+        this.navEl.style.transform = 'translateX(-50%) translateY(-140%)';
+      }
+      this.navLastY = y;
+    };
+    window.addEventListener('scroll', this.onNavHide, { passive: true });
     this.setState({ mobile: this.mobileNow });
     this.onBreakpoint = () => {
       const m = this.mobileNow;
@@ -355,6 +378,8 @@ class Component extends DCLogic {
         this.setupWordReveals();
         this.navActive = undefined;
         if (this.onNavScroll) this.onNavScroll();
+        // switching to desktop mid-scroll shouldn't leave the pill hidden
+        if (!m && this.navEl) this.navEl.style.transform = 'translateX(-50%) translateY(0)';
       }, 80);
     };
     window.addEventListener('resize', this.onBreakpoint);
