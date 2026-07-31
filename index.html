@@ -22,6 +22,7 @@
   <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&amp;display=swap" rel="stylesheet">
   <style>
     html, body { margin: 0; padding: 0; background: #EFE6D8; color: #2E2B27; font-family: "PP Neue Montreal", "Switzer", sans-serif; overflow-x: clip; }
+    @media (max-width: 859px) { html, body { background: #DBC8B1; } }
     a { color: #22335C; text-decoration: none; }
     a:hover { color: #C4622D; }
     ::selection { background: #22335C; color: #F1EAE0; }
@@ -55,7 +56,7 @@
     </sc-if>
 
     <div style="position:absolute; left:3.5vw; right:0; top:0; bottom:0; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; z-index:10; padding:clamp(96px,11vh,140px) 0 clamp(48px,8vh,96px) 0; pointer-events:none">
-      <h1 style="font-weight:600; font-size:clamp(54px,6.5vw,132px); line-height:0.92; letter-spacing:-0.045em; margin:0; color:#2E2B27; max-width:71vw; text-wrap:balance; pointer-events:auto">I build <span style="color: rgb(107, 43, 58);">AI</span> <br>into the way <br>your company works.</h1>
+      <h1 style="font-weight:600; font-size:clamp(54px,6.5vw,132px); line-height:0.92; letter-spacing:-0.045em; margin:0; color:#2E2B27; max-width:71vw; text-wrap:balance; pointer-events:auto">You’re better <br>with <span style="color: rgb(107, 43, 58);">AI</span>.<span style="display:block; height:0.3em"></span>Just not as good <br>as you could be.</h1>
       <div style="display:flex; flex-direction:column; gap:38px; pointer-events:auto; margin-top:clamp(32px,5vh,64px)">
         
         
@@ -69,11 +70,13 @@
 
   <section id="problem" data-screen-label="The problem" style="position:relative; width:100%; aspect-ratio:1376/840; overflow:hidden">
     <img src="magnific_create-a-highresolution-w_rl1ShEZxtc.jpg" alt="A weary textile character in a mustard jacket holding two well-made blocks whose connectors can't fit together" draggable="false" style="position:absolute; top:0; left:-4vw; width:108vw; height:100%; object-fit:cover; object-position:center; user-select:none; -webkit-user-drag:none" loading="lazy">
-    <h2 data-dot-trail-suppress="" data-reveal-words="" style="position:absolute; left:7vw; top:52%; transform:translateY(-50%); font-weight:500; letter-spacing:-0.04em; font-size:clamp(30px,3.8vw,76px); line-height:1.02; margin:0; color:#2E2B27; max-width:27vw; z-index:5">You’re better<br>with AI.<span style="display:block; height:0.55em"></span>Just not as good<br>as you could be.</h2>
-    <div data-dot-trail-suppress="" data-reveal-words="" style="position:absolute; right:3.5vw; top:50%; transform:translateY(-50%); max-width:min(30vw,620px); display:flex; flex-direction:column; gap:clamp(28px,3.5vh,48px); font-size:clamp(24px,2.4vw,40px); font-weight:500; letter-spacing:-0.02em; line-height:1.22; color:#2E2B27; z-index:5">
-      <p style="margin:0; font-size:clamp(28px,3vw,62px)">Each agent knows its task.</p>
-      <p style="margin:0; font-size:clamp(28px,3vw,62px)">None of them know each other.</p>
-      <p style="margin:0; font-size:clamp(26px,2.75vw,57px)">More agents just means more to manage.</p>
+    <div data-dot-trail-suppress="" data-reveal-words="" style="position:absolute; left:5.6vw; top:53%; transform:translateY(-50%); width:25vw; display:flex; flex-direction:column; align-items:flex-end; text-align:right; gap:0.5em; font-weight:500; letter-spacing:-0.03em; font-size:clamp(21px,3.6vw,54px); line-height:1.1; text-wrap:balance; color:#2E2B27; z-index:5">
+      <h2 style="margin: 0; font-weight: 500; font-size: 77px; line-height: inherit; letter-spacing: inherit">Each agent knows its task.</h2>
+      <p style="margin: 0; font-size: 77px">None of them know each other.</p>
+    </div>
+    <div data-dot-trail-suppress="" data-reveal-words="" style="position:absolute; right:5.6vw; top:53%; transform:translateY(-50%); width:25vw; display:flex; flex-direction:column; align-items:flex-start; gap:0.5em; font-weight:500; letter-spacing:-0.03em; font-size:clamp(21px,3.6vw,54px); line-height:1.1; text-wrap:balance; color:#2E2B27; z-index:5">
+      <p style="margin: 0; text-align: left; font-size: 57px">More agents just means more to manage.</p>
+      <p style="margin: 0; text-align: left; font-size: 57px">So you’re stuck holding it all together.</p>
     </div>
     <div aria-hidden="true" style="position:absolute; left:0; right:0; top:-90px; height:180px; pointer-events:none; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent); z-index:6"></div>
   </section>
@@ -82,9 +85,9 @@
     <div aria-hidden="true" style="position:absolute; left:0; right:0; top:-80px; height:160px; pointer-events:none; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 40%, #000 60%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 40%, #000 60%, transparent); z-index:6"></div>
     <div ref="{{ howRef }}" style="position:relative; width:100%; height:calc(100vh + 3 * 72vh)">
     <div style="position:sticky; top:0; width:100%; height:100vh; overflow:hidden; background:linear-gradient(to right, #E8DFD4, #C8BBAD 50%, #A59889)">
-      <img src="magnific_this-is-great-take-the-ch_rl1UTvVxtc.jpg" alt="A friendly textile character with glasses presenting with an open hand" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:45% bottom; user-select:none; -webkit-user-drag:none" loading="lazy">
+      <img src="magnific_this-is-great-take-the-ch_rl1UTvVxtc.jpg" alt="A friendly textile character with glasses presenting with an open hand" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:45% bottom; user-select:none; -webkit-user-drag:none">
       <div aria-hidden="true" style="position:absolute; left:0; right:0; top:calc(100vh - 130px); height:260px; pointer-events:none; backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 40%, #000 60%, transparent), linear-gradient(to right, transparent 45%, #000 55%); -webkit-mask-composite:source-in; mask-image:linear-gradient(to bottom, transparent, #000 40%, #000 60%, transparent), linear-gradient(to right, transparent 45%, #000 55%); mask-composite:intersect; z-index:2"></div>
-      <h2 data-reveal-words="" style="position:absolute; left:43vw; top:calc(50vh - 182px); transform:translateY(-100%); font-weight:500; letter-spacing:-0.04em; font-size:clamp(44px,7.5vw,150px); line-height:0.96; margin:0; color:#2E2B27; z-index:4">How I Build</h2>
+      <h2 data-reveal-words="" style="position:absolute; left:43vw; top:auto; bottom:calc(50vh + 178px); font-weight:500; letter-spacing:-0.04em; font-size:clamp(38px,4.5vw,90px); line-height:0.98; margin:0; max-width:54vw; color:#2E2B27; z-index:4">I build <span style="color:#6B2B3A">AI</span> into the way<br>your company works.</h2>
       <div ref="{{ panelRegionRef }}" style="position:absolute; left:43vw; top:calc(50vh - 110px); width:53vw; overflow:hidden; border-radius:40px; z-index:5">
         <div ref="{{ hp0Ref }}" style="position:relative; background:#15130F; border-radius:40px; display:flex; flex-direction:column; padding:56px">
           <h3 style="font-weight:600; letter-spacing:-0.035em; font-size:clamp(48px,4.2vw,80px); line-height:0.95; margin:0; color:#F2EBDD">The Company<br><span style="color:#8A8578">Core</span></h3>
@@ -128,7 +131,7 @@
     </div>
     <div style="position:relative; width:75%; margin:clamp(-270px,-17vw,-130px) auto 0; z-index:2">
       <div aria-hidden="true" style="position:absolute; left:50%; bottom:5%; transform:translateX(-50%); width:70%; height:4%; background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(46,43,39,0.32), transparent 72%); filter:blur(10px); z-index:0"></div>
-      <img src="asaf-cutout-transparent.png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="position:relative; display:block; width:100%; user-select:none; -webkit-user-drag:none; z-index:1">
+      <img src="asaf-cutout-clean.png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="position:relative; display:block; width:100%; user-select:none; -webkit-user-drag:none; z-index:1">
     </div>
     <div style="width:calc(100% - 14vw); margin:clamp(24px,3.5vh,48px) auto 0; display:grid; grid-template-columns:minmax(0,58%) minmax(0,1fr); gap:72px; align-items:start; color:#2E2B27; text-wrap:pretty">
       <div style="display:flex; flex-direction:column">
@@ -160,30 +163,32 @@
   </sc-if>
 
   <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
-  <section id="hero" data-screen-label="Hero" style="position:relative; width:100%; background:#EFE6D8">
+  <section id="hero" data-screen-label="Hero" style="position:relative; width:100%; background:#DBC8B1">
     <div style="position:relative; width:100%; aspect-ratio:4/5; overflow:hidden">
       <img src="hero_surface-1784918905919.jpg" alt="Three handcrafted textile characters assembling a modular structure from geometric blocks" draggable="false" fetchpriority="high" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:100% center; transform:translateY(10%) scale(1.16); transform-origin:center top; user-select:none">
-      <div aria-hidden="true" style="position:absolute; left:0; right:0; top:0; height:64%; background:linear-gradient(to bottom, #EFE6D8 0%, rgba(239,230,216,0.94) 38%, rgba(239,230,216,0.6) 66%, rgba(239,230,216,0) 100%)"></div>
-      <h1 style="position:absolute; left:22px; right:22px; top:96px; margin:0; font-weight:600; font-size:clamp(34px,9vw,54px); line-height:1.0; letter-spacing:-0.035em; color:#2E2B27; text-wrap:balance">I build <span style="color:#6B2B3A">AI</span> into the way your company works.</h1>
-    </div>
-  </section>
-
-  <section id="problem" data-screen-label="The problem" style="position:relative; width:100%; background:#EFE6D8">
-    <div style="padding:0 22px; padding-top:52px; padding-bottom:36px; display:flex; flex-direction:column; gap:30px">
-      <h2 data-reveal-words="" style="margin:0; font-weight:500; letter-spacing:-0.03em; font-size:clamp(30px,8vw,46px); line-height:1.06; color:#2E2B27">You’re better with AI.<br>Just not as good as you could be.</h2>
-      <div data-reveal-words="" style="display:flex; flex-direction:column; gap:18px; color:#2E2B27; font-weight:500; letter-spacing:-0.02em; line-height:1.18">
-        <p style="margin:0; font-size:clamp(24px,6.4vw,34px)">Each agent knows its task.</p>
-        <p style="margin:0; font-size:clamp(24px,6.4vw,34px)">None of them know each other.</p>
-        <p style="margin:0; font-size:clamp(22px,5.9vw,31px)">More agents just means more to manage.</p>
+      <div aria-hidden="true" style="position:absolute; left:0; right:0; top:0; height:64%; background:linear-gradient(to bottom, #DBC8B1 0%, rgba(219,200,177,0.94) 38%, rgba(219,200,177,0.6) 66%, rgba(219,200,177,0) 100%)"></div>
+      <div style="position:absolute; left:22px; right:22px; top:88px; display:flex; flex-direction:column; gap:16px">
+        <h1 style="margin:0; font-weight:600; font-size:clamp(34px,9vw,54px); line-height:1.0; letter-spacing:-0.035em; color:#2E2B27; text-wrap:balance">You’re better with <span style="color:#6B2B3A">AI</span>. Just not as good as you could be.</h1>
       </div>
     </div>
-    <img src="magnific_create-a-highresolution-w_rl1ShEZxtc.jpg" alt="A weary textile character in a mustard jacket holding two well-made blocks whose connectors can't fit together" draggable="false" style="display:block; width:100%; aspect-ratio:4/5; object-fit:cover; object-position:46% center; user-select:none" loading="lazy">
   </section>
 
-  <section id="how" data-screen-label="How I build" style="position:relative; width:100%; background:linear-gradient(to bottom, #E8DFD4, #C8BBAD)">
+  <section id="problem" data-screen-label="The problem" style="position:relative; width:100%; background:#DBC8B1">
+    <div style="padding:0 22px; padding-top:52px; padding-bottom:36px; display:flex; flex-direction:column; gap:30px">
+      <h2 data-reveal-words="" style="margin:0; font-weight:500; letter-spacing:-0.03em; font-size:clamp(29px,7.6vw,44px); line-height:1.06; color:#2E2B27">Each agent knows its task.<br>None of them know each other.</h2>
+      <p data-reveal-words="" style="margin:-8px 0 0; font-weight:500; letter-spacing:-0.025em; font-size:clamp(21px,5.5vw,29px); line-height:1.2; color:#2E2B27">More agents just means more to manage.<br>So you’re stuck holding it all together.</p>
+    </div>
+    <div style="position:relative; width:100%; aspect-ratio:4/5; overflow:hidden">
+      <div data-mobile-parallax="" style="position:absolute; left:0; top:-7%; width:100%; height:114%; will-change:transform">
+        <img src="magnific_create-a-highresolution-w_rl1ShEZxtc.jpg" alt="A weary textile character in a mustard jacket holding two well-made blocks whose connectors can't fit together" draggable="false" style="display:block; width:100%; height:100%; object-fit:cover; object-position:46% center; user-select:none" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="how" data-screen-label="How I build" style="position:relative; width:100%; background:#DBC8B1">
     <div ref="{{ howRef }}" style="position:relative; width:100%; height:calc(100vh + 3 * 50vh)">
       <div style="position:sticky; top:0; width:100%; height:100vh; box-sizing:border-box; overflow:hidden; padding:52px 22px 32px; display:flex; flex-direction:column">
-        <h2 data-reveal-words="" style="margin:0 0 20px; flex-shrink:0; font-weight:500; letter-spacing:-0.035em; font-size:clamp(38px,10vw,60px); line-height:0.98; color:#2E2B27">How I Build</h2>
+        <h2 data-reveal-words="" style="margin:0 0 20px; flex-shrink:0; font-weight:500; letter-spacing:-0.035em; font-size:clamp(31px,8vw,46px); line-height:1.02; color:#2E2B27">I build <span style="color:#6B2B3A">AI</span> into the way your company works.</h2>
         <div style="position:relative; flex:1; min-height:0">
           <div ref="{{ hp0Ref }}" style="position:absolute; inset:0; background:#15130F; border-radius:26px; padding:26px 24px 30px; display:flex; flex-direction:column; gap:18px">
             <h3 style="margin:0; font-weight:600; letter-spacing:-0.03em; font-size:clamp(30px,7.6vw,42px); line-height:0.98; color:#F2EBDD">The Company<br><span style="color:#8A8578">Core</span></h3>
@@ -206,22 +211,26 @@
     </div>
   </section>
 
-  <section id="proof" data-screen-label="Website as proof" style="position:relative; width:100%; background:#EFE6D8">
+  <section id="proof" data-screen-label="Website as proof" style="position:relative; width:100%; background:#DBC8B1">
     <div style="padding:0 22px; padding-top:52px; padding-bottom:36px; display:flex; flex-direction:column; gap:24px">
       <p data-reveal-words="" style="margin:0; font-weight:600; font-size:clamp(19px,5vw,24px); line-height:1.42; letter-spacing:-0.02em; color:#2E2B27"><span style="display:block; font-size:clamp(34px,9vw,52px); letter-spacing:-0.035em; line-height:1.05; margin-bottom:6px">By the way,</span>this website moved from the creative director to a copywriter to a designer, with the operation lead overseeing the whole thing.</p>
       <p ref="{{ proofSubRef }}" style="opacity:0; transform:translateY(20px); margin:0; font-weight:400; font-size:18px; line-height:1.45; color:#2E2B27; text-wrap:pretty">They’re all agents working from the same context and memory. I stepped in when something needed an actual decision.</p>
     </div>
-    <img src="magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="Three textile characters gathered around a vintage monitor showing this website" draggable="false" style="display:block; width:100%; aspect-ratio:1/1; object-fit:cover; object-position:86% center; user-select:none" loading="lazy">
+    <div style="position:relative; width:100%; aspect-ratio:1/1; overflow:hidden">
+      <div data-mobile-parallax="" style="position:absolute; left:0; top:-7%; width:100%; height:114%; will-change:transform">
+        <img src="magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="Three textile characters gathered around a vintage monitor showing this website" draggable="false" style="display:block; width:100%; height:100%; object-fit:cover; object-position:86% center; user-select:none" loading="lazy">
+      </div>
+    </div>
   </section>
 
-  <section id="about" data-screen-label="About Asaf" style="position:relative; width:100%; background:#EFE6D8; padding-bottom:52px">
+  <section id="about" data-screen-label="About Asaf" style="position:relative; width:100%; background:#DBC8B1; padding-bottom:52px">
     <div style="padding-top:96px; display:flex; flex-direction:column; align-items:center">
       <p data-reveal-words="" style="margin:0; font-size:22px; font-weight:600; letter-spacing:-0.02em; color:#2E2B27">Hi, I’m</p>
       <h2 data-reveal-words="" style="margin:-14px 0 0; font-weight:600; letter-spacing:-0.05em; font-size:clamp(96px,27vw,180px); line-height:0.9; color:#6B2B3A">Asaf</h2>
     </div>
     <div style="position:relative; width:94%; margin:-4vw auto 0">
       <div aria-hidden="true" style="position:absolute; left:50%; bottom:5%; transform:translateX(-50%); width:70%; height:4%; background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(46,43,39,0.32), transparent 72%); filter:blur(10px)"></div>
-      <img src="asaf-cutout-transparent.png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="position:relative; display:block; width:100%; user-select:none">
+      <img src="asaf-cutout-clean.png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="position:relative; display:block; width:100%; user-select:none">
     </div>
     <div style="padding:0 22px; padding-top:26px; display:flex; flex-direction:column; gap:20px; color:#2E2B27; text-wrap:pretty">
       <p style="margin:0; font-size:19px; font-weight:600; line-height:1.45">Father of three (husband of one).</p>
@@ -234,7 +243,7 @@
     </div>
   </section>
 
-  <section id="talk" data-screen-label="Talk to me" style="position:relative; width:100%; box-sizing:border-box; background:#EFE6D8; padding:0 22px; padding-top:44px; padding-bottom:64px; display:flex; flex-direction:column; gap:34px">
+  <section id="talk" data-screen-label="Talk to me" style="position:relative; width:100%; box-sizing:border-box; background:#DBC8B1; padding:0 22px; padding-top:44px; padding-bottom:64px; display:flex; flex-direction:column; gap:34px">
     <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:20px; overflow:hidden; background:#15130F">
       <video ref="{{ talkVideoRef }}" src="talk-selfie.mp4#t=0.05" preload="metadata" playsInline="{{ true }}" onClick="{{ onTalkVideoClick }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover"></video>
       <button ref="{{ playBtnRef }}" type="button" onClick="{{ onTalkPlay }}" aria-label="Play video" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:76px; height:76px; border-radius:50%; border:1.5px solid rgba(34,51,92,0.4); background:rgba(241,234,224,0.9); display:flex; align-items:center; justify-content:center; padding:0; box-shadow:0 3px 20px rgba(46,43,39,0.18)">
@@ -271,7 +280,7 @@ class Component extends DCLogic {
         v.muted = true;
         v.controls = true;
         v.play();
-      }, 900);
+      }, 900); // was 300, bumped for the mute bug fix
     };
     const p = v.play();
     if (p && p.then) p.then(guard).catch(() => this.showPlayBtn(true));
@@ -312,7 +321,7 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this.onHowScroll, { passive: true });
     setTimeout(this.onHowScroll, 200);
-    setTimeout(() => this.setupWordReveals(), 60);
+    setTimeout(() => { this.setupWordReveals(); this.setupMobileImageMotion(); }, 60);
     this.navCopy = [
       ['hero', 'Feel good today'],
       ['problem', 'You’ve got a problem'],
@@ -377,9 +386,11 @@ class Component extends DCLogic {
       // the swapped-in markup needs its word spans built again
       setTimeout(() => {
         this.revealGroups = [];
-        this.wordRevealsDone = false;
+        if (this.revealIO) { this.revealIO.disconnect(); this.revealIO = null; }
         if (this.wordObservers) this.wordObservers.forEach((io) => io.disconnect());
+        this.teardownMobileImageMotion();
         this.setupWordReveals();
+        this.setupMobileImageMotion();
         this.navActive = undefined;
         if (this.onNavScroll) this.onNavScroll();
         // switching to desktop mid-scroll shouldn't leave the pill hidden
@@ -470,6 +481,7 @@ class Component extends DCLogic {
     if (this.onRevealScroll) window.removeEventListener('scroll', this.onRevealScroll);
     if (this.onNavScroll) { window.removeEventListener('scroll', this.onNavScroll); window.removeEventListener('resize', this.onNavScroll); }
     if (this.onBreakpoint) window.removeEventListener('resize', this.onBreakpoint);
+    this.teardownMobileImageMotion();
     clearTimeout(this.navSwapT);
     if (this.onDotResize) window.removeEventListener('resize', this.onDotResize);
     if (this.onTrailMove) window.removeEventListener('pointermove', this.onTrailMove);
@@ -580,12 +592,15 @@ class Component extends DCLogic {
     }, 360);
   }
   setupWordReveals() {
-    if (this.wordRevealsDone) return;
-    this.wordRevealsDone = true;
     const HIDDEN = 'inset(-10% -10% 120% -10%)';
     const SHOWN = 'inset(-10%)';
     const targets = Array.from(document.querySelectorAll('[data-reveal-words]'));
     targets.forEach((root) => {
+      if (root.__wrGroup) {
+        // already split by an earlier pass — just re-register it
+        if (!root.__wrGroup.played) this.observeReveal(root.__wrGroup);
+        return;
+      }
       const words = [];
       const split = (node) => {
         Array.from(node.childNodes).forEach((child) => {
@@ -643,26 +658,75 @@ class Component extends DCLogic {
         w.style.webkitClipPath = SHOWN;
         w.style.transform = 'translateY(0)';
       });
-      (this.revealGroups = this.revealGroups || []).push({ root, play, played: false });
+      const group = { root, play, played: false };
+      root.__wrGroup = group;
+      (this.revealGroups = this.revealGroups || []).push(group);
+      this.observeReveal(group);
     });
-    if (!this.onRevealScroll) {
-      this.onRevealScroll = () => {
-        if (!this.revealGroups) return;
-        const H = window.innerHeight;
-        let pending = 0;
-        this.revealGroups.forEach((g) => {
-          if (g.played) return;
-          const r = g.root.getBoundingClientRect();
-          if (r.top < H * 0.88 && r.bottom > 0) { g.played = true; g.play(); } else pending++;
+  }
+  observeReveal(group) {
+    if (!this.revealIO) {
+      this.revealIO = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          const g = e.target.__wrGroup;
+          if (!g || g.played || !e.isIntersecting) return;
+          g.played = true;
+          g.play();
+          this.revealIO.unobserve(e.target);
         });
-        if (!pending) { window.removeEventListener('scroll', this.onRevealScroll); this.revealScrollBound = false; }
-      };
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
     }
-    if (!this.revealScrollBound) {
-      window.addEventListener('scroll', this.onRevealScroll, { passive: true });
-      this.revealScrollBound = true;
+    this.revealIO.observe(group.root);
+  }
+  // MOBILE ONLY — the standalone photos drift slower than the page (inner
+  // wrapper has 7% headroom top and bottom, so no gap is ever exposed) and
+  // scale-in on the same beat as the word reveals beside them.
+  setupMobileImageMotion() {
+    if (this.mobileMotionBound || !this.state.mobile) return;
+    const inners = Array.from(document.querySelectorAll('[data-mobile-parallax]'));
+    if (!inners.length) return;
+    this.mobileMotionBound = true;
+    this.parallaxItems = inners.map((inner) => {
+      const img = inner.querySelector('img');
+      if (img && !this.reduced) {
+        img.style.transformOrigin = 'center center';
+        img.style.opacity = '0';
+        img.style.transform = 'scale(1.045)';
+      }
+      return { frame: inner.parentElement, inner, img, entered: false };
+    });
+    this.onMobileImageScroll = () => {
+      if (!this.parallaxItems) return;
+      const H = window.innerHeight;
+      this.parallaxItems.forEach((it) => {
+        const r = it.frame.getBoundingClientRect();
+        if (r.bottom < -240 || r.top > H + 240) return;
+        if (!this.reduced) {
+          const p = Math.max(0, Math.min(1, (H - r.top) / (H + r.height)));
+          it.inner.style.transform = 'translate3d(0,' + ((0.5 - p) * r.height * 0.12).toFixed(2) + 'px,0)';
+        }
+        if (!it.entered && r.top < H * 0.88 && r.bottom > 0) {
+          it.entered = true;
+          if (it.img) {
+            it.img.style.transition = this.reduced ? 'none' : 'opacity 780ms cubic-bezier(0.22,0.61,0.36,1) 60ms, transform 1100ms cubic-bezier(0.16,1,0.3,1) 60ms';
+            it.img.style.opacity = '1';
+            it.img.style.transform = 'scale(1)';
+          }
+        }
+      });
+    };
+    window.addEventListener('scroll', this.onMobileImageScroll, { passive: true });
+    window.addEventListener('resize', this.onMobileImageScroll);
+    this.onMobileImageScroll();
+  }
+  teardownMobileImageMotion() {
+    if (this.onMobileImageScroll) {
+      window.removeEventListener('scroll', this.onMobileImageScroll);
+      window.removeEventListener('resize', this.onMobileImageScroll);
+      this.onMobileImageScroll = null;
     }
-    this.onRevealScroll();
+    this.parallaxItems = null;
+    this.mobileMotionBound = false;
   }
   setupProofReveal() {
     if (this.proofObserver || !this.proofSub) return;
