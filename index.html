@@ -398,20 +398,26 @@ class Component extends DCLogic {
       }, 80);
     };
     window.addEventListener('resize', this.onBreakpoint);
-    this.desktopEffects = this.fx;
-    if (this.desktopEffects) {
-      this.setupDotEffects();
-    } else {
-      // No cursor mechanic on touch — the hero photo stands on its own. The
-      // canvases and the idle indicator's video aren't rendered at all; detach
-      // the remaining x-ray source so no 1440p payload is fetched or decoded.
-      if (this.xray) {
-        this.xray.pause();
-        this.xray.removeAttribute('src');
-        this.xray.load();
+    // deferred one tick: reading pointer/media state in the very first
+    // synchronous frame can catch the browser before it's settled that state,
+    // and this decision is irreversible (it detaches the video source on the
+    // "no effects" branch) — so give it one rAF to land on the real answer.
+    requestAnimationFrame(() => {
+      this.desktopEffects = this.fx;
+      if (this.desktopEffects) {
+        this.setupDotEffects();
+      } else {
+        // No cursor mechanic on touch — the hero photo stands on its own. The
+        // canvases and the idle indicator's video aren't rendered at all; detach
+        // the remaining x-ray source so no 1440p payload is fetched or decoded.
+        if (this.xray) {
+          this.xray.pause();
+          this.xray.removeAttribute('src');
+          this.xray.load();
+        }
+        if (this.state.hintVisible) this.setState({ hintVisible: false });
       }
-      if (this.state.hintVisible) this.setState({ hintVisible: false });
-    }
+    });
   }
   async setupDotEffects() {
     const { DotImageLens } = await import('./dot-image-lens.js');
@@ -555,12 +561,13 @@ class Component extends DCLogic {
   }
   get mobileNow() { return window.innerWidth < 860; }
   get fx() {
-    if (this._fx === undefined) {
-      this._fx = !(window.matchMedia('(pointer: coarse)').matches
-        || window.innerWidth < 1024
-        || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    }
-    return this._fx;
+    // not cached — a page's very first synchronous tick can read pointer/media
+    // queries before the browser has fully settled them, and caching that on
+    // first access risked permanently locking in a wrong answer. Cheap to
+    // recompute; every call reflects the current real state.
+    return !(window.matchMedia('(pointer: coarse)').matches
+      || window.innerWidth < 1024
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }
   swapNavLabel(text) {
     const el = this.navLabel;
