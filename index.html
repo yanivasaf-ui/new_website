@@ -62,7 +62,9 @@
     <canvas ref="{{ trailCanvasRef }}" aria-hidden="true" style="position:fixed; inset:0; width:100vw; height:100vh; pointer-events:none; z-index:15"></canvas>
   </sc-if>
   <nav data-dot-trail-suppress="" style="position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:30; display:flex; align-items:center; gap:clamp(12px,2.6vw,40px); max-width:94vw; height:clamp(56px,7.2vw,66px); padding:0 clamp(7px,1.2vw,10px) 0 clamp(17px,3vw,26px); border-radius:999px; background:#15130F; box-shadow:0 6px 30px rgba(21,19,15,0.28); font-size:16.5px">
-    <a href="#" style="display:inline-flex; align-items:center; align-self:stretch; font-weight:600; font-size:clamp(16px,2.2vw,19px); color:#F1EAE0; letter-spacing:-0.02em; white-space:nowrap" style-hover="color:#FFFFFF">Asaf Yaniv</a>
+    <a href="#" style="display:inline-flex; align-items:center; align-self:stretch; white-space:nowrap">
+      <img src="ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(20px,2.8vw,26px); width:auto; user-select:none; -webkit-user-drag:none">
+    </a>
     <span ref="{{ navLabelRef }}" aria-live="polite" style="flex:1; min-width:clamp(180px,21vw,300px); text-align:center; font-weight:600; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:#F1EAE0; opacity:0.72; white-space:nowrap; will-change:transform, clip-path">Feel good today</span>
     <a href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#15130F; background:#F1EAE0; padding:0 clamp(18px,2.8vw,26px); border-radius:999px; font-weight:600; font-size:clamp(15px,1.9vw,16.5px); white-space:nowrap; transition:background 0.15s ease" style-hover="background:#FFFFFF; color:#15130F">Let’s talk</a>
   </nav>

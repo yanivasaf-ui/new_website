@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 173 173">
-  <g transform="translate(-5, 19.5)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 90">
+
+  <text x="0" y="66" font-family="'Space Grotesk',sans-serif" font-weight="600" font-size="64" letter-spacing="-0.64" fill="#F1EAE0">ensemble</text>
+  <g transform="translate(312.5,-2.7) scale(0.6977)">
   <g fill="#7b4a72">
     <circle cx="52" cy="76" r="34"></circle><circle cx="16" cy="76" r="11"></circle><circle cx="27" cy="51" r="11"></circle><circle cx="52" cy="40" r="11"></circle><circle cx="77" cy="51" r="11"></circle><circle cx="88" cy="76" r="11"></circle>
   </g>
