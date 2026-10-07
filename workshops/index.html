@@ -46,12 +46,17 @@
 
   <nav data-dot-trail-suppress="" style="position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:30; display:flex; align-items:center; gap:clamp(12px,2.6vw,40px); max-width:94vw; height:clamp(56px,7.2vw,66px); padding:0 clamp(7px,1.2vw,10px) 0 clamp(17px,3vw,26px); border-radius:999px; background:#15130F; box-shadow:0 6px 30px rgba(21,19,15,0.28); font-size:16.5px">
     <a href="/" style="display:inline-flex; align-items:center; align-self:stretch; white-space:nowrap">
-      <img src="/ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(20px,2.8vw,26px); width:auto; user-select:none; -webkit-user-drag:none">
+      <img src="/ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(14px,5vw,26px); width:auto; user-select:none; -webkit-user-drag:none">
     </a>
     <span ref="{{ navLabelRef }}" aria-live="polite" style="flex:1; min-width:clamp(180px,21vw,300px); text-align:center; font-weight:600; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:#F1EAE0; opacity:0.72; white-space:nowrap; will-change:transform, clip-path">It’s time</span>
     <div style="display:flex; align-items:center; gap:clamp(6px,0.8vw,8px)">
-      <a href="/workshops" aria-current="page" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#F1EAE0; background:rgba(241,234,224,0.14); padding:0 clamp(14px,2.6vw,24px); border-radius:999px; font-weight:600; font-size:clamp(14px,1.9vw,16.5px); white-space:nowrap" style-hover="color:#F1EAE0">Workshops</a>
-      <a href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#15130F; background:#F1EAE0; padding:0 clamp(18px,2.8vw,26px); border-radius:999px; font-weight:600; font-size:clamp(15px,1.9vw,16.5px); white-space:nowrap; transition:background 0.15s ease" style-hover="background:#FFFFFF; color:#15130F">Let’s talk</a>
+      <sc-if value="{{ showLangChip }}" hint-placeholder-val="{{ true }}">
+        <a href="/workshops" aria-current="page" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#F1EAE0; background:rgba(241,234,224,0.14); padding:0 clamp(10px,3.6vw,24px); border-radius:999px; font-weight:600; font-size:clamp(13px,3.8vw,16.5px); white-space:nowrap" style-hover="color:#F1EAE0">Workshops</a>
+      </sc-if>
+      <sc-if value="{{ showLangInline }}" hint-placeholder-val="{{ false }}">
+        <a href="/he/workshops" hreflang="he" lang="he" aria-label="גרסה בעברית" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:50%; color:#F1EAE0; box-shadow:inset 0 0 0 1.5px rgba(241,234,224,0.28); font-weight:600; font-size:13px; flex-shrink:0" style-hover="color:#FFFFFF">עב</a>
+      </sc-if>
+      <a href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#15130F; background:#F1EAE0; padding:0 clamp(12px,4.6vw,26px); border-radius:999px; font-weight:600; font-size:clamp(13px,3.8vw,16.5px); white-space:nowrap; transition:background 0.15s ease" style-hover="background:#FFFFFF; color:#15130F">Let’s talk</a>
     </div>
     <sc-if value="{{ showLangChip }}" hint-placeholder-val="{{ true }}">
       <a href="/he/workshops" hreflang="he" lang="he" aria-label="גרסה בעברית" data-dot-trail-suppress="" style="position:absolute; left:calc(100% + 10px); top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:50%; background:#15130F; color:#F1EAE0; font-weight:600; font-size:13px; box-shadow:0 4px 18px rgba(21,19,15,0.22); transition:color 0.15s ease" style-hover="color:#FFFFFF">עב</a>
@@ -105,13 +110,14 @@
     </div>
   </section>
 
-  <section id="w-talk" data-screen-label="Talk to me" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(72px,12vh,160px) 7vw clamp(96px,13vh,180px); display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:clamp(40px,5vw,88px)">
-    <div data-dot-trail-suppress="" style="flex:1 1 560px; display:flex; flex-direction:column; gap:clamp(14px,2vh,24px)">
+  <section id="w-talk" data-screen-label="Talk to me" style="position:relative; width:100%; box-sizing:border-box; padding-top:clamp(56px,9vh,120px); overflow:hidden">
+    <div data-dot-trail-suppress="" style="position:relative; z-index:2; box-sizing:border-box; max-width:calc(100% - clamp(0px, (100vw - 859px) * 999, 50vw)); min-height:clamp(0px, (100vw - 859px) * 999, 56.25vw); padding:0 7vw; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:clamp(14px,2vh,24px)">
       <h2 data-reveal-words="" style="margin:0; max-width:20ch; font-weight:600; font-size:clamp(36px,4.2vw,80px); line-height:0.98; letter-spacing:-0.045em; color:#2E2B27; text-wrap:balance">Let’s figure out what fits your team and your work,</h2>
       <p data-reveal-words="" style="margin:0; font-weight:500; font-size:clamp(22px,2.2vw,38px); line-height:1.2; letter-spacing:-0.025em; color:#2E2B27">then build the workshop around it.</p>
+      <a data-reveal-words="" href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; margin-top:clamp(16px,3vh,40px); background:#B3312C; color:#F6EFE6; border-radius:999px; padding:clamp(16px,1.6vw,28px) clamp(28px,3.2vw,56px); font-weight:600; font-size:clamp(26px,3.2vw,60px); line-height:1.05; letter-spacing:-0.04em; white-space:nowrap; text-decoration:none; transform-origin:left center; box-shadow:0 4px 28px rgba(179,49,44,0.28); transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#97261F; color:#F6EFE6; transform:scale(1.025)">Take the red pill</a>
     </div>
-    <div style="display:flex; flex:0 0 auto; margin-left:auto">
-      <a data-reveal-words="" href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-self:start; background:#22335C; color:#F1EAE0; border-radius:999px; padding:clamp(18px,2vw,34px) clamp(32px,4vw,72px); font-weight:600; font-size:clamp(30px,4.6vw,88px); line-height:1.05; letter-spacing:-0.04em; white-space:nowrap; text-decoration:none; transform-origin:left center; box-shadow:0 4px 28px rgba(34,51,92,0.22); transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#1A2848; color:#F1EAE0; transform:scale(1.025)">Talk to me.</a>
+    <div style="position:relative; z-index:1; width:100%; aspect-ratio:2048/1152; min-height:360px; margin-top:calc(-1 * clamp(0px, (100vw - 859px) * 999, 56.25vw)); overflow:hidden; -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%)">
+      <img src="/workshop-cta-pills.jpg" alt="A textile character in a long black coat and round sunglasses holding out a red pill and a blue pill" draggable="false" loading="lazy" style="display:block; width:100%; height:100%; object-fit:cover; object-position:72% center; filter:sepia(0.12) saturate(0.96); user-select:none; -webkit-user-drag:none">
     </div>
   </section>
 </div>
@@ -294,6 +300,7 @@ class Component extends DCLogic {
     return {
       heroFx: this.fx,
       showLangChip: window.innerWidth >= 860,
+      showLangInline: window.innerWidth < 860,
       trailCanvasRef: (el) => { this.trailCanvas = el; },
       navLabelRef: (el) => { this.navLabel = el; },
       heroFrameRef: (el) => { this.heroFrame = el; },
