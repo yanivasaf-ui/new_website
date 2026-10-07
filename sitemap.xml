@@ -13,4 +13,16 @@
     <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/"/>
   </url>
+  <url>
+    <loc>https://ensemble-ai.io/workshops</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/workshops"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/workshops"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/workshops"/>
+  </url>
+  <url>
+    <loc>https://ensemble-ai.io/he/workshops</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/workshops"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/workshops"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/workshops"/>
+  </url>
 </urlset>

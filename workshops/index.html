@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Workshops · Ensemble</title>
+<meta name="description" content="Hands-on AI workshops for managers, creative and marketing teams, and founders. Build AI systems around your team's real work.">
+<link rel="canonical" href="https://ensemble-ai.io/workshops">
+<link rel="alternate" hreflang="en" href="https://ensemble-ai.io/workshops">
+<link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/workshops">
+<link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/workshops">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ensemble-ai.io/workshops">
+<meta property="og:title" content="AI Workshops · Ensemble">
+<meta property="og:description" content="Hands-on AI workshops for managers, creative and marketing teams, and founders. Build AI systems around your team's real work.">
+<meta property="og:image" content="https://ensemble-ai.io/workshop-red-pill.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Workshops · Ensemble">
+<meta name="twitter:description" content="Hands-on AI workshops for managers, creative and marketing teams, and founders. Build AI systems around your team's real work.">
+<meta name="twitter:image" content="https://ensemble-ai.io/workshop-red-pill.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #EFE6D8; color: #2E2B27; font-family: "PP Neue Montreal", "Switzer", sans-serif; overflow-x: clip; }
+    @media (max-width: 859px) { html, body { background: #DBC8B1; } }
+    a { color: #22335C; text-decoration: none; }
+    a:hover { color: #C4622D; }
+    ::selection { background: #22335C; color: #F1EAE0; }
+  </style>
+</helmet>
+<div style="min-height:100vh">
+  <sc-if value="{{ heroFx }}" hint-placeholder-val="{{ false }}">
+    <canvas ref="{{ trailCanvasRef }}" aria-hidden="true" style="position:fixed; inset:0; width:100vw; height:100vh; pointer-events:none; z-index:15"></canvas>
+  </sc-if>
+
+  <nav data-dot-trail-suppress="" style="position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:30; display:flex; align-items:center; gap:clamp(12px,2.6vw,40px); max-width:94vw; height:clamp(56px,7.2vw,66px); padding:0 clamp(7px,1.2vw,10px) 0 clamp(17px,3vw,26px); border-radius:999px; background:#15130F; box-shadow:0 6px 30px rgba(21,19,15,0.28); font-size:16.5px">
+    <a href="/" style="display:inline-flex; align-items:center; align-self:stretch; white-space:nowrap">
+      <img src="/ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(20px,2.8vw,26px); width:auto; user-select:none; -webkit-user-drag:none">
+    </a>
+    <span ref="{{ navLabelRef }}" aria-live="polite" style="flex:1; min-width:clamp(180px,21vw,300px); text-align:center; font-weight:600; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:#F1EAE0; opacity:0.72; white-space:nowrap; will-change:transform, clip-path">It’s time</span>
+    <div style="display:flex; align-items:center; gap:clamp(6px,0.8vw,8px)">
+      <a href="/workshops" aria-current="page" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#F1EAE0; background:rgba(241,234,224,0.14); padding:0 clamp(14px,2.6vw,24px); border-radius:999px; font-weight:600; font-size:clamp(14px,1.9vw,16.5px); white-space:nowrap" style-hover="color:#F1EAE0">Workshops</a>
+      <a href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#15130F; background:#F1EAE0; padding:0 clamp(18px,2.8vw,26px); border-radius:999px; font-weight:600; font-size:clamp(15px,1.9vw,16.5px); white-space:nowrap; transition:background 0.15s ease" style-hover="background:#FFFFFF; color:#15130F">Let’s talk</a>
+    </div>
+    <sc-if value="{{ showLangChip }}" hint-placeholder-val="{{ true }}">
+      <a href="/he/workshops" hreflang="he" lang="he" aria-label="גרסה בעברית" data-dot-trail-suppress="" style="position:absolute; left:calc(100% + 10px); top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:50%; background:#15130F; color:#F1EAE0; font-weight:600; font-size:13px; box-shadow:0 4px 18px rgba(21,19,15,0.22); transition:color 0.15s ease" style-hover="color:#FFFFFF">עב</a>
+    </sc-if>
+  </nav>
+
+  <section id="w-hero" data-screen-label="Workshops hero" style="position:relative; width:100%">
+    <div data-dot-trail-suppress="" style="position:relative; z-index:2; box-sizing:border-box; padding:clamp(120px,17vh,180px) clamp(22px,3.5vw,64px) 0; display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(16px,2.4vh,30px)">
+      <h1 data-reveal-words="" style="max-width:16em; margin:0; font-weight:600; font-size:clamp(42px,5.4vw,108px); line-height:0.94; letter-spacing:-0.045em; color:#2E2B27; text-wrap:balance">Learn how to use <span style="color:#6B2B3A">AI</span> in a way that fits your work</h1>
+      <p data-reveal-words="" style="margin:0; font-weight:500; font-size:clamp(20px,1.8vw,32px); line-height:1.25; letter-spacing:-0.02em; color:#2E2B27; text-wrap:balance">Hands-on workshops, built around your team’s real needs</p>
+    </div>
+    <div ref="{{ heroFrameRef }}" style="position:relative; z-index:1; width:100%; aspect-ratio:1360/768; min-height:420px; margin-top:clamp(-60px,-3vw,-8px); overflow:hidden; -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 14%, #000 30%, #000 84%, transparent 100%), linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%); -webkit-mask-composite:source-in; mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 14%, #000 30%, #000 84%, transparent 100%), linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%); mask-composite:intersect">
+      <div ref="{{ heroInnerRef }}" style="position:absolute; left:0; top:-6%; width:100%; height:112%; will-change:transform">
+        <img src="/workshop-red-pill.png" alt="A textile character presenting a whiteboard that reads “It’s time to take the red pill” to a team around a table" draggable="false" fetchpriority="high" style="display:block; width:100%; height:100%; object-fit:cover; object-position:56% center; filter:sepia(0.12) saturate(0.96); user-select:none; -webkit-user-drag:none">
+      </div>
+    </div>
+  </section>
+
+  <section id="w-who" data-screen-label="Who it's for" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(24px,4vh,64px) clamp(22px,3.5vw,64px) clamp(40px,6vh,80px)">
+    <div data-dot-trail-suppress="" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,330px), 1fr)); gap:clamp(14px,1.6vw,28px)">
+      <div data-reveal-up="" style="background:#15130F; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,3.2vw,52px); min-height:clamp(260px,21vw,380px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:40px">
+        <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(34px,3.1vw,60px); line-height:0.95; color:#F2EBDD"><span style="display:block; color:#8A8578">For</span>managers</h3>
+        <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F2EBDD" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(21px,1.85vw,34px); line-height:1.3; color:#F2EBDD; opacity:0.92; text-wrap:pretty">AI changes what a team looks like. Work out how to adapt yours.</p></div>
+      </div>
+      <div data-reveal-up="" style="background:#241E17; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,3.2vw,52px); min-height:clamp(260px,21vw,380px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:40px">
+        <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(34px,3.1vw,60px); line-height:0.95; color:#F2EBDD"><span style="display:block; color:#8A8578">For</span>creative &amp; marketing teams</h3>
+        <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F2EBDD" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(21px,1.85vw,34px); line-height:1.3; color:#F2EBDD; opacity:0.92; text-wrap:pretty">See what creative freedom looks like with AI.</p></div>
+      </div>
+      <div data-reveal-up="" style="background:#0C1424; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,3.2vw,52px); min-height:clamp(260px,21vw,380px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:40px">
+        <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(34px,3.1vw,60px); line-height:0.95; color:#F2EBDD"><span style="display:block; color:#8A8578">For</span>founders &amp; small businesses</h3>
+        <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F2EBDD" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(21px,1.85vw,34px); line-height:1.3; color:#F2EBDD; opacity:0.92; text-wrap:pretty">Put AI in the foundations while the company is small.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="w-how" data-screen-label="How it works" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(72px,12vh,160px) clamp(22px,7vw,140px) clamp(40px,6vh,80px)">
+    <h2 data-reveal-words="" style="margin:0; font-weight:500; letter-spacing:-0.04em; font-size:clamp(38px,4.5vw,90px); line-height:0.98; color:#2E2B27">How it works</h2>
+    <div data-dot-trail-suppress="" style="margin-top:clamp(40px,7vh,96px); display:flex; flex-direction:column">
+      <div data-reveal-up="" style="display:flex; flex-wrap:wrap; align-items:baseline; gap:clamp(12px,4vw,72px); padding:clamp(28px,4.5vh,52px) 0; border-top:1.5px solid rgba(46,43,39,0.16)">
+        <h3 style="flex:0 1 clamp(260px,32vw,600px); margin:0; font-weight:600; font-size:clamp(30px,3.2vw,56px); line-height:1.02; letter-spacing:-0.03em; color:#2E2B27">A short call.</h3>
+        <p style="flex:1 1 340px; max-width:36ch; margin:0; font-weight:400; font-size:clamp(20px,1.8vw,30px); line-height:1.5; color:#2E2B27; text-wrap:pretty">You tell me what’s hard right now and where you want to get. I build the workshop around that.</p>
+      </div>
+      <div data-reveal-up="" style="display:flex; flex-wrap:wrap; align-items:baseline; gap:clamp(12px,4vw,72px); padding:clamp(28px,4.5vh,52px) 0; border-top:1.5px solid rgba(46,43,39,0.16)">
+        <h3 style="flex:0 1 clamp(260px,32vw,600px); margin:0; font-weight:600; font-size:clamp(30px,3.2vw,56px); line-height:1.02; letter-spacing:-0.03em; color:#2E2B27">The workshop.</h3>
+        <p style="flex:1 1 340px; max-width:36ch; margin:0; font-weight:400; font-size:clamp(20px,1.8vw,30px); line-height:1.5; color:#2E2B27; text-wrap:pretty">Hands-on, with the people who do the work. They learn the tools and leave confident enough to keep getting better on their own.</p>
+      </div>
+      <div data-reveal-up="" style="display:flex; flex-wrap:wrap; align-items:baseline; gap:clamp(12px,4vw,72px); padding:clamp(28px,4.5vh,52px) 0; border-top:1.5px solid rgba(46,43,39,0.16); border-bottom:1.5px solid rgba(46,43,39,0.16)">
+        <h3 style="flex:0 1 clamp(260px,32vw,600px); margin:0; font-weight:600; font-size:clamp(30px,3.2vw,56px); line-height:1.02; letter-spacing:-0.03em; color:#2E2B27">Then it’s yours.</h3>
+        <p style="flex:1 1 340px; max-width:36ch; margin:0; font-weight:400; font-size:clamp(20px,1.8vw,30px); line-height:1.5; color:#2E2B27; text-wrap:pretty">Keep going on your own, or we keep working together: on the full system, or on one use case.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="w-talk" data-screen-label="Talk to me" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(72px,12vh,160px) 7vw clamp(96px,13vh,180px); display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:clamp(40px,5vw,88px)">
+    <div data-dot-trail-suppress="" style="flex:1 1 560px; display:flex; flex-direction:column; gap:clamp(14px,2vh,24px)">
+      <h2 data-reveal-words="" style="margin:0; max-width:20ch; font-weight:600; font-size:clamp(36px,4.2vw,80px); line-height:0.98; letter-spacing:-0.045em; color:#2E2B27; text-wrap:balance">Let’s figure out what fits your team and your work,</h2>
+      <p data-reveal-words="" style="margin:0; font-weight:500; font-size:clamp(22px,2.2vw,38px); line-height:1.2; letter-spacing:-0.025em; color:#2E2B27">then build the workshop around it.</p>
+    </div>
+    <div style="display:flex; flex:0 0 auto; margin-left:auto">
+      <a data-reveal-words="" href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-self:start; background:#22335C; color:#F1EAE0; border-radius:999px; padding:clamp(18px,2vw,34px) clamp(32px,4vw,72px); font-weight:600; font-size:clamp(30px,4.6vw,88px); line-height:1.05; letter-spacing:-0.04em; white-space:nowrap; text-decoration:none; transform-origin:left center; box-shadow:0 4px 28px rgba(34,51,92,0.22); transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#1A2848; color:#F1EAE0; transform:scale(1.025)">Talk to me.</a>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.navCopy = [['w-hero', 'It’s time'], ['w-who', 'It’s probably for you'], ['w-how', 'That’s how it works'], ['w-talk', 'Let’s figure it out']];
+    this.onNavScroll = () => {
+      if (!this.navLabel) return;
+      this.navLabel.style.display = window.innerWidth < 760 ? 'none' : '';
+      const nav = this.navLabel.closest('nav');
+      const probe = nav ? nav.getBoundingClientRect().bottom + 8 : 92;
+      let active = this.navCopy[0];
+      this.navCopy.forEach((e) => { const el = document.getElementById(e[0]); if (el && el.getBoundingClientRect().top <= probe) active = e; });
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) active = this.navCopy[this.navCopy.length - 1];
+      if (active[0] === this.navActive) return;
+      const first = this.navActive === undefined;
+      this.navActive = active[0];
+      if (first && this.navLabel.textContent.trim() === active[1]) return;
+      this.swapNavLabel(active[1]);
+    };
+    this.onParallax = () => {
+      const f = this.heroFrame, inner = this.heroInner;
+      if (!f || !inner || this.reduced) return;
+      const H = window.innerHeight, r = f.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > H + 200) return;
+      const p = Math.max(0, Math.min(1, (H - r.top) / (H + r.height)));
+      inner.style.transform = 'translate3d(0,' + ((0.5 - p) * r.height * 0.1).toFixed(2) + 'px,0)';
+    };
+    window.addEventListener('scroll', this.onNavScroll, { passive: true });
+    window.addEventListener('resize', this.onNavScroll);
+    window.addEventListener('scroll', this.onParallax, { passive: true });
+    window.addEventListener('resize', this.onParallax);
+    setTimeout(() => { this.onNavScroll(); this.onParallax(); this.setupWordReveals(); this.setupRevealUp(); }, 60);
+    if (this.fx) this.setupTrail();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onNavScroll); window.removeEventListener('resize', this.onNavScroll);
+    window.removeEventListener('scroll', this.onParallax); window.removeEventListener('resize', this.onParallax);
+    if (this.revealIO) this.revealIO.disconnect();
+    if (this.upIO) this.upIO.disconnect();
+    clearTimeout(this.navSwapT);
+    cancelAnimationFrame(this.raf);
+    if (this.onTrailMove) window.removeEventListener('pointermove', this.onTrailMove);
+    if (this.onTrailLeave) window.removeEventListener('pointerleave', this.onTrailLeave);
+    if (this.onTrailResize) window.removeEventListener('resize', this.onTrailResize);
+    if (this.trail) this.trail.destroy();
+  }
+  get fx() {
+    if (this._fx === undefined) {
+      this._fx = !(window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }
+    return this._fx;
+  }
+  async setupTrail() {
+    const { DotImageLens } = await import('/dot-image-lens.js');
+    if (!this.trailCanvas) return;
+    const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
+    this.trail = new DotImageLens(this.trailCanvas, null, { showIdleLens: false, gridDensity: 140, splatRadiusPx: 40, lensRadiusPx: 40 });
+    this.onTrailResize = () => this.trail.resize(window.innerWidth, window.innerHeight, DPR());
+    this.onTrailResize();
+    this.onTrailMove = (e) => {
+      this.trail.setCursor(e.clientX, e.clientY, true);
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      this.trail.setSuppressed(!!(el && el.closest('[data-dot-trail-suppress]')));
+    };
+    this.onTrailLeave = () => this.trail.setCursor(0, 0, false);
+    window.addEventListener('pointermove', this.onTrailMove);
+    window.addEventListener('pointerleave', this.onTrailLeave);
+    window.addEventListener('resize', this.onTrailResize);
+    let last = performance.now();
+    const tick = () => {
+      const now = performance.now();
+      this.trail.tick(Math.min((now - last) / 1000, 1 / 15));
+      last = now;
+      this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+  }
+  swapNavLabel(text) {
+    const el = this.navLabel;
+    if (!el) return;
+    const BELOW = 'inset(-10% -10% 120% -10%)', ABOVE = 'inset(120% -10% -10% -10%)', SHOWN = 'inset(-10%)';
+    const EASE = 'cubic-bezier(0.16,1,0.3,1)';
+    clearTimeout(this.navSwapT);
+    if (this.reduced) { el.textContent = text; return; }
+    el.style.transition = 'transform 420ms ' + EASE + ', clip-path 420ms ' + EASE;
+    el.style.clipPath = ABOVE; el.style.transform = 'translateY(-100%)';
+    this.navSwapT = setTimeout(() => {
+      if (!this.navLabel) return;
+      el.style.transition = 'none';
+      el.textContent = text;
+      el.style.clipPath = BELOW; el.style.transform = 'translateY(100%)';
+      void el.offsetWidth;
+      el.style.transition = 'transform 460ms ' + EASE + ', clip-path 460ms ' + EASE;
+      el.style.clipPath = SHOWN; el.style.transform = 'translateY(0)';
+    }, 360);
+  }
+  setupWordReveals() {
+    const HIDDEN = 'inset(-10% -10% 120% -10%)', SHOWN = 'inset(-10%)';
+    this.revealIO = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        const g = e.target.__wrGroup;
+        if (!g || g.played || !e.isIntersecting) return;
+        g.played = true; g.play(); this.revealIO.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
+    document.querySelectorAll('[data-reveal-words]').forEach((root) => {
+      if (root.__wrGroup) return;
+      const words = [];
+      const split = (node) => {
+        Array.from(node.childNodes).forEach((child) => {
+          if (child.nodeType === 3) {
+            const parts = child.textContent.split(/(\s+)/);
+            if (!parts.some((p) => p.trim())) return;
+            const frag = document.createDocumentFragment();
+            parts.forEach((part) => {
+              if (!part) return;
+              if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
+              const w = document.createElement('span'); w.textContent = part; words.push(w); frag.appendChild(w);
+            });
+            node.replaceChild(frag, child);
+          } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+            if (!child.querySelector('*') && child.textContent.trim() && !child.textContent.trim().includes(' ')) words.push(child);
+            else split(child);
+          }
+        });
+      };
+      split(root);
+      if (!words.length) return;
+      if (/flex|grid/.test(getComputedStyle(root).display)) {
+        words.forEach((w, i) => {
+          const next = w.nextSibling;
+          if (i < words.length - 1 && next && next.nodeType === 3 && !next.textContent.trim()) {
+            w.appendChild(document.createTextNode('\u00A0'));
+            next.remove();
+          }
+        });
+      }
+      words.forEach((w) => {
+        w.style.display = 'inline-block';
+        if (this.reduced) return;
+        w.style.willChange = 'transform, clip-path';
+        w.style.clipPath = HIDDEN; w.style.transform = 'translateY(100%)';
+      });
+      if (this.reduced) return;
+      const step = Math.max(16, Math.min(50, Math.round(620 / words.length)));
+      root.__wrGroup = {
+        played: false,
+        play: () => words.forEach((w, i) => {
+          const d = i * step;
+          w.style.transition = 'transform 660ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms, clip-path 660ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms';
+          w.style.clipPath = SHOWN; w.style.transform = 'translateY(0)';
+        })
+      };
+      const r = root.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.88 && r.bottom > 0) { root.__wrGroup.played = true; root.__wrGroup.play(); }
+      else this.revealIO.observe(root);
+    });
+  }
+  setupRevealUp() {
+    if (this.reduced) return;
+    const els = Array.from(document.querySelectorAll('[data-reveal-up]'));
+    els.forEach((el) => { el.style.opacity = '0'; el.style.transform = 'translateY(28px)'; });
+    this.upIO = new IntersectionObserver((entries) => {
+      const shown = entries.filter((e) => e.isIntersecting);
+      shown.forEach((e, i) => {
+        const el = e.target, d = i * 110;
+        el.style.transition = 'opacity 700ms cubic-bezier(0.22,0.61,0.36,1) ' + d + 'ms, transform 900ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms';
+        el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+        this.upIO.unobserve(el);
+        setTimeout(() => { el.style.transition = ''; el.style.transform = ''; }, 1000 + d);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+    els.forEach((el) => this.upIO.observe(el));
+  }
+  renderVals() {
+    return {
+      heroFx: this.fx,
+      showLangChip: window.innerWidth >= 860,
+      trailCanvasRef: (el) => { this.trailCanvas = el; },
+      navLabelRef: (el) => { this.navLabel = el; },
+      heroFrameRef: (el) => { this.heroFrame = el; },
+      heroInnerRef: (el) => { this.heroInner = el; },
+    };
+  }
+}
+</script>
+</body>
+</html>
