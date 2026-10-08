@@ -157,7 +157,7 @@ class Component extends DCLogic {
       if (!this.navLabel) return;
       this.navLabel.style.display = window.innerWidth < 760 ? 'none' : '';
       const nav = this.navLabel.closest('nav');
-      const probe = nav ? nav.getBoundingClientRect().bottom + 8 : 92;
+      const probe = window.innerHeight * 0.45;
       let active = this.navCopy[0];
       this.navCopy.forEach((e) => { const el = document.getElementById(e[0]); if (el && el.getBoundingClientRect().top <= probe) active = e; });
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) active = this.navCopy[this.navCopy.length - 1];
@@ -210,7 +210,7 @@ class Component extends DCLogic {
         st.pos = st.anim.from + (st.anim.to - st.anim.from) * ease(t);
         if (t >= 1) st.anim = null;
       } else if (!this.reduced && !st.drag && !st.hover && now > st.pauseUntil) {
-        st.pos += dt * 0.024;
+        st.pos -= dt * 0.024;
       }
       place();
       st.raf = requestAnimationFrame(tick);
