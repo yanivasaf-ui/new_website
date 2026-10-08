@@ -77,20 +77,46 @@
     </div>
   </section>
 
-  <section id="w-who" data-screen-label="Who it's for" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(24px,4vh,64px) clamp(22px,3.5vw,64px) clamp(40px,6vh,80px)">
-    <div data-dot-trail-suppress="" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,330px), 1fr)); gap:clamp(14px,1.6vw,28px)">
-      <div data-reveal-up="" style="background:#15130F; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,3.2vw,52px); min-height:clamp(260px,21vw,380px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:40px">
-        <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(34px,3.1vw,60px); line-height:0.95; color:#F2EBDD">למנהלים</h3>
-        <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F2EBDD" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(21px,1.85vw,34px); line-height:1.3; color:#F2EBDD; opacity:0.92; text-wrap:pretty"><span style="font-family:Switzer, Assistant, sans-serif">AI</span> משנה איך צוות נראה. בואו נבין איך להתאים את שלכם.</p></div>
+  <section id="w-who" data-screen-label="Who it's for" aria-roledescription="carousel" aria-label="למי הסדנאות מתאימות" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(24px,4vh,64px) 0 clamp(40px,6vh,80px); display:flex; flex-direction:column; gap:clamp(18px,2.4vw,32px)">
+    <div data-dot-trail-suppress="" data-reveal-up="" ref="{{ carouselRef }}" style="width:100%; overflow:hidden; touch-action:pan-y; cursor:grab; user-select:none">
+      <div ref="{{ trackRef }}" style="display:flex; align-items:stretch; gap:clamp(14px,1.6vw,28px); padding:0 clamp(22px,3.5vw,64px)">
+        <div role="group" aria-roledescription="slide" aria-label="1 מתוך 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#7B4A72; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(32px,2.8vw,54px); line-height:1; color:#F6EFE6; text-wrap:balance">למנהלים</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F6EFE6" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.35; color:#F6EFE6; text-wrap:pretty"><span lang="en" style="font-family:Switzer, Assistant, sans-serif">AI</span> משנה איך צוות נראה. בואו נבין איך להתאים את שלכם.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="2 מתוך 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#D9A13B; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(32px,2.8vw,54px); line-height:1; color:#1F1A14; text-wrap:balance">לצוותי קריאייטיב ושיווק</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#1F1A14" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.35; color:#1F1A14; text-wrap:pretty">תראו איך נראה חופש יצירתי עם <span lang="en" style="font-family:Switzer, Assistant, sans-serif">AI</span>.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="3 מתוך 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#5B84A8; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(32px,2.8vw,54px); line-height:1; color:#10161F; text-wrap:balance">למייסדים ולעסקים קטנים</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#10161F" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.35; color:#10161F; text-wrap:pretty">להכניס <span lang="en" style="font-family:Switzer, Assistant, sans-serif">AI</span> ליסודות של החברה, כל עוד היא קטנה.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="4 מתוך 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#7B4A72; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(32px,2.8vw,54px); line-height:1; color:#F6EFE6; text-wrap:balance">לצוותי גיוס</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F6EFE6" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.35; color:#F6EFE6; text-wrap:pretty"><span lang="en" style="font-family:Switzer, Assistant, sans-serif">AI</span> מנהל את הפייפליין. אתם מתמקדים במועמדים.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="5 מתוך 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#D9A13B; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(32px,2.8vw,54px); line-height:1; color:#1F1A14; text-wrap:balance">לצוותי כספים</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#1F1A14" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.35; color:#1F1A14; text-wrap:pretty"><span lang="en" style="font-family:Switzer, Assistant, sans-serif">AI</span> הכי טוב במספרים: הוא מריץ דוחות, תחזיות ותרחישים.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="6 מתוך 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#5B84A8; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(32px,2.8vw,54px); line-height:1; color:#10161F; text-wrap:balance">לתפעול</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#10161F" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.35; color:#10161F; text-wrap:pretty">לחשוב מחדש איך תהליכי העבודה בנויים עם <span lang="en" style="font-family:Switzer, Assistant, sans-serif">AI</span>.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="7 מתוך 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#7B4A72; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(32px,2.8vw,54px); line-height:1; color:#F6EFE6; text-wrap:balance">למכירות ו-<span lang="en" style="font-family:Switzer, Assistant, sans-serif">GTM</span></h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F6EFE6" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.35; color:#F6EFE6; text-wrap:pretty">להשתמש ב-<span lang="en" style="font-family:Switzer, Assistant, sans-serif">AI</span> כדי לחקור, להעשיר ולהתכונן, וליצור לכל לקוח חוויה אישית.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="8 מתוך 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#D9A13B; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(32px,2.8vw,54px); line-height:1; color:#1F1A14; text-wrap:balance">לסוכנויות</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#1F1A14" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.35; color:#1F1A14; text-wrap:pretty">לבנות מערכת שעובדת עם הרבה מותגים, ושומרת על האיכות של כל אחד.</p></div>
+        </div>
       </div>
-      <div data-reveal-up="" style="background:#241E17; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,3.2vw,52px); min-height:clamp(260px,21vw,380px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:40px">
-        <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(34px,3.1vw,60px); line-height:0.95; color:#F2EBDD">לצוותי קריאייטיב ושיווק</h3>
-        <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F2EBDD" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(21px,1.85vw,34px); line-height:1.3; color:#F2EBDD; opacity:0.92; text-wrap:pretty">תראו איך נראה חופש יצירתי עם <span style="font-family:Switzer, Assistant, sans-serif">AI</span>.</p></div>
-      </div>
-      <div data-reveal-up="" style="background:#0C1424; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,3.2vw,52px); min-height:clamp(260px,21vw,380px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:40px">
-        <h3 style="margin:0; font-weight:600; letter-spacing:-0.015em; font-size:clamp(34px,3.1vw,60px); line-height:0.95; color:#F2EBDD">למייסדים ולעסקים קטנים</h3>
-        <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F2EBDD" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(21px,1.85vw,34px); line-height:1.3; color:#F2EBDD; opacity:0.92; text-wrap:pretty">להכניס <span style="font-family:Switzer, Assistant, sans-serif">AI</span> ליסודות של החברה, כל עוד היא קטנה.</p></div>
-      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:10px; padding:0 clamp(22px,3.5vw,64px)">
+      <button type="button" aria-label="הקודם" onClick="{{ carouselPrev }}" style="display:inline-flex; align-items:center; justify-content:center; width:56px; height:56px; border:0; border-radius:50%; background:#15130F; color:#F1EAE0; cursor:pointer; padding:0; transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#2E2B27; transform:scale(1.05)"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <button type="button" aria-label="הבא" onClick="{{ carouselNext }}" style="display:inline-flex; align-items:center; justify-content:center; width:56px; height:56px; border:0; border-radius:50%; background:#15130F; color:#F1EAE0; cursor:pointer; padding:0; transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#2E2B27; transform:scale(1.05)"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
     </div>
   </section>
 
@@ -157,8 +183,62 @@ class Component extends DCLogic {
     window.addEventListener('resize', this.onParallax);
     setTimeout(() => { this.onNavScroll(); this.onParallax(); this.setupWordReveals(); this.setupRevealUp(); }, 60);
     if (this.fx) this.setupTrail();
+    this.setupCarousel();
+  }
+  setupCarousel() {
+    const vp = this.carouselVp, track = this.carouselTrack;
+    if (!vp || !track) return;
+    const cards = [...track.children];
+    const st = { pos: 0, anim: null, pauseUntil: 0, hover: false, drag: null, last: performance.now() };
+    this.car = st;
+    const measure = () => {
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      st.step = cards[0].offsetWidth + gap;
+      st.total = st.step * cards.length;
+    };
+    const place = () => {
+      cards.forEach((c, i) => {
+        const base = i * st.step;
+        let x = ((base - st.pos) % st.total + st.total) % st.total;
+        if (x > st.total - st.step) x -= st.total;
+        c.style.transform = 'translate3d(' + (-(x - base)).toFixed(2) + 'px,0,0)';
+      });
+    };
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    const tick = (now) => {
+      const dt = Math.min(64, now - st.last); st.last = now;
+      if (st.anim) {
+        const t = Math.min(1, (now - st.anim.t0) / st.anim.dur);
+        st.pos = st.anim.from + (st.anim.to - st.anim.from) * ease(t);
+        if (t >= 1) st.anim = null;
+      } else if (!this.reduced && !st.drag && !st.hover && now > st.pauseUntil) {
+        st.pos += dt * 0.024;
+      }
+      place();
+      st.raf = requestAnimationFrame(tick);
+    };
+    st.go = (dir) => {
+      const from = st.pos;
+      const to = (Math.round(from / st.step) + dir) * st.step;
+      st.anim = { from, to, t0: performance.now(), dur: this.reduced ? 1 : 750 };
+      st.pauseUntil = performance.now() + 4500;
+    };
+    const down = (e) => { if (e.button > 0) return; st.anim = null; st.drag = { x: e.clientX, pos: st.pos, id: e.pointerId, moved: false }; vp.style.cursor = 'grabbing'; };
+    const move = (e) => { if (!st.drag || e.pointerId !== st.drag.id) return; const dx = e.clientX - st.drag.x; if (Math.abs(dx) > 4 && !st.drag.moved) { st.drag.moved = true; try { vp.setPointerCapture(e.pointerId); } catch (_) {} } st.pos = st.drag.pos + dx; };
+    const up = (e) => { if (!st.drag || e.pointerId !== st.drag.id) return; st.drag = null; vp.style.cursor = 'grab'; st.pauseUntil = performance.now() + 3000; };
+    const enter = (e) => { if (e.pointerType === 'mouse') st.hover = true; };
+    const leave = () => { st.hover = false; };
+    vp.addEventListener('pointerdown', down); vp.addEventListener('pointermove', move);
+    vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
+    vp.addEventListener('pointerenter', enter); vp.addEventListener('pointerleave', leave);
+    const onResize = () => { const k = st.step ? st.pos / st.step : 0; measure(); st.pos = k * st.step; };
+    window.addEventListener('resize', onResize);
+    measure(); place();
+    st.raf = requestAnimationFrame(tick);
+    st.cleanup = () => { cancelAnimationFrame(st.raf); window.removeEventListener('resize', onResize); };
   }
   componentWillUnmount() {
+    if (this.car && this.car.cleanup) this.car.cleanup();
     window.removeEventListener('scroll', this.onNavScroll); window.removeEventListener('resize', this.onNavScroll);
     window.removeEventListener('scroll', this.onParallax); window.removeEventListener('resize', this.onParallax);
     if (this.revealIO) this.revealIO.disconnect();
@@ -305,6 +385,10 @@ class Component extends DCLogic {
       showLangInline: window.innerWidth < 860,
       trailCanvasRef: (el) => { this.trailCanvas = el; },
       navLabelRef: (el) => { this.navLabel = el; },
+      carouselRef: (el) => { this.carouselVp = el; },
+      trackRef: (el) => { this.carouselTrack = el; },
+      carouselPrev: () => { if (this.car) this.car.go(-1); },
+      carouselNext: () => { if (this.car) this.car.go(1); },
       heroFrameRef: (el) => { this.heroFrame = el; },
       heroInnerRef: (el) => { this.heroInner = el; },
     };
