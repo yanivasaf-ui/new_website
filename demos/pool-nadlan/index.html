@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="format-detection" content="telephone=no, email=no">
+<title>הפול נדל״ן - קונספט להמחשה</title>
+<style>
+.pn{
+  --navy:#0b2239; --navy-2:#102f4a; --navy-3:#163b5a; --deep:#06141f;
+  --teal:#5fb99a; --teal-l:#8fd6bb;
+  --ink:#eaf2f1; --mute:#adc1c8; --line:rgba(234,242,241,.14);
+  --maxw:1180px;
+  background:var(--navy); color:var(--ink);
+  font-family:"Heebo","Assistant","Arial Hebrew",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  font-size:17px; line-height:1.7; min-height:100vh; overflow-x:clip;
+}
+.pn *,.pn *::before,.pn *::after{box-sizing:border-box}
+.pn h1,.pn h2,.pn h3,.pn p,.pn ul,.pn ol,.pn dl,.pn dd{margin:0}
+.pn a{color:inherit}
+.pn :focus-visible{outline:3px solid var(--teal-l); outline-offset:3px; border-radius:6px}
+.pn .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+.pn bdi{direction:ltr; unicode-bidi:isolate}
+.pn .kicker{color:var(--teal); font-size:14px; font-weight:700; letter-spacing:.06em; margin-bottom:12px; display:flex; align-items:center; gap:10px}
+.pn .kicker::before{content:""; width:28px; height:2px; background:var(--teal)}
+.pn h2{font-size:clamp(30px,6vw,52px); line-height:1.15; font-weight:800; letter-spacing:-.01em}
+.pn .sub{color:var(--mute); max-width:36em; margin-top:14px}
+
+/* banner */
+.pn .banner{background:var(--deep); border-bottom:1px solid var(--line); text-align:center; padding:10px 16px; font-size:14px; line-height:1.5; color:var(--teal); font-weight:600}
+
+/* hero */
+.pn .hero{position:relative; padding:44px 0 0; overflow:hidden; background:
+  radial-gradient(900px 500px at 15% 0%, rgba(95,185,154,.16), transparent 60%), var(--navy)}
+.pn .hero-top{display:flex; align-items:center; justify-content:flex-start; gap:12px; margin-bottom:36px}
+.pn .plaque{display:inline-flex; align-items:stretch; border:2px solid var(--ink); border-radius:8px; background:#0e3a8a; color:#fff; overflow:hidden; font-weight:700; line-height:1.1; box-shadow:0 0 0 4px #0e3a8a}
+.pn .plaque b{background:#fff; color:#0e3a8a; font-size:26px; font-weight:900; padding:6px 12px; display:grid; place-items:center}
+.pn .plaque span{padding:6px 12px; font-size:13px; display:grid; align-content:center}
+.pn .wordmark{font-size:clamp(76px,23vw,250px); line-height:.92; font-weight:900; letter-spacing:-.035em}
+.pn .wordmark span{color:var(--teal)}
+.pn .slogan{display:inline-block; margin-top:22px; font-size:clamp(22px,5vw,38px); font-weight:600; position:relative}
+.pn .slogan::after{content:""; position:absolute; inset-inline:0; bottom:-6px; height:6px; background:var(--teal); border-radius:3px}
+.pn .lead{color:var(--mute); max-width:32em; margin-top:26px; font-size:18px}
+.pn .pool{display:block; width:100%; height:auto; margin-top:34px; max-height:340px}
+.pn .pool.m{max-width:420px}
+.pn .pool text{font-family:inherit; font-size:13px; fill:var(--mute)}
+.pn .pool .ln{stroke:var(--teal); stroke-width:1.6; fill:none; opacity:.8}
+.pn .pool .pt{fill:var(--ink)}
+.pn .pool .by{fill:var(--teal)}
+
+/* marquee */
+.pn .ribbon{background:var(--teal); color:var(--navy); overflow:hidden; white-space:nowrap; border-block:2px solid var(--navy)}
+.pn .ribbon div{display:inline-flex; gap:34px; padding:12px 0; font-weight:900; font-size:clamp(20px,4vw,30px); letter-spacing:.02em; min-width:100%; justify-content:center}
+.pn .ribbon i{font-style:normal; opacity:.5}
+
+/* sections */
+.pn section{padding:72px 0}
+.pn .about{display:grid; gap:36px}
+.pn .quote{font-size:clamp(26px,4.4vw,44px); font-weight:800; line-height:1.2}
+.pn .quote em{font-style:normal; color:var(--teal)}
+.pn .person{display:grid; gap:6px; border-inline-start:4px solid var(--teal); padding-inline-start:20px}
+.pn .person h3{font-size:30px; font-weight:800}
+.pn .person p{color:var(--mute); font-size:16px}
+.pn .person .role{color:var(--teal); font-weight:700; font-size:14px; letter-spacing:.06em}
+
+/* process */
+.pn .process{background:var(--deep)}
+.pn .steps{list-style:none; padding:0; margin:36px 0 0; display:grid; gap:0; counter-reset:s; position:relative}
+.pn .steps li{counter-increment:s; position:relative; padding:22px 0 22px; padding-inline-start:108px; border-top:1px solid var(--line); min-height:110px}
+.pn .steps li:last-child{border-bottom:1px solid var(--line)}
+.pn .steps li::before{content:counter(s,decimal-leading-zero); position:absolute; inset-inline-start:0; top:10px; font-size:68px; font-weight:900; line-height:1; color:transparent; -webkit-text-stroke:2px var(--teal)}
+.pn .steps h3{font-size:22px; font-weight:800}
+.pn .steps p{color:var(--mute); font-size:16px; margin-top:2px}
+
+/* services */
+.pn .bento{display:grid; gap:14px; margin-top:36px}
+.pn .tile{border-radius:22px; padding:28px; background:var(--navy-2); border:1px solid var(--line); display:grid; gap:10px; align-content:start; min-height:210px}
+.pn .tile svg{width:52px; height:52px; stroke:var(--teal); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.pn .tile h3{font-size:24px; font-weight:800}
+.pn .tile p{color:var(--mute); font-size:16px}
+.pn .tile.hot{background:var(--teal); color:var(--navy); border-color:var(--teal)}
+.pn .tile.hot svg{stroke:var(--navy)}
+.pn .tile.hot p{color:#0b2239}
+
+/* madlan */
+.pn .madlan{display:grid; gap:32px; align-items:center}
+.pn .screen{background:var(--navy-3); border:1px solid var(--line); border-radius:18px; padding:14px; box-shadow:0 30px 60px rgba(0,0,0,.35); transform:rotate(-1.5deg)}
+.pn .screen .bar{display:flex; gap:6px; padding:4px 4px 12px}
+.pn .screen .bar i{width:10px; height:10px; border-radius:50%; background:var(--line)}
+.pn .screen .rows{display:grid; gap:10px}
+.pn .screen .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--navy-2); border-radius:12px; padding:10px}
+.pn .screen .th{height:52px; border-radius:8px; background:linear-gradient(135deg,var(--navy),rgba(95,185,154,.35))}
+.pn .screen .l{height:10px; border-radius:5px; background:var(--line); margin:6px 0}
+.pn .screen .l.s{width:55%}
+.pn .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:0 28px; border-radius:999px; font-weight:800; font-size:17px; text-decoration:none; background:var(--teal); color:var(--navy); border:2px solid var(--teal); margin-top:24px}
+.pn .btn:hover{background:var(--teal-l); border-color:var(--teal-l)}
+.pn .btn[aria-disabled="true"]{background:transparent; color:var(--mute); border:2px dashed var(--mute); cursor:not-allowed; margin-top:0}
+
+/* contact */
+.pn .contact-sec{background:var(--deep)}
+.pn .big-addr{font-size:clamp(44px,13vw,150px); font-weight:900; line-height:.95; letter-spacing:-.03em; margin-top:8px}
+.pn .big-addr span{color:var(--teal)}
+.pn dl.facts{display:grid; gap:0; margin-top:36px}
+.pn .facts div{display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:18px 0; border-top:1px solid var(--line); flex-wrap:wrap}
+.pn .facts div:last-child{border-bottom:1px solid var(--line)}
+.pn .facts dt{color:var(--teal); font-weight:700; font-size:14px; letter-spacing:.06em}
+.pn .facts dd{font-size:clamp(20px,3.4vw,28px); font-weight:700}
+.pn .actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:28px}
+.pn .note{color:var(--mute); font-size:14px; margin-top:14px}
+
+.pn footer{border-top:1px solid var(--line); padding:28px 0 40px; color:var(--mute); font-size:14px; line-height:1.6; background:var(--deep)}
+.pn footer .by{margin-top:6px; opacity:.85}
+
+@media (min-width:860px){
+  .pn .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; padding-bottom:72px}
+  .pn .hero .pool.m{margin-top:0; max-width:520px; margin-inline:auto}
+  .pn .wordmark{font-size:clamp(120px,13vw,200px)}
+  .pn .hero{padding-top:56px}
+  .pn .about{grid-template-columns:1.7fr 1fr; align-items:end; gap:72px}
+  .pn .steps{grid-template-columns:repeat(4,1fr); gap:28px}
+  .pn .steps li{border:0; border-top:3px solid var(--teal); padding:84px 0 0; min-height:0}
+  .pn .steps li:last-child{border-bottom:0}
+  .pn .steps li::before{top:12px}
+  .pn .bento{grid-template-columns:repeat(6,1fr)}
+  .pn .tile{grid-column:span 2}
+  .pn .tile.wide{grid-column:span 3}
+  .pn .tile.hot{grid-column:span 3}
+  .pn section{padding:112px 0}
+  .pn .madlan{grid-template-columns:1fr 1fr; gap:80px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .pn .pool .ln{stroke-dasharray:420; stroke-dashoffset:420; animation:pn-draw 2.2s .3s ease forwards}
+  .pn .ribbon div{animation:pn-slide 22s linear infinite; justify-content:flex-start; width:max-content}
+  .pn .btn{transition:background .2s, border-color .2s}
+  @keyframes pn-draw{to{stroke-dashoffset:0}}
+  @keyframes pn-slide{from{transform:translateX(0)}to{transform:translateX(50%)}}
+}
+</style>
+</head>
+<body style="margin:0;background:#0b2239">
+<div class="pn">
+
+  <div class="banner" role="note">קונספט להמחשה בלבד - לא האתר הרשמי של הפול נדל״ן</div>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-top">
+        <span class="plaque" aria-label="כצנלסון 12, גבעתיים"><b>12</b><span>רחוב כצנלסון<br>גבעתיים</span></span>
+      </div>
+      <div class="hero-grid"><div class="ht">
+      <h1 class="wordmark">הפול<br><span>נדל״ן</span></h1>
+      <p class="slogan">הבית שלך לבית חדש</p>
+      <p class="lead">משרד תיווך בלב גבעתיים, בניהולו של יוסי גבסו. מאגר נכסים, מאגר קונים, וצוות שמחבר ביניהם.</p>
+      </div>
+      <div class="hv">
+
+      <svg class="pool m" viewBox="0 0 360 300" role="img" aria-label="איור: מאגר נכסים מתחבר למאגר קונים">
+        <text x="290" y="20" text-anchor="middle" style="font-size:16px">מאגר נכסים</text>
+        <text x="70" y="20" text-anchor="middle" style="font-size:16px">מאגר קונים</text>
+        <g class="pt"><circle cx="338" cy="70" r="11"/><circle cx="338" cy="130" r="11"/><circle cx="338" cy="190" r="11"/><circle cx="338" cy="250" r="11"/>
+        <circle cx="22" cy="70" r="11"/><circle cx="22" cy="130" r="11"/><circle cx="22" cy="190" r="11"/><circle cx="22" cy="250" r="11"/></g>
+        <path class="ln" d="M327 70 C 240 70, 120 190, 33 190"/><path class="ln" d="M327 130 C 240 130, 120 70, 33 70"/>
+        <path class="ln" d="M327 190 C 240 190, 120 250, 33 250"/><path class="ln" d="M327 250 C 240 250, 120 130, 33 130"/>
+        <circle class="by" cx="180" cy="160" r="38"/><text x="180" y="166" text-anchor="middle" style="fill:#0b2239;font-weight:800;font-size:18px">הפול</text>
+      </svg>
+      </div></div>
+    </div>
+  </header>
+
+  <div class="ribbon" aria-hidden="true"><div><span>גבעתיים</span><i>●</i><span>רמת גן</span><i>●</i><span>תל אביב</span><i>●</i><span>גבעתיים</span><i>●</i><span>רמת גן</span><i>●</i><span>תל אביב</span><i>●</i><span>גבעתיים</span><i>●</i><span>רמת גן</span><i>●</i><span>תל אביב</span><i>●</i></div></div>
+
+  <main>
+    <section id="about" aria-labelledby="h-about">
+      <div class="wrap about">
+        <div>
+          <p class="kicker">על המשרד</p>
+          <h2 id="h-about" class="quote">לא עוד משרד תיווך. <em>צוות</em> שעובד מאגר אחד, יחד.</h2>
+          <p class="sub">הפול נדל״ן הוא משרד תיווך בציר הראשי של גבעתיים. לפי תיאור המשרד, הוא פועל בשיטת מאגר (פול): מאגר נכסים לצד מאגר קונים פוטנציאליים, והתאמה ביניהם. הצוות מלווה קונים, מוכרים, משכירים ושוכרים בגבעתיים, ברמת גן ובתל אביב.</p>
+        </div>
+        <div class="person">
+          <p class="role">ניהול המשרד</p>
+          <h3>יוסי גבסו</h3>
+          <p>לצדו צוות של יועצי נדל״ן. לפי תיאור המשרד, יוסי נולד וחי בגבעתיים.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="process" aria-labelledby="h-process">
+      <div class="wrap">
+        <p class="kicker">התהליך</p>
+        <h2 id="h-process">ארבעה שלבים בדרך למכירה</h2>
+        <p class="sub">כך המשרד מתאר את דרך העבודה שלו.</p>
+        <ol class="steps">
+          <li><h3>היכרות והערכת הנכס</h3><p>בוחנים את הנכס ואת הסביבה, ומעריכים את שוויו.</p></li>
+          <li><h3>שיווק הנכס</h3><p>מפרסמים את הנכס בערוצי המשרד ובפלטפורמות נדל״ן.</p></li>
+          <li><h3>התאמה לקונים</h3><p>בודקים מול מאגר הקונים של המשרד מי מחפש נכס כזה.</p></li>
+          <li><h3>ליווי עד החתימה</h3><p>פגישות בנכס, משא ומתן וליווי עד חתימת החוזה.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="services" aria-labelledby="h-services">
+      <div class="wrap">
+        <p class="kicker">שירותים</p>
+        <h2 id="h-services">במה המשרד עוסק</h2>
+        <div class="bento">
+          <article class="tile hot">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 22 24 7l18 15"/><path d="M11 20v22h26V20"/><path d="M20 42V29h8v13"/></svg>
+            <h3>תיווך</h3><p>ליווי קונים ומוכרים בעסקאות נדל״ן בגבעתיים, ברמת גן ובתל אביב.</p>
+          </article>
+          <article class="tile wide">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 34V14h32v20z"/><path d="M4 40h40"/><path d="M16 24h16"/></svg>
+            <h3>שיווק ומכירת נכסים</h3><p>הצגת הנכס לקהל רלוונטי וניהול תהליך המכירה.</p>
+          </article>
+          <article class="tile wide">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="17" cy="24" r="8"/><path d="M25 24h18M37 24v8M31 24v6"/></svg>
+            <h3>השכרה</h3><p>חיבור בין בעלי נכסים לשוכרים.</p>
+          </article>
+          <article class="tile wide">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 8h28v32H10z"/><path d="M17 16h14M17 24h14M17 32h8"/></svg>
+            <h3>ניהול נכסים</h3><p>ליווי בעלי נכסים בניהול הנכס.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="inventory" aria-labelledby="h-inv" style="background:var(--deep)">
+      <div class="wrap madlan">
+        <div>
+          <p class="kicker">נכסים</p>
+          <h2 id="h-inv">הנכסים הפעילים נמצאים במדלן</h2>
+          <p class="sub">המלאי משתנה כל הזמן, ולכן הוא לא מוצג כאן. הרשימה העדכנית נמצאת בפרופיל המשרד במדלן.</p>
+          <a class="btn" href="https://www.madlan.co.il/agentsOffice/re_office_chAslz1jJys" target="_blank" rel="noopener noreferrer">לפרופיל המשרד במדלן ←</a>
+        </div>
+        <div class="screen" aria-hidden="true">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="rows">
+            <div class="r"><div class="th"></div><div><div class="l"></div><div class="l s"></div></div></div>
+            <div class="r"><div class="th"></div><div><div class="l"></div><div class="l s"></div></div></div>
+            <div class="r"><div class="th"></div><div><div class="l"></div><div class="l s"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-sec" aria-labelledby="h-contact" style="border-top:1px solid var(--line)">
+      <div class="wrap">
+        <p class="kicker">יצירת קשר</p>
+        <h2 id="h-contact" class="big-addr">כצנלסון <span>12</span></h2>
+        <dl class="facts">
+          <div><dt>כתובת</dt><dd>כצנלסון 12, גבעתיים</dd></div>
+          <div><dt>טלפון</dt><dd><bdi>054-489-1371</bdi></dd></div>
+          <div><dt>אימייל</dt><dd><bdi>poolnadlan@gmail.com</bdi></dd></div>
+        </dl>
+        <div class="actions">
+          <span class="btn" role="button" aria-disabled="true" tabindex="0">התקשרות</span>
+          <span class="btn" role="button" aria-disabled="true" tabindex="0">שליחת הודעה</span>
+        </div>
+        <p class="note">הכפתורים לא פעילים - זה קונספט להמחשה בלבד. הפרטים מוצגים כטקסט.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>דף קונספט לא רשמי, שלא אושר על ידי הפול נדל״ן. הפרטים מבוססים על מידע ציבורי על המשרד.</p>
+      <p class="by">Concept by Ensemble AI</p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
