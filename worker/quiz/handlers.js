@@ -77,7 +77,7 @@ export async function handleQuiz(request, env, ctx) {
       const extra = {
         status: 'complete',
         recommended_solution: first_step.solution_id,
-        analysis: analysisToText(analysis.result),
+        analysis: analysisToText(analysis),
         analysis_source: analysis.source,
       };
       if (pageId) await updateLead(env, pageId, leadProps(sub, extra)).catch(logErr('notion analysis update'));
