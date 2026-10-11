@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 90">
+
+  <text x="0" y="66" font-family="'Space Grotesk',sans-serif" font-weight="600" font-size="64" letter-spacing="-0.64" fill="#2E2B27">ensemble</text>
+  <g transform="translate(312.5,-2.7) scale(0.6977)">
+  <g fill="#7b4a72">
+    <circle cx="52" cy="76" r="34"></circle><circle cx="16" cy="76" r="11"></circle><circle cx="27" cy="51" r="11"></circle><circle cx="52" cy="40" r="11"></circle><circle cx="77" cy="51" r="11"></circle><circle cx="88" cy="76" r="11"></circle>
+  </g>
+  <circle cx="44" cy="74" r="4.5" fill="#faf7f2"></circle><circle cx="62" cy="74" r="4.5" fill="#faf7f2"></circle>
+  <rect x="114" y="30" width="64" height="80" rx="26" fill="#5b84a8"></rect>
+  <circle cx="136" cy="62" r="7" fill="none" stroke="#faf7f2" stroke-width="3.5"></circle><circle cx="158" cy="62" r="7" fill="none" stroke="#faf7f2" stroke-width="3.5"></circle><line x1="143" y1="62" x2="151" y2="62" stroke="#faf7f2" stroke-width="3.5"></line>
+  <path d="M68 110 L68 62 Q68 24 100 24 Q132 24 132 62 L132 110 Z" fill="#d9a13b"></path>
+  <line x1="85" y1="50" x2="95" y2="50" stroke="#faf7f2" stroke-width="5" stroke-linecap="round"></line><line x1="105" y1="50" x2="115" y2="50" stroke="#faf7f2" stroke-width="5" stroke-linecap="round"></line>
+  <circle cx="92" cy="61" r="4.5" fill="#faf7f2"></circle><circle cx="108" cy="61" r="4.5" fill="#faf7f2"></circle>
+  <path d="M100 63 L94 77 L106 77 Z" fill="#b07d1e" stroke="#b07d1e" stroke-width="6" stroke-linejoin="round"></path>
+</g>
+</svg>

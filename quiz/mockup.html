@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="format-detection" content="telephone=no, email=no">
+<title>קוויז: מוקאפ מסכים</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/quiz/quiz.css">
+<style>
+  /* mockup gallery only */
+  body.mock { background: #D9CDBC; }
+  .mock-head { max-width: 1100px; margin: 0 auto; padding: 24px 16px 4px; }
+  .mock-head h1 { margin: 0 0 6px; font-size: 24px; }
+  .mock-head p, .mock-head li { font-size: 15px; color: #4b443c; margin: 4px 0; }
+  .mock-head ul { padding-inline-start: 18px; margin: 6px 0 0; }
+  .gallery { display: flex; flex-wrap: wrap; gap: 32px 28px; justify-content: center; padding: 24px 16px 60px; }
+  .shot { margin: 0; display: flex; flex-direction: column; gap: 10px; width: 390px; max-width: 100%; }
+  .shot figcaption { font-size: 14px; font-weight: 700; color: #2E2B27; }
+  .shot figcaption span { font-weight: 400; color: #5b544c; }
+  .frame { height: 780px; border-radius: 34px; overflow: hidden; border: 9px solid #15130F; background: #15130F; box-shadow: 0 18px 40px rgba(21, 19, 15, 0.25); }
+  .frame .app { height: 100%; max-width: none; }
+  .mock-slot { border: 2px dashed rgba(107, 43, 58, 0.45); border-radius: 16px; aspect-ratio: 9 / 12; max-height: 210px; display: grid; place-items: center; text-align: center; padding: 12px; font-size: 13px; color: var(--wine); }
+  @media (max-width: 440px) {
+    .gallery { padding: 16px 0 40px; gap: 28px; }
+    .shot figcaption { padding: 0 16px; }
+    .frame { border: 0; border-radius: 0; height: 740px; box-shadow: none; }
+  }
+</style>
+</head>
+<body class="mock">
+
+<header class="mock-head">
+  <h1>קוויז /quiz/ · מוקאפ של כל המסכים</h1>
+  <p>נתונים מזויפים. כל מסגרת היא מסך טלפון (390px). לבדיקה בטלפון: לפתוח את העמוד בטלפון, כל מסך מוצג ברוחב מלא.</p>
+  <ul>
+    <li>לפני כל שאלה ולפני התוצאה מופיעות נקודות הקלדה (מסך 2 ו-12).</li>
+    <li>ריבוע מקווקו במסך 1: מקום שמור לווידאו של 30-45 שניות ב-v2. מוסתר ב-v1.</li>
+    <li>מסך 14 (תבנית) הוא מה שמוצג כשה-LLM לא זמין. המשתמש לא רואה הבדל.</li>
+  </ul>
+</header>
+
+<main class="gallery">
+
+<!-- 1 · HERO -->
+<figure class="shot">
+  <figcaption>1 · פתיחה <span>(hero)</span></figcaption>
+  <div class="frame"><div class="app">
+    <section class="hero">
+      <img class="hero__logo" src="/quiz/ensemble-lockup-light.svg" alt="Ensemble">
+      <div class="hero__body">
+        <h1>איפה העסק מבזבז הכי הרבה זמן?<span class="soft">שש שאלות, והמלצה למה לעשות קודם</span></h1>
+        <p class="hero__sub">בלי הרשמה. לוקח דקה וחצי.</p>
+        <div data-slot="hero-video-v2" class="mock-slot">v2: וידאו אישי 30-45 שניות<br>(מוסתר ב-v1)</div>
+        <button class="btn btn--block" type="button">מתחילים</button>
+        <div class="hero__cred">
+          <span class="avatar" aria-hidden="true">א</span>
+          <span><b>אסף יניב, Ensemble AI.</b> בונה מערכות AI לעסקים. לפני זה הוביל צוותי קריאייטיב ותפעול בקלטורה ובארטליסט.</span>
+        </div>
+      </div>
+    </section>
+  </div></div>
+</figure>
+
+<!-- 2 · TYPING BEFORE Q1 -->
+<figure class="shot">
+  <figcaption>2 · נקודות הקלדה <span>(לפני כל שאלה)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="1" data-status="מקליד…"></div>
+    <main class="chat">
+      <div class="day">היום</div>
+      <div class="msg msg--in">היי, כאן אסף 👋<span class="msg__time">10:42</span></div>
+      <div class="msg msg--in">שש שאלות קצרות, ובסוף אגיד איפה הייתי מתחיל אצלכם.<span class="msg__time">10:42</span></div>
+      <div class="typing" aria-label="אסף מקליד"><i></i><i></i><i></i></div>
+    </main>
+  </div></div>
+</figure>
+
+<!-- 3 · Q1 -->
+<figure class="shot">
+  <figcaption>3 · שאלה 1 <span>(תחום)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="1"></div>
+    <main class="chat">
+      <div class="day">היום</div>
+      <div class="msg msg--in">היי, כאן אסף 👋<span class="msg__time">10:42</span></div>
+      <div class="msg msg--in">שש שאלות קצרות, ובסוף אגיד איפה הייתי מתחיל אצלכם.<span class="msg__time">10:42</span></div>
+      <div class="msg msg--in">מה העסק שלך עושה?<span class="msg__time">10:42</span></div>
+      <div class="chips" role="group" aria-label="מה העסק שלך עושה?">
+        <button class="chip" type="button">שירותים מקצועיים (משרד, יועץ, עו"ד, רו"ח)</button>
+        <button class="chip" type="button">בניין, שיפוצים ובעלי מקצוע</button>
+        <button class="chip" type="button">מסחר וחנות (פיזית או אונליין)</button>
+        <button class="chip" type="button">מסעדה, קפה, אירוח</button>
+        <button class="chip" type="button">בריאות, טיפול, יופי וכושר</button>
+        <button class="chip" type="button">נדל"ן, ביטוח, פיננסים</button>
+        <button class="chip" type="button">חינוך והדרכה</button>
+        <button class="chip" type="button">אחר</button>
+      </div>
+    </main>
+  </div></div>
+</figure>
+
+<!-- 4 · Q1 OTHER -->
+<figure class="shot">
+  <figcaption>4 · שאלה 1 <span>("אחר" עם טקסט קצר)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="1"></div>
+    <main class="chat">
+      <div class="msg msg--in">מה העסק שלך עושה?<span class="msg__time">10:42</span></div>
+      <div class="chips">
+        <button class="chip" type="button">חינוך והדרכה</button>
+        <button class="chip" type="button" aria-pressed="true">אחר</button>
+      </div>
+      <div class="gap"></div>
+      <div class="msg msg--in">במילה או שתיים: מה העסק עושה?<span class="msg__time">10:43</span></div>
+    </main>
+    <div class="dock">
+      <div class="composer">
+        <textarea rows="1" maxlength="60" aria-label="סוג העסק">סטודיו לעיצוב</textarea>
+        <button class="send" type="button" aria-label="שליחה"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6l-.01 6.53L15 12l-11.61 1.87z"/></svg></button>
+      </div>
+    </div>
+  </div></div>
+</figure>
+
+<!-- 5 · Q2 -->
+<figure class="shot">
+  <figcaption>5 · שאלה 2 <span>(גודל)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="2"></div>
+    <main class="chat">
+      <div class="msg msg--in">מה העסק שלך עושה?<span class="msg__time">10:42</span></div>
+      <div class="msg msg--out">בניין, שיפוצים ובעלי מקצוע<span class="msg__time">10:43 ✓✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in">כמה אנשים עובדים אצלכם, כולל אותך?<span class="msg__time">10:43</span></div>
+      <div class="chips chips--wrap" role="group">
+        <button class="chip" type="button">רק אני</button>
+        <button class="chip" type="button">2-5</button>
+        <button class="chip" type="button">6-15</button>
+        <button class="chip" type="button">16-50</button>
+        <button class="chip" type="button">יותר מ-50</button>
+      </div>
+    </main>
+  </div></div>
+</figure>
+
+<!-- 6 · Q3 MULTI -->
+<figure class="shot">
+  <figcaption>6 · שאלה 3 <span>(עד 2 בחירות + המשך)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="3"></div>
+    <main class="chat">
+      <div class="msg msg--in">כמה אנשים עובדים אצלכם, כולל אותך?<span class="msg__time">10:43</span></div>
+      <div class="msg msg--out">6-15<span class="msg__time">10:43 ✓✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in">איפה רוב השיחות קורות?<span class="msg__hint">אפשר לבחור עד 2</span><span class="msg__time">10:43</span></div>
+      <div class="chips" role="group">
+        <button class="chip" type="button" aria-pressed="true"><span class="chip__check"></span>וואטסאפ</button>
+        <button class="chip" type="button" aria-pressed="true"><span class="chip__check"></span>טלפון</button>
+        <button class="chip" type="button"><span class="chip__check"></span>מייל</button>
+        <button class="chip" type="button"><span class="chip__check"></span><span>אפליקציית הודעות פנימית (<span class="lat">Slack/Teams</span>)</span></button>
+        <button class="chip" type="button"><span class="chip__check"></span>פגישות פנים אל פנים</button>
+        <button class="chip" type="button"><span class="chip__check"></span><span><span class="lat">CRM</span> או מערכת ייעודית</span></button>
+      </div>
+    </main>
+    <div class="dock"><button class="btn btn--block" type="button">המשך</button></div>
+  </div></div>
+</figure>
+
+<!-- 7 · Q4 -->
+<figure class="shot">
+  <figcaption>7 · שאלה 4 <span>(מאיפה לקוחות מגיעים)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="4"></div>
+    <main class="chat">
+      <div class="msg msg--in">איפה רוב השיחות קורות?<span class="msg__time">10:43</span></div>
+      <div class="msg msg--out">וואטסאפ, טלפון<span class="msg__time">10:44 ✓✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in">איך לקוחות חדשים מגיעים אליך?<span class="msg__time">10:44</span></div>
+      <div class="chips" role="group">
+        <button class="chip" type="button">המלצות ופה לאוזן</button>
+        <button class="chip" type="button">פייסבוק ואינסטגרם</button>
+        <button class="chip" type="button">גוגל (חיפוש או פרסום)</button>
+        <button class="chip" type="button">אתר ופורמים</button>
+        <button class="chip" type="button">יוזם פניות בעצמי (טלמרקטינג, לינקדין)</button>
+        <button class="chip" type="button">לקוחות קבועים, כמעט אין חדשים</button>
+      </div>
+    </main>
+  </div></div>
+</figure>
+
+<!-- 8 · Q5 + Q5b -->
+<figure class="shot">
+  <figcaption>8 · שאלה 5 <span>(איפה הזמן הולך + שעות, אותו מסך)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="5"></div>
+    <main class="chat">
+      <div class="msg msg--out">המלצות ופה לאוזן<span class="msg__time">10:44 ✓✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in">איפה מבזבזים הכי הרבה זמן?<span class="msg__time">10:44</span></div>
+      <div class="chips" role="group">
+        <button class="chip" type="button">לענות על אותן שאלות שוב ושוב</button>
+        <button class="chip" type="button" aria-pressed="true">לתאם פגישות ולרדוף אחרי אנשים</button>
+        <button class="chip" type="button">הצעות מחיר, חשבוניות ומסמכים</button>
+        <button class="chip" type="button">מעקב אחרי לידים ולקוחות שנעלמו</button>
+        <button class="chip" type="button">דיווחים, מספרים ותמונת מצב</button>
+        <button class="chip" type="button">לעדכן ולתאם עם העובדים</button>
+        <button class="chip" type="button">תוכן ושיווק</button>
+        <button class="chip" type="button">משהו אחר</button>
+      </div>
+      <p class="chips__label">כמה שעות בשבוע זה לוקח?</p>
+      <div class="chips chips--wrap" role="group">
+        <button class="chip" type="button">פחות מ-2</button>
+        <button class="chip" type="button">2-5</button>
+        <button class="chip" type="button" aria-pressed="true">5-10</button>
+        <button class="chip" type="button">10+</button>
+      </div>
+    </main>
+    <div class="dock"><button class="btn btn--block" type="button">המשך</button></div>
+  </div></div>
+</figure>
+
+<!-- 9 · Q6 -->
+<figure class="shot">
+  <figcaption>9 · שאלה 6 <span>(טקסט חופשי, אפשר לדלג)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="6"></div>
+    <main class="chat">
+      <div class="msg msg--out">לתאם פגישות ולרדוף אחרי אנשים · 5-10 שעות<span class="msg__time">10:45 ✓✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in">שאלה אחרונה.<span class="msg__time">10:45</span></div>
+      <div class="msg msg--in">במשפט אחד: מה הכי מעצבן בעבודה השבועית?<span class="msg__time">10:45</span></div>
+      <div class="chips chips--wrap"><button class="chip chip--skip" type="button">דלג</button></div>
+    </main>
+    <div class="dock">
+      <div class="composer">
+        <textarea rows="2" maxlength="280" aria-label="מה הכי מעצבן בעבודה השבועית">אני מתאם את אותו סיור באתר שלוש פעמים כי הלקוח לא עונה</textarea>
+        <button class="send" type="button" aria-label="שליחה"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6l-.01 6.53L15 12l-11.61 1.87z"/></svg></button>
+      </div>
+      <div class="counter">57/280</div>
+    </div>
+  </div></div>
+</figure>
+
+<!-- 10 · CONTACT -->
+<figure class="shot">
+  <figcaption>10 · פרטים <span>(לפני התוצאה)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="7"></div>
+    <main class="chat">
+      <div class="msg msg--out">אני מתאם את אותו סיור באתר שלוש פעמים כי הלקוח לא עונה<span class="msg__time">10:46 ✓✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in">מעולה. לאן לשלוח את הניתוח?<span class="msg__time">10:46</span></div>
+      <form class="card" novalidate>
+        <div class="field">
+          <label for="m-name">שם</label>
+          <input id="m-name" name="name" autocomplete="name" value="יעל">
+        </div>
+        <div class="field">
+          <label for="m-wa">מספר וואטסאפ</label>
+          <input id="m-wa" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" value="050-1234567">
+        </div>
+        <div class="field">
+          <label for="m-email">מייל <small>(לא חובה)</small></label>
+          <input id="m-email" name="email" type="email" inputmode="email" autocomplete="email" dir="ltr">
+        </div>
+        <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <label class="consent"><input type="checkbox" name="consent"> מאשרים שאפשר לחזור אליכם בנוגע לניתוח</label>
+        <button class="btn btn--block" type="button">לקבלת הניתוח</button>
+        <p class="privacy">הפרטים משמשים רק כדי לחזור אליכם בנוגע לניתוח.</p>
+      </form>
+    </main>
+  </div></div>
+</figure>
+
+<!-- 11 · CONTACT ERROR -->
+<figure class="shot">
+  <figcaption>11 · פרטים <span>(שגיאת מספר)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="7"></div>
+    <main class="chat">
+      <div class="msg msg--in">מעולה. לאן לשלוח את הניתוח?<span class="msg__time">10:46</span></div>
+      <form class="card" novalidate>
+        <div class="field">
+          <label for="e-name">שם</label>
+          <input id="e-name" value="יעל">
+        </div>
+        <div class="field field--error">
+          <label for="e-wa">מספר וואטסאפ</label>
+          <input id="e-wa" type="tel" inputmode="tel" dir="ltr" value="03-123456" aria-invalid="true" aria-describedby="e-wa-err">
+          <span class="field__error" id="e-wa-err">צריך מספר נייד ישראלי, למשל 050-1234567</span>
+        </div>
+        <div class="field">
+          <label for="e-email">מייל <small>(לא חובה)</small></label>
+          <input id="e-email" type="email" dir="ltr">
+        </div>
+        <label class="consent"><input type="checkbox"> מאשרים שאפשר לחזור אליכם בנוגע לניתוח</label>
+        <button class="btn btn--block" type="button">לקבלת הניתוח</button>
+        <p class="privacy">הפרטים משמשים רק כדי לחזור אליכם בנוגע לניתוח.</p>
+      </form>
+    </main>
+  </div></div>
+</figure>
+
+<!-- 12 · ANALYZING -->
+<figure class="shot">
+  <figcaption>12 · מנתח <span>(4-6 שניות של הקלדה)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="7" data-status="מקליד…"></div>
+    <main class="chat">
+      <div class="msg msg--in">מעולה. לאן לשלוח את הניתוח?<span class="msg__time">10:46</span></div>
+      <div class="msg msg--out">יעל · 050-1234567<span class="msg__time">10:47 ✓✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in">תודה, יעל. עובר על התשובות.<span class="msg__time">10:47</span></div>
+      <div class="typing" aria-label="אסף מקליד"><i></i><i></i><i></i></div>
+    </main>
+  </div></div>
+</figure>
+
+<!-- 13 · RESULT (LLM) -->
+<figure class="shot">
+  <figcaption>13 · תוצאה <span>(דוגמה ממודל השפה, גוללים למטה)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="done"></div>
+    <main class="chat">
+      <div class="msg msg--in">עברתי על הכל. ככה זה נראה מהצד שלי:<span class="msg__time">10:47</span></div>
+      <div class="result">
+        <section class="block">
+          <h2>מה ראיתי</h2>
+          <p>בניין ושיפוצים, צוות של 6-15 אנשים, והשיחות קורות בעיקר בוואטסאפ ובטלפון. כתבת שאת אותו סיור באתר מתאמים שלוש פעמים כי הלקוח לא עונה. זה לא עניין של סדר, זה עניין של מי רודף אחרי מי.</p>
+        </section>
+        <section class="block">
+          <h2>המקום הכי יקר שלך</h2>
+          <p>הזמן שהולך על לרדוף אחרי אישורים. כל סיור שלא נסגר בפעם הראשונה עולה עוד שיחה, עוד הודעה, ולפעמים עוד נסיעה.</p>
+          <div class="estimate"><b>הערכה גסה</b> בערך 20-40 שעות בחודש, לפי 5-10 שעות בשבוע שסימנת.</div>
+        </section>
+        <section class="block block--main">
+          <h2>הצעד הראשון שהייתי עושה</h2>
+          <p class="block__title">תיאום ותזכורות שרצים לבד</p>
+          <p>הלקוח מקבל קישור לבחור מועד לסיור, אישור מיידי ותזכורת יום לפני. מי שלא עונה מקבל עוד הודעה אחת, ורק אם גם זה לא עובד זה מגיע אליכם. זה מחליף את ה"אז מתי נוח?" בוואטסאפ.</p>
+          <dl>
+            <dt>בשבוע הראשון</dt>
+            <dd>סיורים שנקבעים בפעם הראשונה, ופחות שיחות של בדיקה אם זה עדיין רלוונטי.</dd>
+          </dl>
+        </section>
+        <section class="block">
+          <h2>ומה אחר כך</h2>
+          <p>אחרי שהיומן מסודר: מעקב אוטומטי אחרי הצעות מחיר שנשלחו אחרי הסיור.</p>
+        </section>
+      </div>
+      <footer class="foot">Ensemble AI · בונים AI לתוך הדרך שבה העסק כבר עובד.<br><a href="https://ensemble-ai.io/he/">ensemble-ai.io</a></footer>
+    </main>
+    <div class="cta">
+      <a class="btn" href="https://cal.com/asaf-yaniv-hlwofj/30min">בואו נדבר 30 דקות ונבנה את זה</a>
+      <small>קובעים ישר ביומן של אסף</small>
+    </div>
+  </div></div>
+</figure>
+
+<!-- 14 · RESULT (TEMPLATE FALLBACK) -->
+<figure class="shot">
+  <figcaption>14 · תוצאה <span>(תבנית, כשה-LLM לא זמין, אותה פרסונה)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="done"></div>
+    <main class="chat">
+      <div class="msg msg--in">עברתי על הכל. ככה זה נראה מהצד שלי:<span class="msg__time">10:47</span></div>
+      <div class="result">
+        <section class="block">
+          <h2>מה ראיתי</h2>
+          <p>עסק בתחום הבנייה והשיפוצים עם 6-15 אנשים, ורוב השיחות קורות בוואטסאפ ובטלפון. כתבת: "אני מתאם את אותו סיור באתר שלוש פעמים כי הלקוח לא עונה".</p>
+        </section>
+        <section class="block">
+          <h2>המקום הכי יקר שלך</h2>
+          <p>התיאום: הודעות הלוך ושוב, תזכורות ידניות ואנשים שלא מגיעים. זה זמן שלא מופיע בשום דוח.</p>
+          <div class="estimate"><b>הערכה גסה</b> לפי מה שסימנת: בערך 20-40 שעות בחודש.</div>
+        </section>
+        <section class="block block--main">
+          <h2>הצעד הראשון שהייתי עושה</h2>
+          <p class="block__title">תיאום ותזכורות שרצים לבד</p>
+          <p>מערכת שקובעת סיורים באתר, שולחת אישור ותזכורת, וחוזרת למי שלא הגיע. זה מחליף את ההודעות הלוך ושוב ואת המעקב הידני ביומן.</p>
+          <dl>
+            <dt>בשבוע הראשון</dt>
+            <dd>פחות הודעות של "מתי נוח", ותזכורות שיוצאות לבד יום לפני.</dd>
+          </dl>
+        </section>
+        <section class="block">
+          <h2>ומה אחר כך</h2>
+          <p>מעקב אוטומטי אחרי לקוחות שלא קבעו פגישת המשך.</p>
+        </section>
+      </div>
+      <footer class="foot">Ensemble AI · בונים AI לתוך הדרך שבה העסק כבר עובד.<br><a href="https://ensemble-ai.io/he/">ensemble-ai.io</a></footer>
+    </main>
+    <div class="cta">
+      <a class="btn" href="https://cal.com/asaf-yaniv-hlwofj/30min">בואו נדבר 30 דקות ונבנה את זה</a>
+      <small>קובעים ישר ביומן של אסף</small>
+    </div>
+  </div></div>
+</figure>
+
+<!-- 15 · NETWORK ERROR -->
+<figure class="shot">
+  <figcaption>15 · שגיאת רשת <span>(הבקשה לא הגיעה לשרת)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="7"></div>
+    <main class="chat">
+      <div class="msg msg--out">יעל · 050-1234567<span class="msg__time">10:47 ✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in msg--warn">משהו נתקע בדרך והניתוח לא הגיע. התשובות שמורות כאן, אפשר לנסות שוב.<span class="msg__time">10:47</span></div>
+      <div class="actions">
+        <button class="btn btn--block" type="button">לנסות שוב</button>
+        <a class="btn btn--ghost btn--block" href="https://cal.com/asaf-yaniv-hlwofj/30min">או לקבוע שיחה ישר</a>
+      </div>
+    </main>
+  </div></div>
+</figure>
+
+<!-- 16 · RATE LIMIT / SERVER ERROR -->
+<figure class="shot">
+  <figcaption>16 · עומס <span>(429 או שגיאת שרת)</span></figcaption>
+  <div class="frame"><div class="app">
+    <div data-header="7"></div>
+    <main class="chat">
+      <div class="msg msg--out">יעל · 050-1234567<span class="msg__time">10:47 ✓</span></div>
+      <div class="gap"></div>
+      <div class="msg msg--in msg--warn">יש כרגע עומס. אפשר לנסות שוב בעוד דקה.<span class="msg__time">10:47</span></div>
+      <div class="actions">
+        <button class="btn btn--block" type="button">לנסות שוב</button>
+        <a class="btn btn--ghost btn--block" href="https://cal.com/asaf-yaniv-hlwofj/30min">או לקבוע שיחה ישר</a>
+      </div>
+    </main>
+  </div></div>
+</figure>
+
+</main>
+
+<template id="tpl-header">
+  <header class="bar">
+    <div class="bar__row">
+      <button class="bar__back" type="button" aria-label="חזרה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <span class="avatar" aria-hidden="true">א</span>
+      <div class="bar__who"><div class="bar__name">אסף יניב</div><div class="bar__status">מחובר</div></div>
+    </div>
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </header>
+</template>
+<script>
+  // Mockup-only: stamp the shared header into each frame and set progress dots.
+  const tpl = document.getElementById('tpl-header');
+  document.querySelectorAll('[data-header]').forEach((slot) => {
+    const node = tpl.content.cloneNode(true);
+    const step = slot.dataset.header;
+    const dots = node.querySelectorAll('.dots i');
+    const n = step === 'done' ? 7 : Number(step);
+    dots.forEach((d, i) => { if (i < n - 1) d.classList.add('on'); else if (i === n - 1) d.classList.add('now'); });
+    if (step === 'done') node.querySelector('.dots').hidden = true;
+    if (step === '1') node.querySelector('.bar__back').disabled = true;
+    if (slot.dataset.status) node.querySelector('.bar__status').textContent = slot.dataset.status;
+    slot.replaceWith(node);
+  });
+</script>
+</body>
+</html>
