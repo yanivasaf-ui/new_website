@@ -1,5 +1,13 @@
 name = "asaf-website"
+main = "worker/index.js"
 compatibility_date = "2026-07-27"
 
 [assets]
 directory = "./"
+binding = "ASSETS"
+
+# Per-IP rate limit for /api/quiz* (Workers Rate Limiting binding; period must be 10 or 60).
+[[ratelimits]]
+name = "QUIZ_RATE_LIMITER"
+namespace_id = "7301"
+simple = { limit = 20, period = 60 }

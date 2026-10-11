@@ -1,0 +1,20 @@
+# Copy to .dev.vars for `wrangler dev`. In production set each with `wrangler secret put <NAME>`.
+# Never commit real values.
+
+# LLM (required for live analysis; without it every result is the template fallback)
+ANTHROPIC_API_KEY=
+# Optional overrides
+# ANTHROPIC_MODEL=claude-opus-5-5
+# QUIZ_LLM_EFFORT=low
+# QUIZ_LLM_TIMEOUT_MS=12000
+# QUIZ_LLM_FALLBACKS=default   # "off" disables server-side refusal fallback
+# ANTHROPIC_BASE_URL=          # testing only (e.g. point at a hanging server to force a timeout)
+
+# Lead storage (Notion internal integration token + the leads database id, shared with the integration)
+NOTION_TOKEN=
+NOTION_LEADS_DB_ID=
+
+# Email (Resend). LEAD_EMAIL_FROM must be on a domain verified in Resend.
+RESEND_API_KEY=
+LEAD_EMAIL_FROM=Ensemble Quiz <quiz@ensemble-ai.io>
+LEAD_EMAIL_TO=asaf@ensemble-ai.io
