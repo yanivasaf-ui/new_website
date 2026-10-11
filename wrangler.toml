@@ -1,6 +1,9 @@
-name = "asaf-website"
+name = "new-website"
+account_id = "16fb0031f94577847d90d30361194cb2"
 main = "worker/index.js"
 compatibility_date = "2026-07-27"
+# Variables and secrets are installed in the Cloudflare dashboard; never let a deploy wipe them.
+keep_vars = true
 
 [assets]
 directory = "./"
