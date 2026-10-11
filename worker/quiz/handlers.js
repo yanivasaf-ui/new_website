@@ -50,6 +50,7 @@ async function readJson(request) {
 /**
  * POST /api/analyze
  * stage=partial  -> upsert anonymous progress row (from Q3 on), no analysis. Own, looser limit.
+ *                   Never touches a lead that is already complete or booked-click.
  * stage=complete -> upsert lead BEFORE the LLM call, analyze, return result (5 per hour per IP);
  *                   analysis write-back + email run after the response. If the analysis fails the
  *                   lead is still saved and emailed, and the client gets 502 analysis_failed.
@@ -77,10 +78,13 @@ export async function handleAnalyze(request, env, ctx) {
     return json({ ok: true });
   }
 
-  const pageId = await upsertLead(env, sub.session_id, leadProps(sub, { status: 'complete' })).catch(logErr('notion create'));
+  const lead = await upsertLead(env, sub.session_id, leadProps(sub, { status: 'complete' })).catch(logErr('notion create'));
+  const pageId = lead?.id;
   const analysis = await analyze(env, sub);
 
   const writeBack = async (/** @type {Record<string, any>} */ extra) => {
+    // a lead that already clicked "book a call" keeps that status when it is re-submitted
+    if (lead?.status === 'booked-click') extra = { ...extra, status: undefined };
     if (pageId) await updateLead(env, pageId, leadProps(sub, extra)).catch(logErr('notion analysis update'));
     else await upsertLead(env, sub.session_id, leadProps(sub, extra)).catch(logErr('notion late create'));
   };

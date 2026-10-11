@@ -19,6 +19,7 @@ export { RateLimiter } from './quiz/ratelimit.js';
  * @property {string} [QUIZ_TEMPLATE_FALLBACK]
  * @property {string} [NOTION_TOKEN]
  * @property {string} [NOTION_QUIZ_DB_ID]
+ * @property {string} [NOTION_BASE_URL]
  * @property {string} [RESEND_API_KEY]
  * @property {string} [LEAD_EMAIL_FROM]
  * @property {string} [LEAD_EMAIL_TO]

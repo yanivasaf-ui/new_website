@@ -2,7 +2,7 @@
 // Notion leads table: one page per quiz session, keyed by the session_id property.
 // Property names/types the database must have are listed in QUIZ.md.
 
-const NOTION_API = 'https://api.notion.com/v1';
+const NOTION_API = 'https://api.notion.com/v1'; // NOTION_BASE_URL overrides it (tests only)
 const NOTION_VERSION = '2022-06-28';
 const TIMEOUT_MS = 6000;
 
@@ -11,7 +11,7 @@ export const notionConfigured = (env) => Boolean(env.NOTION_TOKEN && env.NOTION_
 
 /** @param {import('../index.js').Env} env @param {string} path @param {string} method @param {any} body */
 async function notion(env, path, method, body) {
-  const res = await fetch(NOTION_API + path, {
+  const res = await fetch((env.NOTION_BASE_URL || NOTION_API) + path, {
     method,
     headers: {
       authorization: `Bearer ${env.NOTION_TOKEN}`,
@@ -85,25 +85,42 @@ export async function updateLead(env, pageId, properties) {
   return notion(env, `/pages/${pageId}`, 'PATCH', { properties });
 }
 
+/** Lead status only moves forward: partial < complete < booked-click. */
+const STATUS_RANK = { partial: 1, complete: 2, 'booked-click': 3 };
+const rank = (/** @type {string} */ status) => STATUS_RANK[status] || 0;
+/** @param {any} page */
+export const statusOf = (page) => page?.properties?.status?.select?.name || '';
+
 /**
- * Creates the session's page or updates it. Returns the page id (null when Notion is not configured).
+ * Creates the session's page or updates it, never moving the lead's status backwards:
+ * - an autosave (status partial) on a lead that is already complete or booked-click writes nothing;
+ * - any other write that would lower the status keeps the existing one.
+ * Returns { id, status } (status = what the row has now), or null when Notion is not configured.
  * @param {import('../index.js').Env} env @param {string} sessionId @param {Record<string, any>} properties
+ * @returns {Promise<{ id: string, status: string, skipped?: boolean } | null>}
  */
 export async function upsertLead(env, sessionId, properties) {
   if (!notionConfigured(env)) {
     console.warn('notion not configured (NOTION_TOKEN / NOTION_QUIZ_DB_ID); lead not stored');
     return null;
   }
+  const incoming = properties.status?.select?.name || '';
   const existing = await findLeadBySession(env, sessionId);
   if (existing) {
+    const current = statusOf(existing);
+    if (rank(current) > rank(incoming)) {
+      if (incoming === 'partial') return { id: existing.id, status: current, skipped: true };
+      properties = { ...properties };
+      delete properties.status;
+    }
     await updateLead(env, existing.id, properties);
-    return existing.id;
+    return { id: existing.id, status: rank(current) > rank(incoming) ? current : incoming };
   }
   /** @type {Record<string, any>} */
   const props = { ...properties, created: { date: { start: new Date().toISOString() } } };
   if (!props.name) props.name = { title: [{ text: { content: `anon-${sessionId.slice(0, 8)}` } }] };
   const page = await notion(env, '/pages', 'POST', { parent: { database_id: env.NOTION_QUIZ_DB_ID }, properties: props });
-  return page.id;
+  return { id: page.id, status: incoming };
 }
 
 /** Reads the fields the click email needs back out of a Notion page. @param {any} page */

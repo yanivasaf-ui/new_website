@@ -14,7 +14,9 @@ Answers, contact fields and the result persist in `localStorage` (key `ensemble-
 
 - `POST /api/analyze` — `{ stage: "partial"|"complete", session_id: uuid, answers, contact?, utm, device, website: "" }`
   - `website` is the honeypot: if filled, responds `{ok:true}` and stores nothing.
-  - `partial` (sent from Q3 on): anonymous row, `status=partial`, no outreach. Limit 60/hour/IP.
+  - `partial` (sent from Q3 on): anonymous row, `status=partial`, no outreach. Limit 60/hour/IP. A lead's status only moves
+    forward (partial → complete → booked-click): an autosave on a complete or booked-click lead writes nothing, and a
+    re-submit keeps `booked-click`.
   - `complete`: validates (Israeli mobile required), saves the lead to Notion **before** the LLM call, calls the model
     (30s timeout per attempt; one retry after a timeout, API error or invalid output, so at most ~60s), returns `{ ok, source, result }`, then writes the analysis back and emails.
     Limit **5 per hour per IP**, counted only for well-formed requests.
@@ -76,5 +78,6 @@ npm run check:page   # tsc --checkJs on the page script
 npm run build        # wrangler deploy --dry-run
 npm run dev          # wrangler dev on :8787 (state kept outside the repo)
 npm run personas
+node scripts/fake-notion.mjs & node scripts/quiz-status-test.mjs   # status regression test (see the script header)
 bash scripts/quiz-curl-tests.sh http://localhost:8787
 ```

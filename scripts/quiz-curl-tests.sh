@@ -32,7 +32,7 @@ run "booking click" 10.0.0.1 /api/analyze/click "{\"session_id\":\"$S1\"}"
 if [ -n "$LLM_MODE_FILE" ]; then
   # With the template fallback ON (default) these return 200 source=template. Start the Worker with
   # QUIZ_TEMPLATE_FALLBACK=0 to see the 502 analysis_failed error state instead.
-  setmode hang;    run "LLM FAILURE: model hangs (12s budget)" 10.0.0.3 /api/analyze "$(complete $(SID) '0501234567')"
+  setmode hang;    run "LLM FAILURE: model hangs (30s x 2 attempts, then template)" 10.0.0.3 /api/analyze "$(complete $(SID) '0501234567')"
   setmode garbage; run "LLM FAILURE: model returns invalid JSON (1 retry)" 10.0.0.4 /api/analyze "$(complete $(SID) '0501234567')"
   setmode garbage; run "LLM FAILURE + English pain text (template must not quote it)" 10.0.0.4 /api/analyze "$(complete $(SID) '0501234567' | sed 's/אני מתאם את אותו סיור באתר שלוש פעמים כי הלקוח לא עונה/my clients never answer the phone/')"
   setmode valid
