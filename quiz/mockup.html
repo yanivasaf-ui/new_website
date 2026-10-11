@@ -9,11 +9,12 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/quiz/quiz.css">
 <style>
   /* mockup gallery only */
-  body.mock { background: #D9CDBC; }
+  body.mock { background: #DBC8B1; }
   .mock-head { max-width: 1100px; margin: 0 auto; padding: 24px 16px 4px; }
   .mock-head h1 { margin: 0 0 6px; font-size: 24px; }
   .mock-head p, .mock-head li { font-size: 15px; color: #4b443c; margin: 4px 0; }
@@ -22,7 +23,7 @@
   .shot { margin: 0; display: flex; flex-direction: column; gap: 10px; width: 390px; max-width: 100%; }
   .shot figcaption { font-size: 14px; font-weight: 700; color: #2E2B27; }
   .shot figcaption span { font-weight: 400; color: #5b544c; }
-  .frame { height: 780px; border-radius: 34px; overflow: hidden; border: 9px solid #15130F; background: #15130F; box-shadow: 0 18px 40px rgba(21, 19, 15, 0.25); }
+  .frame { height: 780px; border-radius: 40px; overflow: hidden; border: 9px solid #15130F; background: #15130F; box-shadow: 0 18px 40px rgba(21, 19, 15, 0.25); }
   .frame .app { height: 100%; max-width: none; }
   .mock-slot { border: 2px dashed rgba(107, 43, 58, 0.45); border-radius: 16px; aspect-ratio: 9 / 12; max-height: 210px; display: grid; place-items: center; text-align: center; padding: 12px; font-size: 13px; color: var(--wine); }
   @media (max-width: 440px) {
@@ -51,7 +52,7 @@
   <figcaption>1 · פתיחה <span>(hero)</span></figcaption>
   <div class="frame"><div class="app">
     <section class="hero">
-      <img class="hero__logo" src="/quiz/ensemble-lockup-light.svg" alt="Ensemble">
+      <a class="hero__nav" href="https://ensemble-ai.io/he/" aria-label="Ensemble"><img src="/ensemble-lockup-dark.svg" alt="ensemble"></a>
       <div class="hero__body">
         <h1>איפה העסק מבזבז הכי הרבה זמן?<span class="soft">שש שאלות, והמלצה למה לעשות קודם</span></h1>
         <p class="hero__sub">בלי הרשמה. לוקח דקה וחצי.</p>
@@ -439,12 +440,12 @@
 
 <template id="tpl-header">
   <header class="bar">
-    <div class="bar__row">
+    <div class="bar__pill">
       <button class="bar__back" type="button" aria-label="חזרה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       <span class="avatar" aria-hidden="true">א</span>
       <div class="bar__who"><div class="bar__name">אסף יניב</div><div class="bar__status">מחובר</div></div>
+      <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
     </div>
-    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </header>
 </template>
 <script>
