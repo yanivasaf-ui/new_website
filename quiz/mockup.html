@@ -24,8 +24,7 @@
   .shot figcaption { font-size: 14px; font-weight: 700; color: #2E2B27; }
   .shot figcaption span { font-weight: 400; color: #5b544c; }
   .frame { height: 780px; border-radius: 40px; overflow: hidden; border: 9px solid #15130F; background: #15130F; box-shadow: 0 18px 40px rgba(21, 19, 15, 0.25); }
-  .frame .app { height: 100%; max-width: none; }
-  .mock-slot { border: 2px dashed rgba(107, 43, 58, 0.45); border-radius: 16px; aspect-ratio: 9 / 12; max-height: 210px; display: grid; place-items: center; text-align: center; padding: 12px; font-size: 13px; color: var(--wine); }
+  .frame .app { height: 100%; }
   @media (max-width: 440px) {
     .gallery { padding: 16px 0 40px; gap: 28px; }
     .shot figcaption { padding: 0 16px; }
@@ -37,10 +36,10 @@
 
 <header class="mock-head">
   <h1>קוויז /quiz/ · מוקאפ של כל המסכים</h1>
-  <p>נתונים מזויפים. כל מסגרת היא מסך טלפון (390px). לבדיקה בטלפון: לפתוח את העמוד בטלפון, כל מסך מוצג ברוחב מלא.</p>
+  <p>נתונים מזויפים. כל מסגרת היא מסך טלפון. בדסקטופ הקוויז הוא עמודה ממורכזת ברוחב 420px לכל היותר.</p>
   <ul>
-    <li>לפני כל שאלה ולפני התוצאה מופיעות נקודות הקלדה (מסך 2 ו-12).</li>
-    <li>ריבוע מקווקו במסך 1: מקום שמור לווידאו של 30-45 שניות ב-v2. מוסתר ב-v1.</li>
+    <li>לפני כל שאלה ולפני התוצאה מופיעות נקודות הקלדה במקום השאלה (מסך 2 ו-12).</li>
+    <li>שאלות עם בחירה אחת עוברות הלאה בלחיצה. שאלות עם כמה בחירות, טקסט או פרטים נגמרות בכפתור.</li>
     <li>מסך 14 (תבנית) הוא מה שמוצג כשה-LLM לא זמין. המשתמש לא רואה הבדל.</li>
   </ul>
 </header>
@@ -54,9 +53,9 @@
     <section class="hero">
       <a class="hero__nav" href="https://ensemble-ai.io/he/" aria-label="Ensemble"><img src="/ensemble-lockup-dark.svg" alt="ensemble"></a>
       <div class="hero__body">
-        <h1>איפה העסק מבזבז הכי הרבה זמן?<span class="soft">שש שאלות, והמלצה למה לעשות קודם</span></h1>
-        <p class="hero__sub">בלי הרשמה. לוקח דקה וחצי.</p>
-        <div data-slot="hero-video-v2" class="mock-slot">v2: וידאו אישי 30-45 שניות<br>(מוסתר ב-v1)</div>
+        <h1>מה בעסק שלך יכול לרוץ בלעדיך?</h1>
+        <p class="hero__sub">6 שאלות, ניתוח אישי, ותדע בדיוק איפה</p>
+        <div data-slot="hero-video-v2" hidden></div>
         <button class="btn btn--block" type="button">מתחילים</button>
         <div class="hero__cred">
           <span class="avatar" aria-hidden="true">א</span>
@@ -67,16 +66,13 @@
   </div></div>
 </figure>
 
-<!-- 2 · TYPING BEFORE Q1 -->
+<!-- 2 · TYPING -->
 <figure class="shot">
   <figcaption>2 · נקודות הקלדה <span>(לפני כל שאלה)</span></figcaption>
   <div class="frame"><div class="app">
-    <div data-header="1" data-status="מקליד…"></div>
-    <main class="chat">
-      <div class="day">היום</div>
-      <div class="msg msg--in">היי, כאן אסף 👋<span class="msg__time">10:42</span></div>
-      <div class="msg msg--in">שש שאלות קצרות, ובסוף אגיד איפה הייתי מתחיל אצלכם.<span class="msg__time">10:42</span></div>
-      <div class="typing" aria-label="אסף מקליד"><i></i><i></i><i></i></div>
+    <div data-header="1"></div>
+    <main class="screen">
+      <div class="typing" aria-label="השאלה הבאה בדרך"><i></i><i></i><i></i></div>
     </main>
   </div></div>
 </figure>
@@ -86,20 +82,17 @@
   <figcaption>3 · שאלה 1 <span>(תחום)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="1"></div>
-    <main class="chat">
-      <div class="day">היום</div>
-      <div class="msg msg--in">היי, כאן אסף 👋<span class="msg__time">10:42</span></div>
-      <div class="msg msg--in">שש שאלות קצרות, ובסוף אגיד איפה הייתי מתחיל אצלכם.<span class="msg__time">10:42</span></div>
-      <div class="msg msg--in">מה העסק שלך עושה?<span class="msg__time">10:42</span></div>
-      <div class="chips" role="group" aria-label="מה העסק שלך עושה?">
-        <button class="chip" type="button">שירותים מקצועיים (משרד, יועץ, עו"ד, רו"ח)</button>
-        <button class="chip" type="button">בניין, שיפוצים ובעלי מקצוע</button>
-        <button class="chip" type="button">מסחר וחנות (פיזית או אונליין)</button>
-        <button class="chip" type="button">מסעדה, קפה, אירוח</button>
-        <button class="chip" type="button">בריאות, טיפול, יופי וכושר</button>
-        <button class="chip" type="button">נדל"ן, ביטוח, פיננסים</button>
-        <button class="chip" type="button">חינוך והדרכה</button>
-        <button class="chip" type="button">אחר</button>
+    <main class="screen">
+      <h2 class="q">מה העסק שלך עושה?</h2>
+      <div class="opts" role="group" aria-label="מה העסק שלך עושה?">
+        <button class="opt" type="button">שירותים מקצועיים (משרד, יועץ, עו"ד, רו"ח)</button>
+        <button class="opt" type="button">בניין, שיפוצים ובעלי מקצוע</button>
+        <button class="opt" type="button">מסחר וחנות (פיזית או אונליין)</button>
+        <button class="opt" type="button">מסעדה, קפה, אירוח</button>
+        <button class="opt" type="button">בריאות, טיפול, יופי וכושר</button>
+        <button class="opt" type="button">נדל"ן, ביטוח, פיננסים</button>
+        <button class="opt" type="button">חינוך והדרכה</button>
+        <button class="opt" type="button">אחר</button>
       </div>
     </main>
   </div></div>
@@ -110,21 +103,15 @@
   <figcaption>4 · שאלה 1 <span>("אחר" עם טקסט קצר)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="1"></div>
-    <main class="chat">
-      <div class="msg msg--in">מה העסק שלך עושה?<span class="msg__time">10:42</span></div>
-      <div class="chips">
-        <button class="chip" type="button">חינוך והדרכה</button>
-        <button class="chip" type="button" aria-pressed="true">אחר</button>
+    <main class="screen">
+      <h2 class="q">מה העסק שלך עושה?</h2>
+      <div class="opts">
+        <button class="opt" type="button">חינוך והדרכה</button>
+        <button class="opt" type="button" aria-pressed="true">אחר</button>
       </div>
-      <div class="gap"></div>
-      <div class="msg msg--in">במילה או שתיים: מה העסק עושה?<span class="msg__time">10:43</span></div>
+      <input class="input" maxlength="60" placeholder="במילה או שתיים" aria-label="סוג העסק" value="סטודיו לעיצוב">
     </main>
-    <div class="dock">
-      <div class="composer">
-        <textarea rows="1" maxlength="60" aria-label="סוג העסק">סטודיו לעיצוב</textarea>
-        <button class="send" type="button" aria-label="שליחה"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6l-.01 6.53L15 12l-11.61 1.87z"/></svg></button>
-      </div>
-    </div>
+    <div class="dock"><button class="btn btn--block" type="button">המשך</button></div>
   </div></div>
 </figure>
 
@@ -133,17 +120,14 @@
   <figcaption>5 · שאלה 2 <span>(גודל)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="2"></div>
-    <main class="chat">
-      <div class="msg msg--in">מה העסק שלך עושה?<span class="msg__time">10:42</span></div>
-      <div class="msg msg--out">בניין, שיפוצים ובעלי מקצוע<span class="msg__time">10:43 ✓✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in">כמה אנשים עובדים אצלכם, כולל אותך?<span class="msg__time">10:43</span></div>
-      <div class="chips chips--wrap" role="group">
-        <button class="chip" type="button">רק אני</button>
-        <button class="chip" type="button">2-5</button>
-        <button class="chip" type="button">6-15</button>
-        <button class="chip" type="button">16-50</button>
-        <button class="chip" type="button">יותר מ-50</button>
+    <main class="screen">
+      <h2 class="q">כמה אנשים עובדים אצלכם, כולל אותך?</h2>
+      <div class="opts" role="group">
+        <button class="opt" type="button">רק אני</button>
+        <button class="opt" type="button">2-5</button>
+        <button class="opt" type="button">6-15</button>
+        <button class="opt" type="button">16-50</button>
+        <button class="opt" type="button">יותר מ-50</button>
       </div>
     </main>
   </div></div>
@@ -154,18 +138,16 @@
   <figcaption>6 · שאלה 3 <span>(עד 2 בחירות + המשך)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="3"></div>
-    <main class="chat">
-      <div class="msg msg--in">כמה אנשים עובדים אצלכם, כולל אותך?<span class="msg__time">10:43</span></div>
-      <div class="msg msg--out">6-15<span class="msg__time">10:43 ✓✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in">איפה רוב השיחות קורות?<span class="msg__hint">אפשר לבחור עד 2</span><span class="msg__time">10:43</span></div>
-      <div class="chips" role="group">
-        <button class="chip" type="button" aria-pressed="true"><span class="chip__check"></span>וואטסאפ</button>
-        <button class="chip" type="button" aria-pressed="true"><span class="chip__check"></span>טלפון</button>
-        <button class="chip" type="button"><span class="chip__check"></span>מייל</button>
-        <button class="chip" type="button"><span class="chip__check"></span><span>אפליקציית הודעות פנימית (<span class="lat">Slack/Teams</span>)</span></button>
-        <button class="chip" type="button"><span class="chip__check"></span>פגישות פנים אל פנים</button>
-        <button class="chip" type="button"><span class="chip__check"></span><span><span class="lat">CRM</span> או מערכת ייעודית</span></button>
+    <main class="screen">
+      <h2 class="q">איפה רוב השיחות קורות?</h2>
+      <p class="q__hint">אפשר לבחור עד 2</p>
+      <div class="opts" role="group">
+        <button class="opt" type="button" aria-pressed="true"><span class="opt__check"></span><span>וואטסאפ</span></button>
+        <button class="opt" type="button" aria-pressed="true"><span class="opt__check"></span><span>טלפון</span></button>
+        <button class="opt" type="button"><span class="opt__check"></span><span>מייל</span></button>
+        <button class="opt" type="button"><span class="opt__check"></span><span>אפליקציית הודעות פנימית (<span class="lat">Slack/Teams</span>)</span></button>
+        <button class="opt" type="button"><span class="opt__check"></span><span>פגישות פנים אל פנים</span></button>
+        <button class="opt" type="button"><span class="opt__check"></span><span><span class="lat">CRM</span> או מערכת ייעודית</span></button>
       </div>
     </main>
     <div class="dock"><button class="btn btn--block" type="button">המשך</button></div>
@@ -177,18 +159,15 @@
   <figcaption>7 · שאלה 4 <span>(מאיפה לקוחות מגיעים)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="4"></div>
-    <main class="chat">
-      <div class="msg msg--in">איפה רוב השיחות קורות?<span class="msg__time">10:43</span></div>
-      <div class="msg msg--out">וואטסאפ, טלפון<span class="msg__time">10:44 ✓✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in">איך לקוחות חדשים מגיעים אליך?<span class="msg__time">10:44</span></div>
-      <div class="chips" role="group">
-        <button class="chip" type="button">המלצות ופה לאוזן</button>
-        <button class="chip" type="button">פייסבוק ואינסטגרם</button>
-        <button class="chip" type="button">גוגל (חיפוש או פרסום)</button>
-        <button class="chip" type="button">אתר ופורמים</button>
-        <button class="chip" type="button">יוזם פניות בעצמי (טלמרקטינג, לינקדין)</button>
-        <button class="chip" type="button">לקוחות קבועים, כמעט אין חדשים</button>
+    <main class="screen">
+      <h2 class="q">איך לקוחות חדשים מגיעים אליך?</h2>
+      <div class="opts" role="group">
+        <button class="opt" type="button">המלצות ופה לאוזן</button>
+        <button class="opt" type="button">פייסבוק ואינסטגרם</button>
+        <button class="opt" type="button">גוגל (חיפוש או פרסום)</button>
+        <button class="opt" type="button">אתר ופורמים</button>
+        <button class="opt" type="button">יוזם פניות בעצמי (טלמרקטינג, לינקדין)</button>
+        <button class="opt" type="button">לקוחות קבועים, כמעט אין חדשים</button>
       </div>
     </main>
   </div></div>
@@ -199,26 +178,24 @@
   <figcaption>8 · שאלה 5 <span>(איפה הזמן הולך + שעות, אותו מסך)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="5"></div>
-    <main class="chat">
-      <div class="msg msg--out">המלצות ופה לאוזן<span class="msg__time">10:44 ✓✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in">איפה מבזבזים הכי הרבה זמן?<span class="msg__time">10:44</span></div>
-      <div class="chips" role="group">
-        <button class="chip" type="button">לענות על אותן שאלות שוב ושוב</button>
-        <button class="chip" type="button" aria-pressed="true">לתאם פגישות ולרדוף אחרי אנשים</button>
-        <button class="chip" type="button">הצעות מחיר, חשבוניות ומסמכים</button>
-        <button class="chip" type="button">מעקב אחרי לידים ולקוחות שנעלמו</button>
-        <button class="chip" type="button">דיווחים, מספרים ותמונת מצב</button>
-        <button class="chip" type="button">לעדכן ולתאם עם העובדים</button>
-        <button class="chip" type="button">תוכן ושיווק</button>
-        <button class="chip" type="button">משהו אחר</button>
+    <main class="screen">
+      <h2 class="q">איפה מבזבזים הכי הרבה זמן?</h2>
+      <div class="opts" role="group">
+        <button class="opt" type="button">לענות על אותן שאלות שוב ושוב</button>
+        <button class="opt" type="button" aria-pressed="true">לתאם פגישות ולרדוף אחרי אנשים</button>
+        <button class="opt" type="button">הצעות מחיר, חשבוניות ומסמכים</button>
+        <button class="opt" type="button">מעקב אחרי לידים ולקוחות שנעלמו</button>
+        <button class="opt" type="button">דיווחים, מספרים ותמונת מצב</button>
+        <button class="opt" type="button">לעדכן ולתאם עם העובדים</button>
+        <button class="opt" type="button">תוכן ושיווק</button>
+        <button class="opt" type="button">משהו אחר</button>
       </div>
-      <p class="chips__label">כמה שעות בשבוע זה לוקח?</p>
-      <div class="chips chips--wrap" role="group">
-        <button class="chip" type="button">פחות מ-2</button>
-        <button class="chip" type="button">2-5</button>
-        <button class="chip" type="button" aria-pressed="true">5-10</button>
-        <button class="chip" type="button">10+</button>
+      <p class="q__sub">כמה שעות בשבוע זה לוקח?</p>
+      <div class="opts opts--wrap" role="group">
+        <button class="opt" type="button">פחות מ-2</button>
+        <button class="opt" type="button">2-5</button>
+        <button class="opt" type="button" aria-pressed="true">5-10</button>
+        <button class="opt" type="button">10+</button>
       </div>
     </main>
     <div class="dock"><button class="btn btn--block" type="button">המשך</button></div>
@@ -230,19 +207,14 @@
   <figcaption>9 · שאלה 6 <span>(טקסט חופשי, אפשר לדלג)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="6"></div>
-    <main class="chat">
-      <div class="msg msg--out">לתאם פגישות ולרדוף אחרי אנשים · 5-10 שעות<span class="msg__time">10:45 ✓✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in">שאלה אחרונה.<span class="msg__time">10:45</span></div>
-      <div class="msg msg--in">במשפט אחד: מה הכי מעצבן בעבודה השבועית?<span class="msg__time">10:45</span></div>
-      <div class="chips chips--wrap"><button class="chip chip--skip" type="button">דלג</button></div>
+    <main class="screen">
+      <h2 class="q">במשפט אחד: מה הכי מעצבן בעבודה השבועית?</h2>
+      <textarea class="input" rows="3" maxlength="280" aria-label="מה הכי מעצבן בעבודה השבועית">אני מתאם את אותו סיור באתר שלוש פעמים כי הלקוח לא עונה</textarea>
+      <div class="counter">57/280</div>
     </main>
     <div class="dock">
-      <div class="composer">
-        <textarea rows="2" maxlength="280" aria-label="מה הכי מעצבן בעבודה השבועית">אני מתאם את אותו סיור באתר שלוש פעמים כי הלקוח לא עונה</textarea>
-        <button class="send" type="button" aria-label="שליחה"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6l-.01 6.53L15 12l-11.61 1.87z"/></svg></button>
-      </div>
-      <div class="counter">57/280</div>
+      <button class="btn btn--block" type="button">המשך</button>
+      <button class="opt opt--skip" type="button" style="justify-content:center">דלג</button>
     </div>
   </div></div>
 </figure>
@@ -252,11 +224,9 @@
   <figcaption>10 · פרטים <span>(לפני התוצאה)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="7"></div>
-    <main class="chat">
-      <div class="msg msg--out">אני מתאם את אותו סיור באתר שלוש פעמים כי הלקוח לא עונה<span class="msg__time">10:46 ✓✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in">מעולה. לאן לשלוח את הניתוח?<span class="msg__time">10:46</span></div>
-      <form class="card" novalidate>
+    <main class="screen">
+      <h2 class="q">מעולה. לאן לשלוח את הניתוח?</h2>
+      <form class="form" novalidate>
         <div class="field">
           <label for="m-name">שם</label>
           <input id="m-name" name="name" autocomplete="name" value="יעל">
@@ -271,10 +241,12 @@
         </div>
         <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
         <label class="consent"><input type="checkbox" name="consent"> מאשרים שאפשר לחזור אליכם בנוגע לניתוח</label>
-        <button class="btn btn--block" type="button">לקבלת הניתוח</button>
-        <p class="privacy">הפרטים משמשים רק כדי לחזור אליכם בנוגע לניתוח.</p>
       </form>
     </main>
+    <div class="dock">
+      <button class="btn btn--block" type="button">לקבלת הניתוח</button>
+      <p class="privacy">הפרטים משמשים רק כדי לחזור אליכם בנוגע לניתוח.</p>
+    </div>
   </div></div>
 </figure>
 
@@ -283,9 +255,9 @@
   <figcaption>11 · פרטים <span>(שגיאת מספר)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="7"></div>
-    <main class="chat">
-      <div class="msg msg--in">מעולה. לאן לשלוח את הניתוח?<span class="msg__time">10:46</span></div>
-      <form class="card" novalidate>
+    <main class="screen">
+      <h2 class="q">מעולה. לאן לשלוח את הניתוח?</h2>
+      <form class="form" novalidate>
         <div class="field">
           <label for="e-name">שם</label>
           <input id="e-name" value="יעל">
@@ -300,24 +272,23 @@
           <input id="e-email" type="email" dir="ltr">
         </div>
         <label class="consent"><input type="checkbox"> מאשרים שאפשר לחזור אליכם בנוגע לניתוח</label>
-        <button class="btn btn--block" type="button">לקבלת הניתוח</button>
-        <p class="privacy">הפרטים משמשים רק כדי לחזור אליכם בנוגע לניתוח.</p>
       </form>
     </main>
+    <div class="dock">
+      <button class="btn btn--block" type="button">לקבלת הניתוח</button>
+      <p class="privacy">הפרטים משמשים רק כדי לחזור אליכם בנוגע לניתוח.</p>
+    </div>
   </div></div>
 </figure>
 
 <!-- 12 · ANALYZING -->
 <figure class="shot">
-  <figcaption>12 · מנתח <span>(4-6 שניות של הקלדה)</span></figcaption>
+  <figcaption>12 · מנתח <span>(4-6 שניות)</span></figcaption>
   <div class="frame"><div class="app">
-    <div data-header="7" data-status="מקליד…"></div>
-    <main class="chat">
-      <div class="msg msg--in">מעולה. לאן לשלוח את הניתוח?<span class="msg__time">10:46</span></div>
-      <div class="msg msg--out">יעל · 050-1234567<span class="msg__time">10:47 ✓✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in">תודה, יעל. עובר על התשובות.<span class="msg__time">10:47</span></div>
-      <div class="typing" aria-label="אסף מקליד"><i></i><i></i><i></i></div>
+    <div data-header="7"></div>
+    <main class="screen">
+      <h2 class="q">עובר על התשובות</h2>
+      <div class="typing" aria-label="מנתח"><i></i><i></i><i></i></div>
     </main>
   </div></div>
 </figure>
@@ -327,8 +298,8 @@
   <figcaption>13 · תוצאה <span>(דוגמה ממודל השפה, גוללים למטה)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="done"></div>
-    <main class="chat">
-      <div class="msg msg--in">עברתי על הכל. ככה זה נראה מהצד שלי:<span class="msg__time">10:47</span></div>
+    <main class="screen">
+      <h2 class="q">ככה זה נראה מהצד שלי</h2>
       <div class="result">
         <section class="block">
           <h2>מה ראיתי</h2>
@@ -355,8 +326,8 @@
       </div>
       <footer class="foot">Ensemble AI · בונים AI לתוך הדרך שבה העסק כבר עובד.<br><a href="https://ensemble-ai.io/he/">ensemble-ai.io</a></footer>
     </main>
-    <div class="cta">
-      <a class="btn" href="https://cal.com/asaf-yaniv-hlwofj/30min">בואו נדבר 30 דקות ונבנה את זה</a>
+    <div class="dock">
+      <a class="btn btn--block" href="https://cal.com/asaf-yaniv-hlwofj/30min">בואו נדבר 30 דקות ונבנה את זה</a>
       <small>קובעים ישר ביומן של אסף</small>
     </div>
   </div></div>
@@ -367,8 +338,8 @@
   <figcaption>14 · תוצאה <span>(תבנית, כשה-LLM לא זמין, אותה פרסונה)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="done"></div>
-    <main class="chat">
-      <div class="msg msg--in">עברתי על הכל. ככה זה נראה מהצד שלי:<span class="msg__time">10:47</span></div>
+    <main class="screen">
+      <h2 class="q">ככה זה נראה מהצד שלי</h2>
       <div class="result">
         <section class="block">
           <h2>מה ראיתי</h2>
@@ -395,8 +366,8 @@
       </div>
       <footer class="foot">Ensemble AI · בונים AI לתוך הדרך שבה העסק כבר עובד.<br><a href="https://ensemble-ai.io/he/">ensemble-ai.io</a></footer>
     </main>
-    <div class="cta">
-      <a class="btn" href="https://cal.com/asaf-yaniv-hlwofj/30min">בואו נדבר 30 דקות ונבנה את זה</a>
+    <div class="dock">
+      <a class="btn btn--block" href="https://cal.com/asaf-yaniv-hlwofj/30min">בואו נדבר 30 דקות ונבנה את זה</a>
       <small>קובעים ישר ביומן של אסף</small>
     </div>
   </div></div>
@@ -407,15 +378,14 @@
   <figcaption>15 · שגיאת רשת <span>(הבקשה לא הגיעה לשרת)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="7"></div>
-    <main class="chat">
-      <div class="msg msg--out">יעל · 050-1234567<span class="msg__time">10:47 ✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in msg--warn">משהו נתקע בדרך והניתוח לא הגיע. התשובות שמורות כאן, אפשר לנסות שוב.<span class="msg__time">10:47</span></div>
-      <div class="actions">
-        <button class="btn btn--block" type="button">לנסות שוב</button>
-        <a class="btn btn--ghost btn--block" href="https://cal.com/asaf-yaniv-hlwofj/30min">או לקבוע שיחה ישר</a>
-      </div>
+    <main class="screen">
+      <h2 class="q">משהו נתקע בדרך</h2>
+      <p class="lead">הניתוח לא הגיע. התשובות שמורות כאן, אפשר לנסות שוב.</p>
     </main>
+    <div class="dock">
+      <button class="btn btn--block" type="button">לנסות שוב</button>
+      <a class="btn btn--ghost btn--block" href="https://cal.com/asaf-yaniv-hlwofj/30min">או לקבוע שיחה ישר</a>
+    </div>
   </div></div>
 </figure>
 
@@ -424,15 +394,14 @@
   <figcaption>16 · עומס <span>(429 או שגיאת שרת)</span></figcaption>
   <div class="frame"><div class="app">
     <div data-header="7"></div>
-    <main class="chat">
-      <div class="msg msg--out">יעל · 050-1234567<span class="msg__time">10:47 ✓</span></div>
-      <div class="gap"></div>
-      <div class="msg msg--in msg--warn">יש כרגע עומס. אפשר לנסות שוב בעוד דקה.<span class="msg__time">10:47</span></div>
-      <div class="actions">
-        <button class="btn btn--block" type="button">לנסות שוב</button>
-        <a class="btn btn--ghost btn--block" href="https://cal.com/asaf-yaniv-hlwofj/30min">או לקבוע שיחה ישר</a>
-      </div>
+    <main class="screen">
+      <h2 class="q">יש כרגע עומס</h2>
+      <p class="lead">אפשר לנסות שוב בעוד דקה.</p>
     </main>
+    <div class="dock">
+      <button class="btn btn--block" type="button">לנסות שוב</button>
+      <a class="btn btn--ghost btn--block" href="https://cal.com/asaf-yaniv-hlwofj/30min">או לקבוע שיחה ישר</a>
+    </div>
   </div></div>
 </figure>
 
@@ -440,12 +409,10 @@
 
 <template id="tpl-header">
   <header class="bar">
-    <div class="bar__pill">
-      <button class="bar__back" type="button" aria-label="חזרה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-      <span class="avatar" aria-hidden="true">א</span>
-      <div class="bar__who"><div class="bar__name">אסף יניב</div><div class="bar__status">מחובר</div></div>
-      <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
+    <button class="bar__back" type="button" aria-label="חזרה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    <img class="bar__logo" src="/quiz/ensemble-lockup-ink.svg" alt="ensemble">
+    <span aria-hidden="true"></span>
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </header>
 </template>
 <script>
@@ -454,12 +421,10 @@
   document.querySelectorAll('[data-header]').forEach((slot) => {
     const node = tpl.content.cloneNode(true);
     const step = slot.dataset.header;
-    const dots = node.querySelectorAll('.dots i');
     const n = step === 'done' ? 7 : Number(step);
-    dots.forEach((d, i) => { if (i < n - 1) d.classList.add('on'); else if (i === n - 1) d.classList.add('now'); });
+    node.querySelectorAll('.dots i').forEach((d, i) => { if (i < n - 1) d.classList.add('on'); else if (i === n - 1) d.classList.add('now'); });
     if (step === 'done') node.querySelector('.dots').hidden = true;
     if (step === '1') node.querySelector('.bar__back').disabled = true;
-    if (slot.dataset.status) node.querySelector('.bar__status').textContent = slot.dataset.status;
     slot.replaceWith(node);
   });
 </script>
