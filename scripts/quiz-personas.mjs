@@ -33,6 +33,7 @@ if (existsSync('.dev.vars')) {
 }
 const args = process.argv.slice(2);
 if (args.includes('--template')) delete env.ANTHROPIC_API_KEY;
+if (!env.ANTHROPIC_API_KEY) env.QUIZ_TEMPLATE_FALLBACK = '1'; // no key: show the template output instead of failing
 const only = args.filter((x) => /^\d+$/.test(x)).map(Number);
 
 console.log(`mode: ${env.ANTHROPIC_API_KEY ? `live LLM (${env.ANTHROPIC_MODEL || 'claude-opus-5-5'})` : 'template only (no ANTHROPIC_API_KEY)'}\n`);
@@ -41,6 +42,7 @@ for (const [i, answers] of PERSONAS.entries()) {
   const n = i + 1;
   if (only.length && !only.includes(n)) continue;
   const an = await analyze(env, { stage: 'complete', session_id: '00000000-0000-4000-8000-000000000000', answers, contact: null, utm: { source: '', medium: '', campaign: '' }, device: 'test' });
+  if (!an.ok) { console.log(`━━━━━━━━ #${n} FAILED: ${an.errors.join(' | ')}\n`); continue; }
   const r = an.result;
   const check = checkResult(r, an.shortlist);
   console.log(`━━━━━━━━ #${n} ${optionLabel('industry', answers.industry)}${answers.industry_other ? ` (${answers.industry_other})` : ''} · ${optionLabel('size', answers.size)} · ${optionLabel('sink', answers.sink)} · ${optionLabel('hours', answers.hours)} ש׳`);

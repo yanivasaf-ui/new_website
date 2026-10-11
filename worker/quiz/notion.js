@@ -7,7 +7,7 @@ const NOTION_VERSION = '2022-06-28';
 const TIMEOUT_MS = 6000;
 
 /** @param {import('../index.js').Env} env */
-export const notionConfigured = (env) => Boolean(env.NOTION_TOKEN && env.NOTION_LEADS_DB_ID);
+export const notionConfigured = (env) => Boolean(env.NOTION_TOKEN && env.NOTION_QUIZ_DB_ID);
 
 /** @param {import('../index.js').Env} env @param {string} path @param {string} method @param {any} body */
 async function notion(env, path, method, body) {
@@ -72,7 +72,7 @@ export function leadProps(sub, extra = {}) {
 /** @param {import('../index.js').Env} env @param {string} sessionId */
 export async function findLeadBySession(env, sessionId) {
   if (!notionConfigured(env)) return null;
-  const r = await notion(env, `/databases/${env.NOTION_LEADS_DB_ID}/query`, 'POST', {
+  const r = await notion(env, `/databases/${env.NOTION_QUIZ_DB_ID}/query`, 'POST', {
     filter: { property: 'session_id', rich_text: { equals: sessionId } },
     page_size: 1,
   });
@@ -91,7 +91,7 @@ export async function updateLead(env, pageId, properties) {
  */
 export async function upsertLead(env, sessionId, properties) {
   if (!notionConfigured(env)) {
-    console.warn('notion not configured (NOTION_TOKEN / NOTION_LEADS_DB_ID); lead not stored');
+    console.warn('notion not configured (NOTION_TOKEN / NOTION_QUIZ_DB_ID); lead not stored');
     return null;
   }
   const existing = await findLeadBySession(env, sessionId);
@@ -102,7 +102,7 @@ export async function upsertLead(env, sessionId, properties) {
   /** @type {Record<string, any>} */
   const props = { ...properties, created: { date: { start: new Date().toISOString() } } };
   if (!props.name) props.name = { title: [{ text: { content: `anon-${sessionId.slice(0, 8)}` } }] };
-  const page = await notion(env, '/pages', 'POST', { parent: { database_id: env.NOTION_LEADS_DB_ID }, properties: props });
+  const page = await notion(env, '/pages', 'POST', { parent: { database_id: env.NOTION_QUIZ_DB_ID }, properties: props });
   return page.id;
 }
 

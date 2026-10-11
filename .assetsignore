@@ -13,3 +13,5 @@ jsconfig.json
 .wrangler/
 .build/
 QUIZ.md
+quiz/mockup.html
+jsconfig.page.json

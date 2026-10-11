@@ -1,7 +1,8 @@
 // @ts-check
 // Validation of an analysis result (LLM or template).
 
-export const MAX_WORDS = 140;
+/** Hard cap per result block (what_i_saw / leak+estimate / first_step / next_step). */
+export const BLOCK_MAX = 120;
 
 /** Visible fields, in display order. `reason` is internal and not counted. */
 const VISIBLE = (/** @type {any} */ r) => [
@@ -57,7 +58,13 @@ export function checkResult(r, shortlist) {
 
   const fields = VISIBLE(r);
   const words = fields.reduce((n, f) => n + wordCount(f), 0);
-  if (words > MAX_WORDS) errors.push(`${words} words, max ${MAX_WORDS}`);
+  const blocks = {
+    what_i_saw: wordCount(r.what_i_saw),
+    biggest_leak: wordCount(r.biggest_leak) + wordCount(r.estimate_note),
+    first_step: wordCount(fs.title) + wordCount(fs.description) + wordCount(fs.week1),
+    next_step: wordCount(r.next_step),
+  };
+  for (const [name, n] of Object.entries(blocks)) if (n > BLOCK_MAX) errors.push(`${name} has ${n} words, max ${BLOCK_MAX}`);
   fields.forEach((f, i) => {
     if (hebrewRatio(f) < 0.75) errors.push(`field ${i} is not mostly Hebrew`);
   });

@@ -1,5 +1,6 @@
 // @ts-check
 import { optionIds, LIMITS } from '../../quiz/questions.js';
+import { normalizeIlMobile } from '../../quiz/phone.js';
 
 /** Name of the hidden honeypot input. Real users never fill it. */
 export const HONEYPOT_FIELD = 'website';
@@ -11,21 +12,6 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 function cleanText(v, max) {
   if (typeof v !== 'string') return '';
   return v.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
-}
-
-/**
- * Israeli mobile number -> { local: '05XXXXXXXX', e164: '+9725XXXXXXXX' }, or null.
- * Accepts spaces, dashes, parentheses, +972 / 972 / 0 prefixes.
- * @param {unknown} raw
- */
-export function normalizeIlMobile(raw) {
-  let d = String(raw ?? '').replace(/[\s\-().]/g, '');
-  if (d.startsWith('+972')) d = '0' + d.slice(4);
-  else if (d.startsWith('00972')) d = '0' + d.slice(5);
-  else if (d.startsWith('972')) d = '0' + d.slice(3);
-  d = d.replace(/^00/, '0');
-  if (!/^05\d{8}$/.test(d)) return null;
-  return { local: d, e164: '+972' + d.slice(1) };
 }
 
 /** @param {any} body */

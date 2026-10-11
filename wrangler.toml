@@ -6,8 +6,12 @@ compatibility_date = "2026-07-27"
 directory = "./"
 binding = "ASSETS"
 
-# Per-IP rate limit for /api/quiz* (Workers Rate Limiting binding; period must be 10 or 60).
-[[ratelimits]]
-name = "QUIZ_RATE_LIMITER"
-namespace_id = "7301"
-simple = { limit = 20, period = 60 }
+# Per-IP hourly limits for /api/analyze (5 analyses per hour). The built-in rate-limit binding
+# only supports 10s/60s windows, so this is a small SQLite-backed Durable Object.
+[[durable_objects.bindings]]
+name = "RATE_LIMITER"
+class_name = "RateLimiter"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RateLimiter"]

@@ -1,13 +1,14 @@
 // @ts-check
-// Analysis engine: shortlist -> one LLM call (structured JSON) -> validate -> one retry ->
-// template fallback. The user always gets a result.
+// Analysis engine: shortlist -> one LLM call (structured JSON) -> validate -> one retry.
+// If both attempts fail the analysis fails (the page shows "משהו נתקע בדרך"), unless
+// QUIZ_TEMPLATE_FALLBACK=1, which returns a template result built from the shortlist instead.
 import Anthropic from '@anthropic-ai/sdk';
 import { buildShortlist } from './shortlist.js';
 import { SYSTEM_PROMPT, outputSchema, userMessage } from './prompt.js';
 import { checkResult } from './check.js';
 import { templateResult } from './template.js';
 
-const DEFAULT_MODEL = 'claude-opus-5-5';
+const DEFAULT_MODEL = 'claude-sonnet-4-6';
 const DEFAULT_TIMEOUT_MS = 12_000;
 /** Don't start the retry unless at least this much of the budget is left. */
 const MIN_RETRY_BUDGET_MS = 4_000;
@@ -21,12 +22,13 @@ const MIN_RETRY_BUDGET_MS = 4_000;
  * @property {string} next_step
  *
  * @typedef {Object} Analysis
- * @property {'llm'|'template'} source
- * @property {AnalysisResult} result
+ * @property {boolean} ok
+ * @property {'llm'|'template'|'failed'} source
+ * @property {AnalysisResult} [result]    present when ok
  * @property {string[]} shortlist
- * @property {string[]} trace       shortlist rule trace
- * @property {string} [reason]      LLM's internal reason for the pick
- * @property {string[]} [errors]    why the LLM path was abandoned (if it was)
+ * @property {string[]} trace             shortlist rule trace
+ * @property {string} [reason]            LLM's internal reason for the pick
+ * @property {string[]} [errors]          why the LLM path was abandoned (if it was)
  * @property {number} [ms]
  */
 
@@ -38,17 +40,17 @@ async function callModel(env, user, shortlist, timeoutMs) {
   const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, baseURL: env.ANTHROPIC_BASE_URL || undefined, maxRetries: 0 });
   const params = {
     model: env.ANTHROPIC_MODEL || DEFAULT_MODEL,
-    max_tokens: 4000,
+    max_tokens: 3000,
     system: SYSTEM_PROMPT,
     messages: [{ role: 'user', content: user }],
     output_config: {
-      effort: env.QUIZ_LLM_EFFORT || 'low',
+      ...(env.QUIZ_LLM_EFFORT ? { effort: env.QUIZ_LLM_EFFORT } : {}),
       format: { type: 'json_schema', schema: outputSchema(shortlist) },
     },
   };
-  const useFallbacks = (env.QUIZ_LLM_FALLBACKS || 'default') !== 'off';
+  // Server-side refusal fallback is only for the newest models; opt in with QUIZ_LLM_FALLBACKS=default.
   const res = /** @type {any} */ (
-    useFallbacks
+    env.QUIZ_LLM_FALLBACKS === 'default'
       ? await client.beta.messages.create(
           /** @type {any} */ ({ ...params, betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' }),
           { timeout: timeoutMs },
@@ -70,21 +72,20 @@ export async function analyze(env, sub) {
   const started = Date.now();
   const a = sub.answers;
   const { ids: shortlist, trace } = buildShortlist(a);
-  const fallback = (/** @type {string[]} */ errors) => ({
-    source: /** @type {const} */ ('template'),
-    result: templateResult(a, shortlist),
-    shortlist,
-    trace,
-    errors,
-    ms: Date.now() - started,
-  });
+  const giveUp = (/** @type {string[]} */ errors) => {
+    console.warn('[quiz] LLM path abandoned:', errors.join(' | '));
+    return env.QUIZ_TEMPLATE_FALLBACK === '1'
+      ? /** @type {Analysis} */ ({ ok: true, source: 'template', result: templateResult(a, shortlist), shortlist, trace, errors, ms: Date.now() - started })
+      : /** @type {Analysis} */ ({ ok: false, source: 'failed', shortlist, trace, errors, ms: Date.now() - started });
+  };
 
-  if (!env.ANTHROPIC_API_KEY) return fallback(['ANTHROPIC_API_KEY not set']);
+  if (!env.ANTHROPIC_API_KEY) return giveUp(['ANTHROPIC_API_KEY not set']);
 
   const budget = Number(env.QUIZ_LLM_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS;
   const deadline = started + budget;
   /** @type {string[]} */
   const errors = [];
+  /** @type {string[] | undefined} */
   let previous = undefined;
 
   for (let attempt = 1; attempt <= 2; attempt++) {
@@ -98,7 +99,7 @@ export async function analyze(env, sub) {
       const check = checkResult(out, shortlist);
       if (check.ok) {
         const { reason, ...result } = out;
-        return { source: 'llm', result, shortlist, trace, reason, errors, ms: Date.now() - started };
+        return { ok: true, source: 'llm', result, shortlist, trace, reason, errors, ms: Date.now() - started };
       }
       errors.push(`attempt ${attempt} invalid: ${check.errors.join('; ')}`);
       previous = check.errors;
@@ -109,21 +110,23 @@ export async function analyze(env, sub) {
       if (msg === 'timeout') break;
     }
   }
-  console.warn('[quiz] LLM path abandoned, using template:', errors.join(' | '));
-  return fallback(errors);
+  return giveUp(errors);
 }
 
-/** Flattens a result into plain text for the Notion `analysis` field. @param {Analysis} an */
+/** Flattens an analysis into plain text for the Notion `analysis` field. @param {Analysis} an */
 export function analysisToText(an) {
+  const meta = `source: ${an.source} · shortlist: ${an.shortlist.join(', ')}${an.reason ? ` · reason: ${an.reason}` : ''}`;
+  const errs = an.errors?.length ? `llm errors: ${an.errors.join(' | ')}` : '';
+  if (!an.ok || !an.result) return ['ANALYSIS FAILED, follow up manually', meta, errs].filter(Boolean).join('\n');
   const r = an.result;
   return [
     `מה ראיתי: ${r.what_i_saw}`,
     `המקום הכי יקר: ${r.biggest_leak} (${r.estimate_note})`,
     `הצעד הראשון: ${r.first_step.title}. ${r.first_step.description} שבוע ראשון: ${r.first_step.week1}`,
     `ומה אחר כך: ${r.next_step}`,
-    `---`,
-    `source: ${an.source} · shortlist: ${an.shortlist.join(', ')}${an.reason ? ` · reason: ${an.reason}` : ''}`,
-    an.errors?.length ? `llm errors: ${an.errors.join(' | ')}` : '',
+    '---',
+    meta,
+    errs,
   ]
     .filter(Boolean)
     .join('\n');
