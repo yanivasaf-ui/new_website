@@ -1,12 +1,31 @@
 // @ts-check
 // Analysis engine: shortlist -> one LLM call (structured JSON) -> validate -> one retry.
-// If both attempts fail the analysis fails (the page shows "משהו נתקע בדרך"), unless
-// QUIZ_TEMPLATE_FALLBACK=1, which returns a template result built from the shortlist instead.
+// If both attempts fail the user still gets a result: a template built from the shortlist
+// (QUIZ_TEMPLATE_FALLBACK=0 turns this off). The analysis only fails, and the page shows
+// "משהו נתקע בדרך", when the template cannot be built or fails the same validation.
 import Anthropic from '@anthropic-ai/sdk';
 import { buildShortlist } from './shortlist.js';
 import { SYSTEM_PROMPT, outputSchema, userMessage } from './prompt.js';
 import { checkResult } from './check.js';
 import { templateResult } from './template.js';
+
+/**
+ * Template result that passes the same checks as LLM output, or null.
+ * The template quotes the owner's own words; if that quote trips a check (English text, a banned
+ * word), retry without the quote and the free-text business type before giving up.
+ * @param {import('./validate.js').Answers} a @param {string[]} shortlist
+ */
+export function safeTemplate(a, shortlist) {
+  for (const answers of [a, { ...a, pain: '', industry_other: '' }]) {
+    try {
+      const result = templateResult(answers, shortlist);
+      if (checkResult(result, shortlist).ok) return result;
+    } catch (e) {
+      console.error('[quiz] template failed:', e?.message || e);
+    }
+  }
+  return null;
+}
 
 const DEFAULT_MODEL = 'claude-sonnet-4-6';
 const DEFAULT_TIMEOUT_MS = 12_000;
@@ -74,8 +93,9 @@ export async function analyze(env, sub) {
   const { ids: shortlist, trace } = buildShortlist(a);
   const giveUp = (/** @type {string[]} */ errors) => {
     console.warn('[quiz] LLM path abandoned:', errors.join(' | '));
-    return env.QUIZ_TEMPLATE_FALLBACK === '1'
-      ? /** @type {Analysis} */ ({ ok: true, source: 'template', result: templateResult(a, shortlist), shortlist, trace, errors, ms: Date.now() - started })
+    const result = env.QUIZ_TEMPLATE_FALLBACK === '0' ? null : safeTemplate(a, shortlist);
+    return result
+      ? /** @type {Analysis} */ ({ ok: true, source: 'template', result, shortlist, trace, errors, ms: Date.now() - started })
       : /** @type {Analysis} */ ({ ok: false, source: 'failed', shortlist, trace, errors, ms: Date.now() - started });
   };
 

@@ -160,3 +160,9 @@ textarea.input { border-radius: var(--r-card); min-height: 112px; }
 /* entrance only when moving between screens, never when a tap re-renders the current one */
 @media (prefers-reduced-motion: no-preference) { .screen.enter { animation: rise 0.22s ease-out; } }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Q5: the hours row sits in the dock so it never falls below the fold */
+.dock .q__sub { margin: 0; font-size: 17px; padding-inline-start: 4px; }
+.dock .opts--wrap { gap: 8px; }
+.dock .opts--wrap .opt { padding: 0 10px; min-width: 56px; }
+.dock { box-shadow: 0 -10px 16px -10px rgba(239, 230, 216, 0.9); }

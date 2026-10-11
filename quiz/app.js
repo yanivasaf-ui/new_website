@@ -247,9 +247,12 @@ function opt(label, pressed, onclick, { check = false, disabled = false } = {}) 
   );
 }
 
-/** Wrap Latin words (Slack/Teams, CRM) so they use the Latin face. @param {string} text */
+/** Wrap Latin words (Slack/Teams, CRM) in the Latin face, and "10+" in an LTR run so the plus stays on the right. @param {string} text */
 function latinSpans(text) {
-  return text.split(/([A-Za-z][A-Za-z/]*)/).map((part) => (/^[A-Za-z]/.test(part) ? h('span', { class: 'lat' }, part) : part));
+  return text.split(/([A-Za-z][A-Za-z/]*|\d+\+)/).map((part) => {
+    if (/^\d+\+$/.test(part)) return h('bdi', { dir: 'ltr' }, part);
+    return /^[A-Za-z]/.test(part) ? h('span', { class: 'lat' }, part) : part;
+  });
 }
 
 /** Tap an option, show it selected, then move on. @param {() => void} set @param {number} step */
@@ -274,7 +277,7 @@ function heroScreen() {
       'div',
       { class: 'hero__body' },
       h('h1', { tabindex: '-1' }, 'מה בעסק שלך יכול לרוץ בלעדיך?'),
-      h('p', { class: 'hero__sub' }, '6 שאלות, ניתוח אישי, ותדע בדיוק איפה'),
+      h('p', { class: 'hero__sub' }, '6 שאלות, ניתוח אישי, ותדעו בדיוק איפה'),
       h('div', { 'data-slot': 'hero-video-v2', hidden: true }),
       h('button', { class: 'btn btn--block', type: 'button', onclick: () => go(1, { typing: true }) }, 'מתחילים'),
       h(
@@ -376,6 +379,8 @@ function sinkScreen() {
     save();
     refresh();
   };
+  // The hours row lives in the bottom dock next to המשך, so it is always on screen
+  // while the (long) list of time sinks scrolls above it.
   return [
     header(5),
     h(
@@ -383,10 +388,14 @@ function sinkScreen() {
       { class: 'screen' },
       headline(q.text),
       h('div', { class: 'opts', role: 'group', 'aria-label': q.text }, (q.options || []).map((o) => opt(o.label, S.a.sink === o.id, pick('sink', o.id)))),
+    ),
+    h(
+      'div',
+      { class: 'dock' },
       h('p', { class: 'q__sub' }, hq.text),
       h('div', { class: 'opts opts--wrap', role: 'group', 'aria-label': hq.text }, (hq.options || []).map((o) => opt(o.label, S.a.hours === o.id, pick('hours', o.id)))),
+      h('button', { class: 'btn btn--block', type: 'button', disabled: !(S.a.sink && S.a.hours), onclick: () => go(6, { typing: true }) }, 'המשך'),
     ),
-    h('div', { class: 'dock' }, h('button', { class: 'btn btn--block', type: 'button', disabled: !(S.a.sink && S.a.hours), onclick: () => go(6, { typing: true }) }, 'המשך')),
   ];
 }
 

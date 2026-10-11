@@ -18,8 +18,11 @@ Answers, contact fields and the result persist in `localStorage` (key `ensemble-
   - `complete`: validates (Israeli mobile required), saves the lead to Notion **before** the LLM call, calls the model
     (12s budget, one retry on invalid output), returns `{ ok, source, result }`, then writes the analysis back and emails.
     Limit **5 per hour per IP**, counted only for well-formed requests.
-  - LLM failure or timeout: lead is still saved and emailed (marked "analysis failed"), response is `502 analysis_failed`,
-    and the page shows "משהו נתקע בדרך". Set `QUIZ_TEMPLATE_FALLBACK=1` to return a template result instead.
+  - LLM failure or timeout: the user still gets a result, a template built from the shortlist (`source: "template"`,
+    recorded in Notion and the lead email). The template drops the quote of the owner's own words if that quote would fail
+    validation (e.g. English text). Only if the template cannot be built either: lead is saved and emailed (marked
+    "analysis failed"), response is `502 analysis_failed`, and the page shows "משהו נתקע בדרך".
+    `QUIZ_TEMPLATE_FALLBACK=0` turns the template off, so every LLM failure shows the error state.
   - Other responses: `400 {error, field}`, `403` foreign Origin, `405`, `429 {retry_after}` → "יש כרגע עומס".
 - `POST /api/analyze/click` — `{ session_id }`: sets `booking_clicked`, `status=booked-click`, short email. 30/hour/IP.
 
@@ -30,14 +33,14 @@ binding only supports 10s/60s windows.
 
 `catalog.js` (S1-S9) → `shortlist.js` (deterministic rules table, 1-2 candidates) → `prompt.js` (system prompt, JSON schema
 with `solution_id` restricted to the shortlist) → `check.js` (schema, Hebrew ratio, ≤120 words per block, banned words,
-gendered forms, solution in shortlist) → `analysis.js`. Model: `claude-sonnet-4-6` (override with `ANTHROPIC_MODEL`).
+gendered forms, solution in shortlist) → `analysis.js` (falls back to `template.js`). Model: `claude-sonnet-4-6` (override with `ANTHROPIC_MODEL`).
 `npm run personas` prints 12 persona outputs (live if `ANTHROPIC_API_KEY` is set, template otherwise).
 
 ## Secrets (`wrangler secret put <NAME>`; local: copy `.dev.vars.example` to `.dev.vars`)
 
 | Name | Needed for |
 |---|---|
-| `ANTHROPIC_API_KEY` | the analysis (without it every submission ends in the error state) |
+| `ANTHROPIC_API_KEY` | the live analysis (without it every result is the template fallback) |
 | `NOTION_TOKEN`, `NOTION_QUIZ_DB_ID` | lead storage (skipped with a log warning if missing) |
 | `RESEND_API_KEY`, `LEAD_EMAIL_FROM` (verified domain), `LEAD_EMAIL_TO` | lead emails (skipped with a log warning if missing) |
 
