@@ -10,6 +10,9 @@ keep_vars = true
 routes = [
   { pattern = "ensemble-ai.io", zone_name = "ensemble-ai.io", custom_domain = true },
 ]
+# Declaring routes makes wrangler turn the workers.dev address off unless it is set explicitly.
+# It was on before, so keep it on.
+workers_dev = true
 
 [assets]
 directory = "./"
