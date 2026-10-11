@@ -5,7 +5,7 @@
 ANTHROPIC_API_KEY=
 # Optional overrides
 # ANTHROPIC_MODEL=claude-sonnet-4-6
-# QUIZ_LLM_TIMEOUT_MS=12000
+# QUIZ_LLM_TIMEOUT_MS=30000   # per attempt; a timeout or invalid output gets one retry, then the template
 # QUIZ_LLM_EFFORT=             # low|medium|high; unset = model default
 # QUIZ_LLM_FALLBACKS=default   # server-side refusal fallback; only for models that support it
 # QUIZ_TEMPLATE_FALLBACK=0     # default is ON: an LLM failure returns a template result. 0 = show the error state instead

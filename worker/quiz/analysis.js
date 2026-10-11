@@ -1,5 +1,6 @@
 // @ts-check
-// Analysis engine: shortlist -> one LLM call (structured JSON) -> validate -> one retry.
+// Analysis engine: shortlist -> LLM call (structured JSON) -> validate. Two attempts at most:
+// the second runs after a timeout, an API error, or output that fails validation.
 // If both attempts fail the user still gets a result: a template built from the shortlist
 // (QUIZ_TEMPLATE_FALLBACK=0 turns this off). The analysis only fails, and the page shows
 // "משהו נתקע בדרך", when the template cannot be built or fails the same validation.
@@ -28,9 +29,8 @@ export function safeTemplate(a, shortlist) {
 }
 
 const DEFAULT_MODEL = 'claude-sonnet-4-6';
-const DEFAULT_TIMEOUT_MS = 12_000;
-/** Don't start the retry unless at least this much of the budget is left. */
-const MIN_RETRY_BUDGET_MS = 4_000;
+/** Timeout PER ATTEMPT (QUIZ_LLM_TIMEOUT_MS overrides). Worst case is two attempts, so 2 x this. */
+const DEFAULT_TIMEOUT_MS = 30_000;
 
 /**
  * @typedef {Object} AnalysisResult
@@ -101,21 +101,15 @@ export async function analyze(env, sub) {
 
   if (!env.ANTHROPIC_API_KEY) return giveUp(['ANTHROPIC_API_KEY not set']);
 
-  const budget = Number(env.QUIZ_LLM_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS;
-  const deadline = started + budget;
+  const perAttempt = Number(env.QUIZ_LLM_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS;
   /** @type {string[]} */
   const errors = [];
   /** @type {string[] | undefined} */
   let previous = undefined;
 
   for (let attempt = 1; attempt <= 2; attempt++) {
-    const remaining = deadline - Date.now();
-    if (attempt === 2 && remaining < MIN_RETRY_BUDGET_MS) {
-      errors.push(`no budget for retry (${remaining}ms left)`);
-      break;
-    }
     try {
-      const out = await callModel(env, userMessage(a, shortlist, previous), shortlist, remaining);
+      const out = await callModel(env, userMessage(a, shortlist, previous), shortlist, perAttempt);
       const check = checkResult(out, shortlist);
       if (check.ok) {
         const { reason, ...result } = out;
@@ -124,18 +118,17 @@ export async function analyze(env, sub) {
       errors.push(`attempt ${attempt} invalid: ${check.errors.join('; ')}`);
       previous = check.errors;
     } catch (e) {
-      const msg = e?.name === 'APIConnectionTimeoutError' || /timed? ?out/i.test(String(e?.message)) ? 'timeout' : String(e?.message || e).slice(0, 200);
+      const msg = e?.name === 'APIConnectionTimeoutError' || /timed? ?out/i.test(String(e?.message)) ? `timeout after ${perAttempt}ms` : String(e?.message || e).slice(0, 200);
       errors.push(`attempt ${attempt} failed: ${msg}`);
-      // A timeout means the budget is gone; other errors (bad JSON, 5xx) may be worth one retry.
-      if (msg === 'timeout') break;
     }
+    if (attempt === 1) console.warn('[quiz] LLM attempt 1 did not produce a result, retrying once:', errors[errors.length - 1]);
   }
   return giveUp(errors);
 }
 
 /** Flattens an analysis into plain text for the Notion `analysis` field. @param {Analysis} an */
 export function analysisToText(an) {
-  const meta = `source: ${an.source} · shortlist: ${an.shortlist.join(', ')}${an.reason ? ` · reason: ${an.reason}` : ''}`;
+  const meta = `source: ${an.source} · ${an.ms ?? '?'}ms · shortlist: ${an.shortlist.join(', ')}${an.reason ? ` · reason: ${an.reason}` : ''}`;
   const errs = an.errors?.length ? `llm errors: ${an.errors.join(' | ')}` : '';
   if (!an.ok || !an.result) return ['ANALYSIS FAILED, follow up manually', meta, errs].filter(Boolean).join('\n');
   const r = an.result;

@@ -8,7 +8,7 @@ const SITE_URL = 'https://ensemble-ai.io/he/';
 const STORE_KEY = 'ensemble-quiz-v1';
 const TYPING_MS = 650; // dots shown before each question
 const ANALYZING_MIN_MS = 4000; // dots shown while the analysis loads (never shorter than this)
-const REQUEST_TIMEOUT_MS = 40_000;
+const REQUEST_TIMEOUT_MS = 90_000; // server worst case: Notion save (6s) + 2 LLM attempts (30s each)
 const ADVANCE_MS = 180; // pause so the tapped option is seen before moving on
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 /** answer field -> question step, for recovering from a server-side "invalid option" */

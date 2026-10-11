@@ -16,7 +16,7 @@ Answers, contact fields and the result persist in `localStorage` (key `ensemble-
   - `website` is the honeypot: if filled, responds `{ok:true}` and stores nothing.
   - `partial` (sent from Q3 on): anonymous row, `status=partial`, no outreach. Limit 60/hour/IP.
   - `complete`: validates (Israeli mobile required), saves the lead to Notion **before** the LLM call, calls the model
-    (12s budget, one retry on invalid output), returns `{ ok, source, result }`, then writes the analysis back and emails.
+    (30s timeout per attempt; one retry after a timeout, API error or invalid output, so at most ~60s), returns `{ ok, source, result }`, then writes the analysis back and emails.
     Limit **5 per hour per IP**, counted only for well-formed requests.
   - LLM failure or timeout: the user still gets a result, a template built from the shortlist (`source: "template"`,
     recorded in Notion and the lead email). The template drops the quote of the owner's own words if that quote would fail
