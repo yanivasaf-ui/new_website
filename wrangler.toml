@@ -5,6 +5,12 @@ compatibility_date = "2026-07-27"
 # Variables and secrets are installed in the Cloudflare dashboard; never let a deploy wipe them.
 keep_vars = true
 
+# The custom domain ensemble-ai.io is bound to this Worker. Declared here so the config matches the
+# dashboard and a deploy never reports (or applies) drift on it.
+routes = [
+  { pattern = "ensemble-ai.io", zone_name = "ensemble-ai.io", custom_domain = true },
+]
+
 [assets]
 directory = "./"
 binding = "ASSETS"
