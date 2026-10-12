@@ -84,7 +84,10 @@ function load() {
   if (!fresh.utm.source && !fresh.utm.medium && !fresh.utm.campaign) {
     fresh.utm = { source: q.get('utm_source') || '', medium: q.get('utm_medium') || '', campaign: q.get('utm_campaign') || '' };
   }
-  if (fresh.step === 'result' && !fresh.result) fresh.step = 7;
+  if (fresh.step === 'result' && !validResult(fresh.result)) {
+    fresh.step = 7;
+    fresh.result = null;
+  }
   return fresh;
 }
 
@@ -154,7 +157,8 @@ async function requestAnalysis() {
 /** @param {any} r */
 function validResult(r) {
   const s = (/** @type {any} */ x) => typeof x === 'string' && x.trim() !== '';
-  return Boolean(r && s(r.what_i_saw) && s(r.biggest_leak) && s(r.estimate_note) && s(r.next_step) && r.first_step && s(r.first_step.title) && s(r.first_step.description) && s(r.first_step.week1));
+  const p = r?.product;
+  return Boolean(s(r?.what_i_saw) && s(r.biggest_leak) && s(r.estimate_note) && p && s(p.name) && s(p.does) && s(p.week1) && Number.isInteger(p.days) && p.days >= 1);
 }
 
 /* -------------------------------------------------------------- navigation */
@@ -526,6 +530,9 @@ function stateScreen(title, text) {
   ];
 }
 
+/** Build time in plain Hebrew. @param {number} n */
+const daysLabel = (n) => (n === 1 ? 'יום אחד' : n === 2 ? 'יומיים' : `${n} ימים`);
+
 /** @param {any} r */
 function resultScreen(r) {
   const note = String(r.estimate_note).replace(/^\s*הערכה גסה\s*[:,\-–]?\s*/, '');
@@ -544,12 +551,11 @@ function resultScreen(r) {
         h(
           'section',
           { class: 'block block--main' },
-          h('h2', {}, 'הצעד הראשון שהייתי עושה'),
-          h('p', { class: 'block__title' }, r.first_step.title),
-          h('p', {}, r.first_step.description),
-          h('dl', {}, h('dt', {}, 'בשבוע הראשון'), h('dd', {}, r.first_step.week1)),
+          h('h2', {}, 'מה הייתי בונה לכם'),
+          h('p', { class: 'block__title' }, r.product.name),
+          h('p', {}, r.product.does),
+          h('dl', {}, h('dt', {}, 'זמן בנייה'), h('dd', {}, daysLabel(r.product.days)), h('dt', {}, 'בשבוע הראשון'), h('dd', {}, r.product.week1)),
         ),
-        block('ומה אחר כך', h('p', {}, r.next_step)),
       ),
       h('footer', { class: 'foot' }, 'Ensemble AI · בונים AI לתוך הדרך שבה העסק כבר עובד.', h('br'), h('a', { href: SITE_URL }, 'ensemble-ai.io')),
     ),

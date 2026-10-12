@@ -99,16 +99,16 @@ export async function handleAnalyze(request, env, ctx) {
     return json({ ok: false, error: 'analysis_failed' }, 502);
   }
 
-  const { first_step } = analysis.result;
+  const { product } = analysis.result;
   ctx.waitUntil(
     (async () => {
       await writeBack({
         status: 'complete',
-        recommended_solution: first_step.solution_id,
+        recommended_solution: product.solution_id,
         analysis: analysisToText(analysis),
         analysis_source: analysis.source,
       });
-      await sendLeadEmail(env, sub, { solutionId: first_step.solution_id, solutionTitle: first_step.title, source: analysis.source }).catch(logErr('lead email'));
+      await sendLeadEmail(env, sub, { solutionId: product.solution_id, solutionTitle: product.name, source: analysis.source }).catch(logErr('lead email'));
     })(),
   );
 

@@ -31,6 +31,16 @@ Answers, contact fields and the result persist in `localStorage` (key `ensemble-
 Rate limits live in a SQLite-backed Durable Object (`RateLimiter`, see `wrangler.toml`): the built-in rate-limit
 binding only supports 10s/60s windows.
 
+## Result shape
+
+Ensemble sells implementation, so every result ends with a named product Asaf builds for the client, not with advice:
+`{ what_i_saw, biggest_leak, estimate_note, product: { solution_id, name, does, days, week1 } }`. The first three are the
+diagnosis. `product` is the last block on the page ("מה הייתי בונה לכם"): the product name, what it does for the pain, build
+time in days, and what they see in week one. `days` always comes from `catalog.js`, never from the model. The model's
+`product` must come from the shortlist, may not give advice (no "כדאי", "מומלץ"), and may not use em-dashes or superlatives
+(`check.js`). The template fallback builds the same block from the catalog (`productFor`), filled with the industry's wording
+and the owner's own channel.
+
 ## Analysis engine
 
 `catalog.js` (S1-S9) → `shortlist.js` (deterministic rules table, 1-2 candidates) → `prompt.js` (system prompt, JSON schema

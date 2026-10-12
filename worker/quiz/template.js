@@ -1,7 +1,7 @@
 // @ts-check
 // Deterministic fallback result, built from the catalog + answers. Used when the LLM is
 // unavailable, times out, or fails validation twice. Must pass the same checks as LLM output.
-import { solution, INDUSTRY_EXAMPLES } from './catalog.js';
+import { solution, productFor } from './catalog.js';
 
 const INDUSTRY = {
   professional: 'משרד שנותן שירותים מקצועיים',
@@ -63,8 +63,6 @@ function clip(s, maxWords) {
  */
 export function templateResult(a, shortlist) {
   const sol = solution(shortlist[0]) || solution('map_first');
-  const ex = INDUSTRY_EXAMPLES[a.industry] || INDUSTRY_EXAMPLES.other;
-  const fill = (/** @type {string} */ s) => s.replace('{ask}', ex.ask).replace('{doc}', ex.doc).replace('{meet}', ex.meet);
 
   const industry = a.industry === 'other' ? (a.industry_other ? `עסק מסוג "${a.industry_other}"` : 'עסק בתחום שלא מופיע ברשימה') : INDUSTRY[a.industry];
   const channels = (a.channels || []).map((c) => CHANNEL[c]).filter(Boolean).join(' ו');
@@ -75,12 +73,6 @@ export function templateResult(a, shortlist) {
     what_i_saw: base + pain,
     biggest_leak: LEAK[a.sink] || LEAK.other,
     estimate_note: `הערכה גסה, לפי מה שסימנת: בערך ${MONTHLY[a.hours] || MONTHLY['2_5']}.`,
-    first_step: {
-      solution_id: sol.id,
-      title: sol.title,
-      description: fill(sol.template.description),
-      week1: sol.template.week1,
-    },
-    next_step: sol.template.next,
+    product: productFor(sol, a),
   };
 }

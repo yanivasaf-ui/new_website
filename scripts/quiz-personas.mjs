@@ -53,6 +53,5 @@ for (const [i, answers] of PERSONAS.entries()) {
   if (an.errors?.length && an.source === 'template') console.log(`llm: ${an.errors.join(' | ')}`);
   console.log(`\nמה ראיתי\n  ${r.what_i_saw}`);
   console.log(`המקום הכי יקר שלך\n  ${r.biggest_leak}\n  ${r.estimate_note}`);
-  console.log(`הצעד הראשון שהייתי עושה: ${r.first_step.title} [${r.first_step.solution_id}]\n  ${r.first_step.description}\n  בשבוע הראשון: ${r.first_step.week1}`);
-  console.log(`ומה אחר כך\n  ${r.next_step}\n`);
+  console.log(`מה הייתי בונה לכם: ${r.product.name} [${r.product.solution_id}]\n  ${r.product.does}\n  זמן בנייה: ${r.product.days} ימים\n  בשבוע הראשון: ${r.product.week1}\n`);
 }

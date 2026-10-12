@@ -166,3 +166,6 @@ textarea.input { border-radius: var(--r-card); min-height: 112px; }
 .dock .opts--wrap { gap: 8px; }
 .dock .opts--wrap .opt { padding: 0 10px; min-width: 56px; }
 .dock { box-shadow: 0 -10px 16px -10px rgba(239, 230, 216, 0.9); }
+
+/* result: build time and first-week effect share one definition list */
+.block dd + dt { margin-top: 12px; }

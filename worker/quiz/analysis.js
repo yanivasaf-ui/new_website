@@ -9,6 +9,7 @@ import { buildShortlist } from './shortlist.js';
 import { SYSTEM_PROMPT, outputSchema, userMessage } from './prompt.js';
 import { checkResult } from './check.js';
 import { templateResult } from './template.js';
+import { solution } from './catalog.js';
 
 /**
  * Template result that passes the same checks as LLM output, or null.
@@ -37,8 +38,7 @@ const DEFAULT_TIMEOUT_MS = 30_000;
  * @property {string} what_i_saw
  * @property {string} biggest_leak
  * @property {string} estimate_note
- * @property {{ solution_id: string, title: string, description: string, week1: string }} first_step
- * @property {string} next_step
+ * @property {{ solution_id: string, name: string, does: string, days: number, week1: string }} product  the named product Ensemble builds
  *
  * @typedef {Object} Analysis
  * @property {boolean} ok
@@ -113,6 +113,8 @@ export async function analyze(env, sub) {
       const check = checkResult(out, shortlist);
       if (check.ok) {
         const { reason, ...result } = out;
+        // the build time is Ensemble's commitment, never the model's
+        result.product.days = solution(result.product.solution_id)?.days ?? 5;
         return { ok: true, source: 'llm', result, shortlist, trace, reason, errors, ms: Date.now() - started };
       }
       errors.push(`attempt ${attempt} invalid: ${check.errors.join('; ')}`);
@@ -135,8 +137,7 @@ export function analysisToText(an) {
   return [
     `מה ראיתי: ${r.what_i_saw}`,
     `המקום הכי יקר: ${r.biggest_leak} (${r.estimate_note})`,
-    `הצעד הראשון: ${r.first_step.title}. ${r.first_step.description} שבוע ראשון: ${r.first_step.week1}`,
-    `ומה אחר כך: ${r.next_step}`,
+    `מה הייתי בונה: ${r.product.name}. ${r.product.does} נבנה ב-${r.product.days} ימים. שבוע ראשון: ${r.product.week1}`,
     '---',
     meta,
     errs,
