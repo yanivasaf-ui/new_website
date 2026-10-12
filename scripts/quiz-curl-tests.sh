@@ -6,8 +6,9 @@
 BASE="${1:-http://localhost:8787}"
 SID() { node -e 'console.log(crypto.randomUUID())'; }
 ANSWERS='{"industry":"construction","size":"6_15","channels":["whatsapp","phone"],"acquisition":"referrals","sink":"scheduling","hours":"5_10","pain":"אני מתאם את אותו סיור באתר שלוש פעמים כי הלקוח לא עונה"}'
-complete() { # session_id, phone -> JSON body
-  echo "{\"stage\":\"complete\",\"session_id\":\"$1\",\"answers\":$ANSWERS,\"contact\":{\"name\":\"TEST\",\"whatsapp\":\"$2\",\"email\":\"\",\"consent\":true},\"utm\":{\"source\":\"test\",\"medium\":\"curl\",\"campaign\":\"quiz-dev\"},\"device\":\"mobile\",\"website\":\"${3:-}\"}"
+complete() { # session_id, phone, honeypot, email (default test@example.com; pass NONE for no email) -> JSON body
+  local email="${4-test@example.com}"; [ "$email" = NONE ] && email=""
+  echo "{\"stage\":\"complete\",\"session_id\":\"$1\",\"answers\":$ANSWERS,\"contact\":{\"name\":\"TEST\",\"whatsapp\":\"$2\",\"email\":\"$email\",\"consent\":true},\"utm\":{\"source\":\"test\",\"medium\":\"curl\",\"campaign\":\"quiz-dev\"},\"device\":\"mobile\",\"website\":\"${3:-}\"}"
 }
 run() { # name, ip, path, body
   echo "=== $1"
@@ -21,8 +22,11 @@ setmode valid
 S1=$(SID)
 run "partial after Q3 (anonymous)" 10.0.0.1 /api/analyze "{\"stage\":\"partial\",\"session_id\":\"$S1\",\"answers\":{\"industry\":\"construction\",\"size\":\"6_15\",\"channels\":[\"whatsapp\"]},\"utm\":{\"source\":\"test\"},\"device\":\"mobile\",\"website\":\"\"}"
 run "SUCCESS: valid complete lead" 10.0.0.1 /api/analyze "$(complete $S1 '050-123-4567')"
-run "missing phone" 10.0.0.2 /api/analyze "$(complete $(SID) '')"
-run "invalid phone (landline)" 10.0.0.2 /api/analyze "$(complete $(SID) '03-1234567')"
+run "CONTACT: email only, no phone -> passes" 10.0.0.2 /api/analyze "$(complete $(SID) '')"
+run "CONTACT: no email (phone given) -> rejected, field=email" 10.0.0.2 /api/analyze "$(complete $(SID) '0501234567' '' NONE)"
+run "CONTACT: malformed email -> rejected, field=email" 10.0.0.2 /api/analyze "$(complete $(SID) '' '' 'not-an-email')"
+run "CONTACT: email + bad phone (landline) -> rejected, field=whatsapp" 10.0.0.2 /api/analyze "$(complete $(SID) '03-1234567')"
+run "CONTACT: email + bad phone (letters) -> rejected, field=whatsapp" 10.0.0.2 /api/analyze "$(complete $(SID) 'abc')"
 run "honeypot filled" 10.0.0.2 /api/analyze "$(complete $(SID) '0501234567' 'http://spam.example')"
 run "invalid option" 10.0.0.2 /api/analyze "{\"stage\":\"complete\",\"session_id\":\"$(SID)\",\"answers\":{\"industry\":\"crypto\"},\"utm\":{},\"device\":\"mobile\"}"
 echo "=== foreign origin"; curl -s -w " HTTP %{http_code}\n" -X POST "$BASE/api/analyze" -H 'origin: https://evil.example' -H 'content-type: application/json' --data '{}'; echo

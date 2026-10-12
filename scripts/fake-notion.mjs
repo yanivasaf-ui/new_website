@@ -16,6 +16,8 @@ const flat = (p) => ({
   id: p.id,
   status: p.properties.status?.select?.name,
   name: p.properties.name?.title?.[0]?.text?.content,
+  phone: p.properties.whatsapp?.phone_number ?? null,
+  email: p.properties.email?.email ?? null,
   size: p.properties.size?.select?.name,
   sink: p.properties.sink?.select?.name,
   booking_clicked: p.properties.booking_clicked?.checkbox,

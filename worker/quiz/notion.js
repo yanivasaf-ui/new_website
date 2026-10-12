@@ -57,8 +57,8 @@ export function leadProps(sub, extra = {}) {
   if (a.pain || a.industry_other) p.pain = text([a.industry_other && `[תחום: ${a.industry_other}]`, a.pain].filter(Boolean).join(' '));
   if (sub.contact) {
     p.name = { title: [{ text: { content: sub.contact.name } }] };
-    p.whatsapp = { phone_number: sub.contact.whatsapp_e164 };
-    p.email = { email: sub.contact.email || null };
+    p.whatsapp = { phone_number: sub.contact.whatsapp_e164 || null };
+    p.email = { email: sub.contact.email };
     p.consent = { checkbox: sub.contact.consent };
   }
   if (extra.status) p.status = select(extra.status);
@@ -130,6 +130,7 @@ export function pageToLead(page) {
   return {
     name: plain(p.name),
     whatsapp: p.whatsapp?.phone_number || '',
+    email: p.email?.email || '',
     industry: p.industry?.select?.name || '',
     size: p.size?.select?.name || '',
     sink: p.sink?.select?.name || '',

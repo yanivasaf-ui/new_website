@@ -59,8 +59,8 @@ export async function sendLeadEmail(env, sub, rec, notionUrl = '') {
   const subject = `${SUBJECT_PREFIX}${hot ? ' [חם]' : ''}: ${c.name} · ${optionLabel('industry', a.industry)}`;
   const rows = /** @type {[string, string][]} */ ([
     ['שם', esc(c.name)],
-    ['וואטסאפ', `<a href="tel:${esc(c.whatsapp_e164)}">${esc(c.whatsapp)}</a> · <a href="https://wa.me/${esc(c.whatsapp_e164.slice(1))}">פתיחת צ'אט</a>`],
-    ['מייל', esc(c.email || '—')],
+    ['מייל', `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>`],
+    ['וואטסאפ', c.whatsapp_e164 ? `<a href="tel:${esc(c.whatsapp_e164)}">${esc(c.whatsapp)}</a> · <a href="https://wa.me/${esc(c.whatsapp_e164.slice(1))}">פתיחת צ'אט</a>` : 'לא השאירו'],
     ['אישור חזרה', c.consent ? 'כן' : 'לא'],
     ['סוג עסק', esc(industry)],
     ['גודל', esc(optionLabel('size', a.size))],
@@ -79,14 +79,15 @@ export async function sendLeadEmail(env, sub, rec, notionUrl = '') {
 /**
  * Short email when the booking CTA is clicked (always hot).
  * @param {import('../index.js').Env} env
- * @param {{ name?: string, whatsapp?: string, industry?: string, sink?: string, recommended_solution?: string, url?: string, session_id?: string }} lead
+ * @param {{ name?: string, whatsapp?: string, email?: string, industry?: string, sink?: string, recommended_solution?: string, url?: string, session_id?: string }} lead
  */
 export async function sendClickEmail(env, lead) {
   const name = lead.name || `סשן ${String(lead.session_id || '').slice(0, 8)}`;
   const subject = `${SUBJECT_PREFIX} [חם]: ${name} לחצו על קביעת שיחה`;
   const rows = /** @type {[string, string][]} */ ([
     ['שם', esc(name)],
-    ['וואטסאפ', lead.whatsapp ? `<a href="tel:${esc(lead.whatsapp)}">${esc(lead.whatsapp)}</a>` : '—'],
+    ['מייל', lead.email ? `<a href="mailto:${esc(lead.email)}">${esc(lead.email)}</a>` : '—'],
+    ['וואטסאפ', lead.whatsapp ? `<a href="tel:${esc(lead.whatsapp)}">${esc(lead.whatsapp)}</a>` : 'לא השאירו'],
     ['סוג עסק', esc(lead.industry ? optionLabel('industry', lead.industry) : '—')],
     ['איפה הזמן הולך', esc(lead.sink ? optionLabel('sink', lead.sink) : '—')],
     ['המלצה', esc(lead.recommended_solution || '—')],

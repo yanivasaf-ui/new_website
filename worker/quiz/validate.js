@@ -38,7 +38,7 @@ const fail = (field, error) => ({ ok: /** @type {const} */ (false), field, error
  * @property {'partial'|'complete'} stage
  * @property {string} session_id
  * @property {Answers} answers
- * @property {{ name: string, whatsapp: string, whatsapp_e164: string, email: string, consent: boolean } | null} contact
+ * @property {{ name: string, whatsapp: string, whatsapp_e164: string, email: string, consent: boolean } | null} contact  email always set; whatsapp is '' when not given
  * @property {{ source: string, medium: string, campaign: string }} utm
  * @property {string} device
  */
@@ -46,7 +46,7 @@ const fail = (field, error) => ({ ok: /** @type {const} */ (false), field, error
 /**
  * Validates and normalizes a POST /api/quiz body.
  * partial: needs industry, size, channels (sent from Q3 onward); later answers optional.
- * complete: needs every required answer + contact.
+ * complete: needs every required answer + contact (name and a valid email; phone only validated when given).
  * @param {any} body
  * @returns {{ ok: true, value: Submission } | { ok: false, field: string, error: string }}
  */
@@ -93,11 +93,14 @@ export function validateSubmission(body) {
     const c = body.contact && typeof body.contact === 'object' ? body.contact : {};
     const name = cleanText(c.name, LIMITS.name);
     if (name.length < 2) return fail('name', 'missing');
-    const phone = normalizeIlMobile(c.whatsapp);
-    if (!phone) return fail('whatsapp', c.whatsapp ? 'invalid_phone' : 'missing');
+    // email is required (the analysis is sent there); the WhatsApp number is optional but must be valid when given
     const email = cleanText(c.email, LIMITS.email);
-    if (email && !EMAIL_RE.test(email)) return fail('email', 'invalid_email');
-    contact = { name, whatsapp: phone.local, whatsapp_e164: phone.e164, email, consent: c.consent === true };
+    if (!email) return fail('email', 'missing');
+    if (!EMAIL_RE.test(email)) return fail('email', 'invalid_email');
+    const rawPhone = cleanText(c.whatsapp, 40);
+    const phone = rawPhone ? normalizeIlMobile(rawPhone) : null;
+    if (rawPhone && !phone) return fail('whatsapp', 'invalid_phone');
+    contact = { name, whatsapp: phone?.local || '', whatsapp_e164: phone?.e164 || '', email, consent: c.consent === true };
   }
 
   const u = body.utm && typeof body.utm === 'object' ? body.utm : {};

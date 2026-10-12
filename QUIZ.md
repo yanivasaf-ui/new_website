@@ -17,7 +17,8 @@ Answers, contact fields and the result persist in `localStorage` (key `ensemble-
   - `partial` (sent from Q3 on): anonymous row, `status=partial`, no outreach. Limit 60/hour/IP. A lead's status only moves
     forward (partial → complete → booked-click): an autosave on a complete or booked-click lead writes nothing, and a
     re-submit keeps `booked-click`.
-  - `complete`: validates (Israeli mobile required), saves the lead to Notion **before** the LLM call, calls the model
+  - `complete`: validates the contact (name and a valid email are required; the WhatsApp number is optional but must be a
+    valid Israeli mobile when given), saves the lead to Notion **before** the LLM call, calls the model
     (30s timeout per attempt; one retry after a timeout, API error or invalid output, so at most ~60s), returns `{ ok, source, result }`, then writes the analysis back and emails.
     Limit **5 per hour per IP**, counted only for well-formed requests.
   - LLM failure or timeout: the user still gets a result, a template built from the shortlist (`source: "template"`,
@@ -25,6 +26,7 @@ Answers, contact fields and the result persist in `localStorage` (key `ensemble-
     validation (e.g. English text). Only if the template cannot be built either: lead is saved and emailed (marked
     "analysis failed"), response is `502 analysis_failed`, and the page shows "משהו נתקע בדרך".
     `QUIZ_TEMPLATE_FALLBACK=0` turns the template off, so every LLM failure shows the error state.
+  - Contact errors: `400` with `field` = `name`, `email` (`missing` / `invalid_email`) or `whatsapp` (`invalid_phone`, only when a number was given).
   - Other responses: `400 {error, field}`, `403` foreign Origin, `405`, `429 {retry_after}` → "יש כרגע עומס".
 - `POST /api/analyze/click` — `{ session_id }`: sets `booking_clicked`, `status=booked-click`, short email. 30/hour/IP.
 
@@ -63,8 +65,8 @@ gendered forms, solution in shortlist) → `analysis.js` (falls back to `templat
 | `name` | Title |
 | `created` | Date |
 | `session_id` | Text |
-| `whatsapp` | Phone |
-| `email` | Email |
+| `whatsapp` | Phone (empty when the lead gave no number) |
+| `email` | Email (always set on complete leads) |
 | `consent` | Checkbox |
 | `industry`, `size`, `acquisition`, `sink`, `hours` | Select (option ids, auto-created) |
 | `channels` | Multi-select |

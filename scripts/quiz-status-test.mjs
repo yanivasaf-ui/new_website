@@ -15,10 +15,11 @@ const post = (path, body) =>
 const lookup = async () => { const all = await (await fetch(DUMP)).json(); return all[all.length - 1]; };
 const settle = async (pred) => { for (let i = 0; i < 40; i++) { const r = await lookup(); if (r && pred(r)) return r; await new Promise((r) => setTimeout(r, 150)); } return lookup(); };
 
+const rowsBefore = (await (await fetch(DUMP)).json()).length; // the store may already hold other rows
 let failed = 0;
 const check = (name, ok, detail) => { if (!ok) failed++; console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}  → ${detail}`); };
 const partial = (a) => post('/api/analyze', { stage: 'partial', session_id: sid, answers: a, utm: {}, device: 'mobile', website: '' });
-const complete = (a) => post('/api/analyze', { stage: 'complete', session_id: sid, answers: a, contact: { name: 'TEST', whatsapp: '0501234567', email: '', consent: true }, utm: {}, device: 'mobile', website: '' });
+const complete = (a) => post('/api/analyze', { stage: 'complete', session_id: sid, answers: a, contact: { name: 'TEST', whatsapp: '', email: 'test@example.com', consent: true }, utm: {}, device: 'mobile', website: '' });
 
 await partial({ ...answers, pain: '' });
 let r = await settle((x) => x.status === 'partial');
@@ -48,6 +49,6 @@ r = await lookup();
 check('6. re-submit keeps booked-click but updates the answers', r.status === 'booked-click' && r.size === '16_50' && r.has_analysis, JSON.stringify(r));
 
 const all = await (await fetch(DUMP)).json();
-check('7. one row for the whole session (no duplicates)', all.length === 1, `rows: ${all.length}`);
+check('7. one row for the whole session (no duplicates)', all.length === rowsBefore + 1, `rows added: ${all.length - rowsBefore}`);
 console.log(failed ? `\n${failed} FAILED` : '\nall passed');
 process.exit(failed ? 1 : 0);

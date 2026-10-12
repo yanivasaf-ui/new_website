@@ -11,6 +11,13 @@ const ANALYZING_MIN_MS = 4000; // dots shown while the analysis loads (never sho
 const REQUEST_TIMEOUT_MS = 90_000; // server worst case: Notion save (6s) + 2 LLM attempts (30s each)
 const ADVANCE_MS = 180; // pause so the tapped option is seen before moving on
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+/** Contact-step error messages (the same ones are used when the server rejects a field). */
+const MSG = {
+  name: 'צריך להכניס שם',
+  phone: 'צריך מספר נייד ישראלי, למשל 050-1234567',
+  emailMissing: 'צריך להכניס כתובת מייל',
+  emailInvalid: 'כתובת המייל לא נראית תקינה',
+};
 /** answer field -> question step, for recovering from a server-side "invalid option" */
 const FIELD_STEP = { industry: 1, size: 2, channels: 3, acquisition: 4, sink: 5, hours: 5 };
 
@@ -129,7 +136,7 @@ function sendPartial() {
   partialQueue = partialQueue.then(() => post('/api/analyze', body).then(() => {}, () => {}));
 }
 
-/** @returns {Promise<{ kind: 'ok', data: any } | { kind: 'busy', retryAfter: number } | { kind: 'invalid', field: string } | { kind: 'error' }>} */
+/** @returns {Promise<{ kind: 'ok', data: any } | { kind: 'busy', retryAfter: number } | { kind: 'invalid', field: string, code: string } | { kind: 'error' }>} */
 async function requestAnalysis() {
   await Promise.race([partialQueue, sleep(3000)]);
   const ctrl = new AbortController();
@@ -142,7 +149,7 @@ async function requestAnalysis() {
     }
     if (res.status === 400) {
       const j = await res.json().catch(() => ({}));
-      return { kind: 'invalid', field: String(j.field || '') };
+      return { kind: 'invalid', field: String(j.field || ''), code: String(j.error || '') };
     }
     if (!res.ok) return { kind: 'error' };
     const data = await res.json().catch(() => null);
@@ -476,18 +483,20 @@ function contactScreen() {
         /** @type {string[]} */
         const bad = [];
         const name = S.c.name.trim();
-        if (name.length < 2) (showError('name', 'צריך להכניס שם'), bad.push('name'));
-        if (!normalizeIlMobile(S.c.whatsapp)) (showError('whatsapp', 'צריך מספר נייד ישראלי, למשל 050-1234567'), bad.push('whatsapp'));
-        if (S.c.email.trim() && !EMAIL_RE.test(S.c.email.trim())) (showError('email', 'כתובת המייל לא נראית תקינה'), bad.push('email'));
+        if (name.length < 2) (showError('name', MSG.name), bad.push('name'));
+        // phone is optional, but a number that is filled in has to be a valid Israeli mobile
+        if (S.c.whatsapp.trim() && !normalizeIlMobile(S.c.whatsapp)) (showError('whatsapp', MSG.phone), bad.push('whatsapp'));
+        if (!S.c.email.trim()) (showError('email', MSG.emailMissing), bad.push('email'));
+        else if (!EMAIL_RE.test(S.c.email.trim())) (showError('email', MSG.emailInvalid), bad.push('email'));
         if (bad.length) return document.getElementById(`f-${bad[0]}`)?.focus();
         S.c.name = name;
         S.c.email = S.c.email.trim();
         submit();
       },
     },
-    field('name', 'שם', { autocomplete: 'name', enterkeyhint: 'next' }),
-    field('whatsapp', 'מספר וואטסאפ', { type: 'tel', inputmode: 'tel', autocomplete: 'tel', dir: 'ltr', placeholder: '050-1234567', enterkeyhint: 'next' }),
-    field('email', 'מייל', { type: 'email', inputmode: 'email', autocomplete: 'email', dir: 'ltr', enterkeyhint: 'done' }, 'לא חובה'),
+    field('name', 'שם', { autocomplete: 'name', enterkeyhint: 'next', 'aria-required': 'true' }),
+    field('whatsapp', 'מספר וואטסאפ', { type: 'tel', inputmode: 'tel', autocomplete: 'tel', dir: 'ltr', placeholder: '050-1234567', enterkeyhint: 'next' }, 'לא חובה'),
+    field('email', 'מייל', { type: 'email', inputmode: 'email', autocomplete: 'email', dir: 'ltr', enterkeyhint: 'done', 'aria-required': 'true' }),
     h('div', { class: 'hp', 'aria-hidden': 'true' }, h('label', {}, 'Website ', h('input', { name: 'website', tabindex: '-1', autocomplete: 'off' }))),
     h(
       'label',
@@ -618,7 +627,7 @@ async function submit() {
     const mins = Math.max(1, Math.ceil(out.retryAfter / 60));
     mount(...stateScreen('יש כרגע עומס', `אפשר לנסות שוב ${mins === 1 ? 'בעוד דקה' : `בעוד ${mins} דקות`}.`));
   } else if (out.kind === 'invalid') {
-    const contact = { name: 'צריך להכניס שם', whatsapp: 'צריך מספר נייד ישראלי, למשל 050-1234567', email: 'כתובת המייל לא נראית תקינה' };
+    const contact = { name: MSG.name, whatsapp: MSG.phone, email: out.code === 'missing' ? MSG.emailMissing : MSG.emailInvalid };
     if (out.field in contact) {
       pendingFieldError = { field: out.field, message: /** @type {any} */ (contact)[out.field] };
       return render();
