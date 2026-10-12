@@ -5,7 +5,7 @@
   "scripts": {
     "check": "tsc -p jsconfig.json",
     "build": "wrangler deploy --dry-run --outdir .build",
-    "dev": "wrangler dev --persist-to \"${TMPDIR:-/tmp}/ensemble-wrangler-state\"",
+    "dev": "wrangler dev --upstream-protocol https --persist-to \"${TMPDIR:-/tmp}/ensemble-wrangler-state\"",
     "personas": "node scripts/quiz-personas.mjs",
     "check:page": "tsc -p jsconfig.page.json"
   },
