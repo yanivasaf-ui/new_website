@@ -61,6 +61,7 @@ function uuid() {
  * @property {{ name: string, whatsapp: string, email: string, consent: boolean }} c
  * @property {{ source: string, medium: string, campaign: string }} utm
  * @property {any} result
+ * @property {boolean} [lead] Meta Pixel Lead already fired for this quiz session (persisted, so reload/back/resubmit never re-fire)
  */
 
 /** @returns {State} */
@@ -572,6 +573,22 @@ function trackBookingClick() {
 
 /* ------------------------------------------------------------------- submit */
 
+/** Meta Pixel Lead, once per quiz session: called only from submit() after a successful analysis, never from render(),
+ *  so reloading on the result screen or re-rendering cannot fire it. S.lead is saved with the state, which also covers
+ *  back to the contact screen and a second submit. */
+function trackLead() {
+  if (S.lead) return;
+  const fbq = /** @type {any} */ (window).fbq;
+  if (typeof fbq !== 'function') return; // blocked or not loaded: nothing to dedupe, and the quiz must not break
+  try {
+    fbq('track', 'Lead');
+    S.lead = true;
+    save();
+  } catch {
+    /* tracking must never break the result screen */
+  }
+}
+
 async function submit() {
   const mine = ++nav;
   mount(...analyzingScreen());
@@ -585,7 +602,9 @@ async function submit() {
     S.result = out.data.result;
     S.step = 'result';
     save();
-    return render();
+    render();
+    trackLead();
+    return;
   }
   S.step = 7;
   save();
