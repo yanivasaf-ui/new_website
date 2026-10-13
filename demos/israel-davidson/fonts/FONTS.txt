@@ -1,0 +1,4 @@
+David Libre (Bold) - (c) 2003-2016 The David Libre Project Authors.
+Noto Sans Hebrew (Regular, Bold) - (c) 2024 The Noto Project Authors (https://github.com/notofonts/hebrew).
+Both licensed under the SIL Open Font License 1.1: https://scripts.sil.org/OFL
+Subset to Hebrew + basic Latin and converted to WOFF2 for this concept page.
