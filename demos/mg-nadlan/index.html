@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="format-detection" content="telephone=no, email=no">
+<title>MG נדל״ן - קונספט להמחשה</title>
+<style>
+@font-face{font-family:"Rubik MG"; src:url("fonts/rubik-400.woff2") format("woff2"); font-weight:400; font-display:swap}
+@font-face{font-family:"Rubik MG"; src:url("fonts/rubik-700.woff2") format("woff2"); font-weight:700; font-display:swap}
+.mg{
+  --sea:#0b2433; --sea-2:#123248; --deep:#06161f;
+  --sand:#f5eee2; --coral:#ff7a4d; --coral-d:#ad411e; --sun:#ffc36b;
+  --ink:#10222d; --mute:#51636e; --mute-d:#b4c4cc; --line:rgba(16,34,45,.14); --line-d:rgba(245,238,226,.16);
+  --paper:#fffaf1;
+  --maxw:1120px; --ease:cubic-bezier(.2,.7,.2,1);
+  background:var(--sand); color:var(--ink);
+  font-family:"Rubik MG","Rubik","Heebo","Assistant","Arial Hebrew",system-ui,sans-serif; font-weight:400; font-synthesis:none;
+  font-size:17px; line-height:1.7; min-height:100vh; min-height:100dvh; overflow-x:clip;
+  -webkit-tap-highlight-color:transparent;
+}
+.mg *,.mg *::before,.mg *::after{box-sizing:border-box}
+.mg h1,.mg h2,.mg h3,.mg p,.mg ul,.mg dl,.mg dd{margin:0}
+.mg b,.mg strong,.mg h1,.mg h2,.mg h3{font-weight:700}
+.mg a{color:inherit}
+.mg button{font:inherit; color:inherit; cursor:pointer}
+.mg :focus-visible{outline:3px solid var(--coral); outline-offset:3px; border-radius:8px}
+.mg .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+.mg bdi{direction:ltr; unicode-bidi:isolate}
+.mg .kicker{color:var(--coral-d); font-size:14px; font-weight:700; letter-spacing:.08em; margin-bottom:12px; display:flex; align-items:center; gap:10px}
+.mg .kicker::before{content:""; width:28px; height:2px; background:currentColor}
+.mg h2{font-size:clamp(30px,6vw,56px); line-height:1.12; letter-spacing:-.015em}
+.mg .sub{color:var(--mute); max-width:36em; margin-top:14px}
+
+/* concept label */
+.mg .banner{background:var(--coral); color:#1d0c05; text-align:center; padding:12px 16px; font-size:15px; line-height:1.5; font-weight:700; position:relative; z-index:30}
+.mg .banner b{display:inline-block; background:#1d0c05; color:var(--coral); border-radius:99px; padding:0 10px; margin-inline-start:8px; font-size:12px; letter-spacing:.1em}
+
+/* sticky nav */
+.mg .bar{position:sticky; top:0; z-index:20; background:rgba(11,36,51,.88); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); color:var(--sand); box-shadow:0 1px 0 rgba(245,238,226,.08), 0 12px 24px -16px rgba(0,0,0,.5)}
+.mg .bar .wrap{display:flex; align-items:center; justify-content:space-between; min-height:56px; gap:16px}
+.mg .logo{font-weight:700; font-size:20px; text-decoration:none; letter-spacing:-.02em}
+.mg .logo span{color:var(--coral)}
+.mg .nav{display:flex; gap:4px 20px; font-size:15px; font-weight:400}
+.mg .nav a{text-decoration:none; color:var(--mute-d); min-height:44px; display:inline-flex; align-items:center; position:relative}
+.mg .nav a::after{content:""; position:absolute; inset-inline:0; bottom:6px; height:2px; background:var(--coral); transform:scaleX(0); transition:transform .25s var(--ease)}
+.mg .nav a.on{color:var(--sand)}
+.mg .nav a.on::after{transform:scaleX(1)}
+
+/* hero */
+.mg .hero{position:relative; overflow:hidden; color:var(--sand);
+  background:linear-gradient(180deg,#0b2433 0%, #123248 68%, #1b4a66 100%); padding:56px 0 0}
+.mg .sun{position:absolute; width:min(60vw,420px); aspect-ratio:1; border-radius:50%; inset-inline-end:-8%; top:120px; background:radial-gradient(circle at 40% 35%, #ffd89a, var(--coral) 70%); opacity:.92; transform:translate3d(calc(var(--px,0)*-22px), calc(var(--py,0)*-16px), 0)}
+.mg .hero .wrap{position:relative; z-index:2}
+.mg .tag{display:inline-flex; align-items:center; gap:8px; background:rgba(11,36,51,.72); box-shadow:0 0 0 1px var(--line-d); border-radius:99px; padding:6px 14px; font-size:14px; color:var(--sun)}
+.mg .tag i{width:8px; height:8px; border-radius:50%; background:var(--coral)}
+.mg .wordmark{font-size:clamp(96px,27vw,300px); line-height:.88; font-weight:700; letter-spacing:-.04em; margin-top:22px}
+.mg .wordmark .l{display:block}
+.mg .wordmark .l2{color:var(--coral)}
+.mg .lead{color:var(--mute-d); max-width:30em; margin-top:26px; font-size:19px}
+.mg .lead b{color:var(--sand)}
+.mg .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px}
+.mg .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:54px; padding:0 28px; border-radius:999px; font-weight:700; font-size:17px; text-decoration:none; background:var(--coral); color:#1d0c05; border:2px solid var(--coral); transition:transform .2s var(--ease)}
+.mg .btn.ghost{background:transparent; color:var(--sand); border-color:rgba(245,238,226,.35)}
+.mg .btn .ar{display:inline-block; transition:transform .25s var(--ease)}
+.mg .skyline{display:block; width:100%; height:auto; margin-top:40px; color:#0a1d2a; position:relative; z-index:1}
+.mg .waves{position:relative; height:90px; margin-top:-2px; z-index:2}
+.mg .waves svg{position:absolute; bottom:0; inset-inline-start:0; width:200%; height:100%}
+.mg .waves .w1{color:#17405a; animation:mg-wave 14s linear infinite}
+.mg .waves .w2{color:#245a7b; animation:mg-wave 9s linear infinite reverse; height:75%}
+.mg .waves .w3{color:var(--sand); animation:mg-wave 18s linear infinite; height:45%}
+
+/* ribbon */
+.mg .ribbon{background:var(--coral); color:#1d0c05; overflow:hidden; white-space:nowrap}
+.mg .ribbon div{display:inline-flex; gap:34px; padding:12px 0; font-weight:700; font-size:clamp(20px,4vw,28px); width:max-content; animation:mg-slide 26s linear infinite}
+.mg .ribbon i{font-style:normal; opacity:.45}
+
+/* sections + reveal */
+.mg section{padding:80px 0}
+.js .mg .rv{opacity:0; transform:translateY(24px); transition:opacity .6s var(--ease), transform .6s var(--ease)}
+.js .mg .rv.in{opacity:1; transform:none}
+.js .mg .rv.d1{transition-delay:.08s} .js .mg .rv.d2{transition-delay:.16s}
+
+/* path selector */
+.mg .selector{margin-top:36px; display:grid; gap:14px}
+.mg .tabs{display:grid; gap:10px}
+.mg .tab{display:flex; align-items:center; justify-content:space-between; gap:14px; text-align:start; min-height:76px; padding:0 24px; border-radius:20px; border:0; background:var(--paper); box-shadow:0 1px 2px rgba(16,34,45,.08), 0 10px 24px -14px rgba(16,34,45,.28); font-size:clamp(22px,4vw,30px); font-weight:700; transition:transform .2s var(--ease)}
+.mg .tab small{font-size:13px; font-weight:700; letter-spacing:.1em; color:var(--coral-d)}
+.mg .tab .go{width:42px; height:42px; border-radius:50%; background:var(--sand); display:grid; place-items:center; flex:none; font-size:18px; transition:transform .25s var(--ease)}
+.mg .tab[aria-selected="true"]{background:var(--sea); color:var(--sand); box-shadow:0 14px 30px -14px rgba(11,36,51,.7)}
+.mg .tab[aria-selected="true"] small{color:var(--coral)}
+.mg .tab[aria-selected="true"] .go{background:var(--coral); color:#1d0c05; transform:rotate(180deg)}
+.mg .panel{background:var(--sea); color:var(--sand); border-radius:24px; padding:30px 26px; min-height:260px; box-shadow:0 20px 40px -20px rgba(11,36,51,.7)}
+.mg .panel[hidden]{display:none}
+.mg .panel h3{font-size:clamp(26px,4.4vw,38px); line-height:1.2}
+.mg .panel p{color:var(--mute-d); margin-top:10px; max-width:30em}
+.mg .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px}
+.mg .chip{display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:0 18px; border-radius:99px; background:rgba(245,238,226,.1); box-shadow:inset 0 0 0 1px var(--line-d); text-decoration:none; font-weight:700; transition:transform .2s var(--ease)}
+.mg .chip span{font-weight:400; color:var(--mute-d)}
+.mg .panel.in-anim{animation:mg-pop .4s var(--ease)}
+
+/* team */
+.mg .team-sec{background:var(--sea); color:var(--sand); position:relative; overflow:hidden}
+.mg .team-sec::before{content:"MG"; position:absolute; font-weight:700; font-size:clamp(200px,40vw,520px); line-height:.8; color:transparent; -webkit-text-stroke:2px rgba(245,238,226,.06); inset-inline-start:-2%; bottom:-8%; pointer-events:none}
+.mg .team-sec .kicker{color:var(--coral)}
+.mg .team-sec .sub{color:var(--mute-d)}
+.mg .team{display:grid; gap:16px; margin-top:38px; list-style:none; padding:0; position:relative}
+.mg .agent{position:relative; border-radius:26px; padding:28px 26px 26px; background:linear-gradient(160deg,var(--sea-2),#0e2b3f); box-shadow:inset 0 1px 0 rgba(245,238,226,.08), 0 24px 40px -22px rgba(0,0,0,.6); display:grid; gap:2px; transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); transition:transform .18s var(--ease)}
+.mg .agent .fn{font-size:clamp(40px,10vw,52px); font-weight:700; line-height:1.05; letter-spacing:-.02em}
+.mg .agent .ln{font-size:20px; color:var(--mute-d)}
+.mg .agent .rule{width:48px; height:3px; background:var(--coral); border-radius:2px; margin:14px 0 6px; transform-origin:right; transition:transform .35s var(--ease)}
+.mg .agent .call{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; min-height:56px; padding:0 22px; border-radius:99px; background:var(--coral); color:#1d0c05; text-decoration:none; font-weight:700; font-size:22px; transition:transform .2s var(--ease)}
+.mg .agent .call svg{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex:none}
+.mg .mail{display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px; margin-top:34px; position:relative}
+.mg .mail a.em{font-size:clamp(20px,4.4vw,32px); font-weight:700; text-decoration:none; min-height:44px; display:inline-flex; align-items:center; border-bottom:2px solid var(--coral)}
+
+/* areas */
+.mg .areas{display:grid; gap:28px}
+.mg .alist{list-style:none; padding:0; margin:0}
+.mg .alist li{border-top:2px solid var(--ink)}
+.mg .alist li:last-child{border-bottom:2px solid var(--ink)}
+.mg .alist a{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 4px; min-height:64px; text-decoration:none; font-size:clamp(34px,8vw,72px); font-weight:700; line-height:1; letter-spacing:-.02em}
+.mg .alist .t{position:relative; color:transparent; -webkit-text-stroke:2px var(--ink); display:inline-block; transition:transform .3s var(--ease)}
+.mg .alist .t::before{content:attr(data-t); position:absolute; inset:0; color:var(--ink); -webkit-text-stroke:0; opacity:0; transition:opacity .25s var(--ease)}
+.mg .alist em{font-style:normal; font-size:15px; letter-spacing:.06em; color:var(--coral-d); opacity:0; transition:opacity .25s var(--ease); font-weight:700}
+.mg .alist a:focus-visible .t::before,.mg .alist a:focus-visible em{opacity:1}
+.mg .where{color:var(--mute); margin-top:16px}
+
+/* mobile call FAB */
+.mg .fab{position:fixed; inset-inline-start:16px; bottom:calc(16px + env(safe-area-inset-bottom)); z-index:40; display:grid; justify-items:start; gap:10px}
+.mg .fab-btn{min-height:58px; padding:0 22px; border-radius:99px; background:var(--coral); color:#1d0c05; border:0; font-weight:700; font-size:17px; box-shadow:0 2px 4px rgba(0,0,0,.2), 0 14px 30px -8px rgba(0,0,0,.45); display:inline-flex; align-items:center; gap:10px}
+.mg .fab-menu{display:none; gap:8px}
+.mg .fab.open .fab-menu{display:grid}
+.mg .fab-menu a{display:flex; justify-content:space-between; gap:18px; align-items:center; min-height:48px; padding:0 18px; border-radius:99px; background:var(--sea); color:var(--sand); text-decoration:none; font-weight:700; box-shadow:0 2px 4px rgba(0,0,0,.2), 0 12px 24px -8px rgba(0,0,0,.45); animation:mg-pop .3s var(--ease) both}
+
+.mg footer{background:var(--deep); color:var(--mute-d); padding:32px 0 calc(96px + env(safe-area-inset-bottom)); font-size:14px; line-height:1.6}
+.mg footer .by{margin-top:6px; opacity:.85}
+
+@media (hover:hover){
+  .mg .nav a:hover{color:var(--sand)} .mg .nav a:hover::after{transform:scaleX(1)}
+  .mg .btn:hover{transform:translateY(-2px)} .mg .btn:hover .ar{transform:translateX(-5px)}
+  .mg .tab:hover{transform:translateX(-6px)}
+  .mg .chip:hover{transform:translateY(-2px); background:var(--coral); color:#1d0c05} .mg .chip:hover span{color:#1d0c05}
+  .mg .agent:hover .rule{transform:scaleX(1.8)}
+  .mg .agent .call:hover{transform:translateY(-2px)}
+  .mg .mail a.em:hover{color:var(--coral)}
+  .mg .alist a:hover .t{transform:translateX(-14px)} .mg .alist a:hover .t::before,.mg .alist a:hover em{opacity:1}
+}
+@media (min-width:860px){
+  .mg .hero{padding-top:84px}
+  .mg .selector{grid-template-columns:.9fr 1.1fr; align-items:stretch; gap:22px}
+  .mg .panel{padding:44px 40px}
+  .mg .team{grid-template-columns:repeat(3,1fr)}
+  .mg section{padding:120px 0}
+  .mg .areas{grid-template-columns:.8fr 1.2fr; align-items:end; gap:72px}
+  .mg .fab{display:none}
+  .mg footer{padding-bottom:40px}
+}
+@media (max-width:560px){ .mg .nav a:nth-child(3){display:none} .mg .sun{width:190px; top:34px; opacity:.55} }
+@keyframes mg-wave{from{transform:translateX(0)}to{transform:translateX(50%)}}
+@keyframes mg-slide{from{transform:translateX(0)}to{transform:translateX(50%)}}
+@keyframes mg-pop{from{opacity:0; transform:translateY(10px)}to{opacity:1; transform:none}}
+@keyframes mg-rise{from{opacity:0; transform:translateY(36px)}to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .mg .tag,.mg .wordmark .l,.mg .lead,.mg .cta{animation:mg-rise .8s var(--ease) both}
+  .mg .tag{animation-delay:.05s} .mg .wordmark .l1{animation-delay:.12s} .mg .wordmark .l2{animation-delay:.22s} .mg .lead{animation-delay:.36s} .mg .cta{animation-delay:.46s}
+}
+@media (prefers-reduced-motion:reduce){
+  .mg *{animation:none !important; transition:none !important}
+  .js .mg .rv{opacity:1; transform:none}
+}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body style="margin:0;background:#f5eee2">
+<div class="mg">
+
+  <div class="banner" role="note">דוגמה ראשונית - לא האתר הרשמי של המשרד <b>CONCEPT</b></div>
+
+  <div class="bar">
+    <div class="wrap">
+      <a class="logo" href="#top"><bdi>MG</bdi> <span>נדל״ן</span></a>
+      <nav class="nav" aria-label="ניווט ראשי">
+        <a href="#paths">במה נעזור</a>
+        <a href="#team">הצוות</a>
+        <a href="#areas">אזורי פעילות</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="tag"><i></i>משרד תיווך בוטיק · אזור רוטשילד, בת ים</p>
+      <h1 class="wordmark"><span class="l l1"><bdi>MG</bdi></span><span class="l l2">נדל״ן</span></h1>
+      <p class="lead"><b>מוכרים, קונים וייעוץ משכנתא</b> - עם צוות קטן שאפשר להתקשר אליו ישירות, בלי לעבור דרך טופס.</p>
+      <div class="cta">
+        <a class="btn" href="#team">מי עונה לטלפון <span class="ar">←</span></a>
+        <a class="btn ghost" href="#paths">מה מחפשים?</a>
+      </div>
+    </div>
+    <svg class="skyline" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 120V70h60V40h50v30h40V20h70v50h50V55h60v-25h40v25h60V35h50v35h70V10h60v60h50V45h70v25h60V30h50v40h70V50h60V25h50v45h60v50z M1000 60H1200V120H1000z M0 100H1200V120H0z"/></svg>
+    <div class="waves" aria-hidden="true">
+      <svg class="w1" viewBox="0 0 2400 100" preserveAspectRatio="none"><path fill="currentColor" d="M0 50C100 20 200 20 300 50S500 80 600 50 800 20 900 50s200 30 300 0c100-30 200-30 300 0s200 30 300 0 200-30 300 0 200 30 300 0V100H0z"/></svg>
+      <svg class="w2" viewBox="0 0 2400 100" preserveAspectRatio="none"><path fill="currentColor" d="M0 60C150 30 250 30 400 60s250 30 400 0 250-30 400 0 250 30 400 0 250-30 400 0 250 30 400 0V100H0z"/></svg>
+      <svg class="w3" viewBox="0 0 2400 100" preserveAspectRatio="none"><path fill="currentColor" d="M0 70C200 40 300 40 500 70s300 30 500 0 300-30 500 0 300 30 500 0 200-20 400 0V100H0z"/></svg>
+    </div>
+  </header>
+
+  <div class="ribbon" aria-hidden="true"><div><span>בת ים</span><i>●</i><span>חולון</span><i>●</i><span>יפו</span><i>●</i><span>דרום תל אביב</span><i>●</i><span>בת ים</span><i>●</i><span>חולון</span><i>●</i><span>יפו</span><i>●</i><span>דרום תל אביב</span><i>●</i><span>בת ים</span><i>●</i><span>חולון</span><i>●</i><span>יפו</span><i>●</i><span>דרום תל אביב</span><i>●</i><span>בת ים</span><i>●</i><span>חולון</span><i>●</i><span>יפו</span><i>●</i><span>דרום תל אביב</span><i>●</i></div></div>
+
+  <main>
+    <section id="paths" aria-labelledby="h-paths">
+      <div class="wrap">
+        <p class="kicker rv">במה נעזור</p>
+        <h2 id="h-paths" class="rv d1">מה הכי קרוב אליכם<br>עכשיו?</h2>
+        <p class="sub rv d2">בחרו נתיב ותראו מי מחכה לשיחה.</p>
+        <div class="selector rv d2">
+          <div class="tabs" role="tablist" aria-label="בחירת נתיב">
+            <button class="tab" role="tab" id="t1" aria-selected="true" aria-controls="p1" type="button"><span><small>01</small><br>מוכרים</span><span class="go" aria-hidden="true">←</span></button>
+            <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1" type="button"><span><small>02</small><br>קונים</span><span class="go" aria-hidden="true">←</span></button>
+            <button class="tab" role="tab" id="t3" aria-selected="false" aria-controls="p3" tabindex="-1" type="button"><span><small>03</small><br>ייעוץ משכנתא</span><span class="go" aria-hidden="true">←</span></button>
+          </div>
+          <div>
+            <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+              <h3>רוצים למכור? מתחילים בשיחה.</h3>
+              <p>אחד מאנשי הצוות יענה לכם ישירות. בחרו את מי שנוח לכם להתקשר אליו:</p>
+              <div class="chips"><a class="chip" href="tel:+972542141278">גבריאל <span><bdi>054-214-1278</bdi></span></a><a class="chip" href="tel:+972526850058">מורן <span><bdi>052-685-0058</bdi></span></a><a class="chip" href="tel:+972505999099">אורית <span><bdi>050-599-9099</bdi></span></a></div>
+            </div>
+            <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+              <h3>מחפשים בית בבת ים, חולון, יפו או דרום תל אביב?</h3>
+              <p>ספרו לצוות מה אתם מחפשים בשיחה אחת. בחרו את מי שנוח לכם להתקשר אליו:</p>
+              <div class="chips"><a class="chip" href="tel:+972542141278">גבריאל <span><bdi>054-214-1278</bdi></span></a><a class="chip" href="tel:+972526850058">מורן <span><bdi>052-685-0058</bdi></span></a><a class="chip" href="tel:+972505999099">אורית <span><bdi>050-599-9099</bdi></span></a></div>
+            </div>
+            <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+              <h3>שאלות על משכנתא? שואלים את הצוות.</h3>
+              <p>ייעוץ משכנתא הוא אחד משלושת הנתיבים של המשרד. בחרו את מי שנוח לכם להתקשר אליו:</p>
+              <div class="chips"><a class="chip" href="tel:+972542141278">גבריאל <span><bdi>054-214-1278</bdi></span></a><a class="chip" href="tel:+972526850058">מורן <span><bdi>052-685-0058</bdi></span></a><a class="chip" href="tel:+972505999099">אורית <span><bdi>050-599-9099</bdi></span></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="team-sec" aria-labelledby="h-team">
+      <div class="wrap">
+        <p class="kicker rv">הצוות</p>
+        <h2 id="h-team" class="rv d1">שלושה אנשים.<br>קו ישיר לכל אחד.</h2>
+        <p class="sub rv d2">בטלפון: לחיצה אחת מחייגת. במחשב: מספר הטלפון מופיע על הכפתור.</p>
+        <ul class="team">
+          <li class="agent rv"><h3><span class="fn">גבריאל</span><br><span class="ln">שאולוב</span></h3><div class="rule" aria-hidden="true"></div><a class="call" href="tel:+972542141278"><bdi>054-214-1278</bdi><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></li>
+          <li class="agent rv d1"><h3><span class="fn">מורן</span><br><span class="ln">שאולוב</span></h3><div class="rule" aria-hidden="true"></div><a class="call" href="tel:+972526850058"><bdi>052-685-0058</bdi><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></li>
+          <li class="agent rv d2"><h3><span class="fn">אורית</span><br><span class="ln">רזון</span></h3><div class="rule" aria-hidden="true"></div><a class="call" href="tel:+972505999099"><bdi>050-599-9099</bdi><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></li>
+        </ul>
+        <div class="mail rv">
+          <a class="em" href="mailto:mg.s.nadlan@gmail.com"><bdi>mg.s.nadlan@gmail.com</bdi></a>
+          <a class="btn" href="mailto:mg.s.nadlan@gmail.com">שליחת אימייל <span class="ar">←</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="areas" aria-labelledby="h-areas">
+      <div class="wrap areas">
+        <div>
+          <p class="kicker rv">אזורי פעילות</p>
+          <h2 id="h-areas" class="rv d1">מהים של בת ים<br>עד דרום העיר.</h2>
+          <p class="where rv d2">המשרד ממוקם באזור רוטשילד, בת ים.</p>
+        </div>
+        <ul class="alist rv d1">
+          <li><a href="#paths"><span class="t" data-t="בת ים">בת ים</span><em>המשרד כאן</em></a></li>
+          <li><a href="#paths"><span class="t" data-t="חולון">חולון</span></a></li>
+          <li><a href="#paths"><span class="t" data-t="יפו">יפו</span></a></li>
+          <li><a href="#paths"><span class="t" data-t="דרום תל אביב">דרום תל אביב</span></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div class="fab" id="fab">
+    <div class="fab-menu" id="fabMenu">
+      <a href="tel:+972542141278">גבריאל <bdi>054-214-1278</bdi></a>
+      <a href="tel:+972526850058">מורן <bdi>052-685-0058</bdi></a>
+      <a href="tel:+972505999099">אורית <bdi>050-599-9099</bdi></a>
+    </div>
+    <button class="fab-btn" id="fabBtn" type="button" aria-expanded="false" aria-controls="fabMenu">התקשרו</button>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <p>דוגמה ראשונית - לא האתר הרשמי של המשרד. דף קונספט לא רשמי, שלא אושר על ידי MG נדל״ן. הפרטים מבוססים על מידע ציבורי על המשרד.</p>
+      <p class="by">Concept by Ensemble AI</p>
+    </div>
+  </footer>
+</div>
+<script>
+(function(){
+  var root=document.querySelector('.mg'), rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var rv=[].slice.call(root.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+    rv.forEach(function(el){io.observe(el)});
+  } else rv.forEach(function(el){el.classList.add('in')});
+  var tabs=[].slice.call(root.querySelectorAll('.tab')), panels=[].slice.call(root.querySelectorAll('.panel'));
+  function sel(i,focus){
+    tabs.forEach(function(t,j){t.setAttribute('aria-selected',j===i);t.tabIndex=j===i?0:-1});
+    panels.forEach(function(p,j){p.hidden=j!==i; if(j===i){p.classList.remove('in-anim');void p.offsetWidth;p.classList.add('in-anim')}});
+    if(focus)tabs[i].focus();
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){sel(i)});
+    t.addEventListener('keydown',function(e){
+      var k=e.key; if(k==='ArrowDown'||k==='ArrowLeft'){e.preventDefault();sel((i+1)%3,1)} else if(k==='ArrowUp'||k==='ArrowRight'){e.preventDefault();sel((i+2)%3,1)}
+    });
+  });
+  var hero=root.querySelector('.hero');
+  if(!rm && matchMedia('(hover:hover)').matches) hero.addEventListener('pointermove',function(e){
+    var r=hero.getBoundingClientRect();
+    hero.style.setProperty('--px',((e.clientX-r.left)/r.width-.5).toFixed(2)); hero.style.setProperty('--py',((e.clientY-r.top)/r.height-.5).toFixed(2));
+  });
+  if(!rm && matchMedia('(hover:hover)').matches) root.querySelectorAll('.agent').forEach(function(c){
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.setProperty('--ry',(x*-8)+'deg');c.style.setProperty('--rx',(y*8)+'deg')});
+    c.addEventListener('pointerleave',function(){c.style.setProperty('--ry','0deg');c.style.setProperty('--rx','0deg')});
+  });
+  var links=[].slice.call(root.querySelectorAll('.nav a'));
+  if('IntersectionObserver' in window){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+    ['paths','team','areas'].forEach(function(id){so.observe(root.querySelector('#'+id))});
+  }
+  var fab=root.querySelector('#fab'), fb=root.querySelector('#fabBtn');
+  fb.addEventListener('click',function(){var o=fab.classList.toggle('open');fb.setAttribute('aria-expanded',o)});
+})();
+</script>
+</body>
+</html>
