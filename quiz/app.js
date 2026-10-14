@@ -502,7 +502,8 @@ function contactScreen() {
       'label',
       { class: 'consent' },
       h('input', { type: 'checkbox', name: 'consent', checked: S.c.consent, onchange: (/** @type {Event} */ e) => { S.c.consent = /** @type {HTMLInputElement} */ (e.target).checked; save(); } }),
-      'מאשרים שאפשר לחזור אליכם בנוגע לניתוח',
+      'מאשרים שאפשר לחזור אליכם בנוגע לניתוח. ',
+      h('a', { href: '/privacy/', target: '_blank', rel: 'noopener', onclick: (/** @type {Event} */ e) => e.stopPropagation() }, 'מדיניות פרטיות'),
     ),
   );
   // a server-side rejection (rare) is shown on the field it names
