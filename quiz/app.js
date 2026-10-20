@@ -118,6 +118,7 @@ function payload(stage) {
     stage,
     session_id: S.sid,
     answers: S.a,
+    step: typeof S.step === 'number' ? S.step : 7,
     contact: stage === 'complete' ? S.c : undefined,
     utm: S.utm,
     device,
@@ -131,7 +132,7 @@ const post = (path, body, signal) => fetch(path, { method: 'POST', headers: { 'c
 /** Anonymous progress saves run one at a time so the server never creates duplicate rows. */
 let partialQueue = Promise.resolve();
 function sendPartial() {
-  if (!(S.a.industry && S.a.size && S.a.channels?.length)) return;
+  if (!S.a.industry) return;
   const body = payload('partial');
   partialQueue = partialQueue.then(() => post('/api/analyze', body).then(() => {}, () => {}));
 }
@@ -176,7 +177,7 @@ let nav = 0; // bumped on every navigation so a pending "typing" timer from an o
 function go(step, { typing = false } = {}) {
   S.step = step;
   save();
-  if (typeof step === 'number' && step >= 4 && step <= 7) sendPartial();
+  if (typeof step === 'number' && step >= 2 && step <= 7) sendPartial();
   const mine = ++nav;
   if (typing && typeof step === 'number' && step >= 1) {
     mount(header(step), h('main', { class: 'screen' }, h('div', { class: 'typing', 'aria-label': 'השאלה הבאה בדרך' }, h('i'), h('i'), h('i'))));

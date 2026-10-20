@@ -44,13 +44,14 @@ export function leadProps(sub, extra = {}) {
   const p = {
     session_id: text(sub.session_id),
     industry: select(a.industry),
-    size: select(a.size),
-    channels: { multi_select: (a.channels || []).map((name) => ({ name })) },
+    ...(a.size ? { size: select(a.size) } : {}),
+    ...(a.channels?.length ? { channels: { multi_select: a.channels.map((name) => ({ name })) } } : {}),
     utm_source: text(sub.utm.source),
     utm_medium: text(sub.utm.medium),
     utm_campaign: text(sub.utm.campaign),
     device: select(sub.device),
   };
+  if (sub.step != null) p.last_step = { number: sub.step };
   if (a.acquisition) p.acquisition = select(a.acquisition);
   if (a.sink) p.sink = select(a.sink);
   if (a.hours) p.hours = select(a.hours);
@@ -107,6 +108,12 @@ export async function upsertLead(env, sessionId, properties) {
   const incoming = properties.status?.select?.name || '';
   const existing = await findLeadBySession(env, sessionId);
   if (existing) {
+    // last_step only moves forward (going back a screen must not lower it)
+    const seen = existing.properties?.last_step?.number;
+    if (typeof seen === 'number' && properties.last_step && properties.last_step.number <= seen) {
+      properties = { ...properties };
+      delete properties.last_step;
+    }
     const current = statusOf(existing);
     if (rank(current) > rank(incoming)) {
       if (incoming === 'partial') return { id: existing.id, status: current, skipped: true };

@@ -41,11 +41,12 @@ const fail = (field, error) => ({ ok: /** @type {const} */ (false), field, error
  * @property {{ name: string, whatsapp: string, whatsapp_e164: string, email: string, consent: boolean } | null} contact  email always set; whatsapp is '' when not given
  * @property {{ source: string, medium: string, campaign: string }} utm
  * @property {string} device
+ * @property {number|null} step  last step the visitor reached (1-7), null when not sent
  */
 
 /**
  * Validates and normalizes a POST /api/quiz body.
- * partial: needs industry, size, channels (sent from Q3 onward); later answers optional.
+ * partial: needs industry (sent from Q2 onward); size, channels and later answers optional.
  * complete: needs every required answer + contact (name and a valid email; phone only validated when given).
  * @param {any} body
  * @returns {{ ok: true, value: Submission } | { ok: false, field: string, error: string }}
@@ -73,14 +74,16 @@ export function validateSubmission(body) {
   const later = stage === 'complete';
   let err =
     single('industry', true) ||
-    single('size', true);
+    single('size', later);
   if (err) return err;
 
-  if (!Array.isArray(a.channels) || a.channels.length < 1) return fail('channels', 'missing');
-  const ch = [...new Set(a.channels)];
-  if (ch.length > 2) return fail('channels', 'too_many');
-  if (!ch.every((c) => optionIds('channels').includes(c))) return fail('channels', 'invalid_option');
-  answers.channels = ch;
+  if (later || (Array.isArray(a.channels) && a.channels.length > 0)) {
+    if (!Array.isArray(a.channels) || a.channels.length < 1) return fail('channels', 'missing');
+    const ch = [...new Set(a.channels)];
+    if (ch.length > 2) return fail('channels', 'too_many');
+    if (!ch.every((c) => optionIds('channels').includes(c))) return fail('channels', 'invalid_option');
+    answers.channels = ch;
+  }
 
   err = single('acquisition', later) || single('sink', later) || single('hours', later);
   if (err) return err;
@@ -107,7 +110,9 @@ export function validateSubmission(body) {
   const utm = { source: cleanText(u.source, 100), medium: cleanText(u.medium, 100), campaign: cleanText(u.campaign, 100) };
   const device = ['mobile', 'tablet', 'desktop'].includes(body.device) ? body.device : 'unknown';
 
-  return { ok: true, value: { stage, session_id, answers, contact, utm, device } };
+  const step = Number.isInteger(body.step) && body.step >= 1 && body.step <= 7 ? body.step : null;
+
+  return { ok: true, value: { stage, session_id, answers, contact, utm, device, step } };
 }
 
 /** @param {any} body */
