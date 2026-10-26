@@ -3,7 +3,7 @@
 import { question, LIMITS } from './questions.js';
 import { normalizeIlMobile } from './phone.js';
 
-const CAL_URL = 'https://cal.com/asaf-yaniv-hlwofj/30min';
+const CAL_URL = 'https://cal.com/asaf-yaniv-hlwofj/20min';
 const SITE_URL = 'https://ensemble-ai.io/he/';
 const STORE_KEY = 'ensemble-quiz-v1';
 const TYPING_MS = 650; // dots shown before each question
@@ -573,7 +573,7 @@ function resultScreen(r) {
     h(
       'div',
       { class: 'dock' },
-      h('a', { class: 'btn btn--block', href: CAL_URL, onclick: trackBookingClick }, 'בואו נדבר 30 דקות ונבנה את זה'),
+      h('a', { class: 'btn btn--block', href: CAL_URL, onclick: trackBookingClick }, 'בואו נדבר 20 דקות ונבנה את זה'),
       h('small', {}, 'קובעים ישר ביומן של אסף'),
     ),
   ];
