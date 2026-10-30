@@ -29,7 +29,7 @@ export function safeTemplate(a, shortlist) {
   return null;
 }
 
-const DEFAULT_MODEL = 'claude-sonnet-4-6';
+const DEFAULT_MODEL = 'claude-sonnet-5-5';
 /** Timeout PER ATTEMPT (QUIZ_LLM_TIMEOUT_MS overrides). Worst case is two attempts, so 2 x this. */
 const DEFAULT_TIMEOUT_MS = 30_000;
 

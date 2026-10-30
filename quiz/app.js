@@ -424,6 +424,7 @@ function painScreen() {
     rows: '3',
     maxlength: max,
     'aria-label': q.text,
+    placeholder: 'למשל: כל סוף חודש אני מעתיק מספרים מאקסל להצעת מחיר ידנית',
     value: text,
     oninput: (/** @type {Event} */ e) => {
       const v = /** @type {HTMLTextAreaElement} */ (e.target).value;
@@ -568,13 +569,15 @@ function resultScreen(r) {
           h('dl', {}, h('dt', {}, 'זמן בנייה'), h('dd', {}, daysLabel(r.product.days)), h('dt', {}, 'בשבוע הראשון'), h('dd', {}, r.product.week1)),
         ),
       ),
+      h('p', { class: 'foot' }, 'הניתוח נוצר אוטומטית מהתשובות שלכם, ולכן הוא עדיין לא יודע באילו כלים אתם עובדים ואיך התהליך נראה בפועל. את זה בודקים יחד בשיחה.'),
       h('footer', { class: 'foot' }, 'Ensemble AI · בונים AI לתוך הדרך שבה העסק כבר עובד.', h('br'), h('a', { href: SITE_URL }, 'ensemble-ai.io')),
     ),
     h(
       'div',
       { class: 'dock' },
-      h('a', { class: 'btn btn--block', href: CAL_URL, onclick: trackBookingClick }, 'בואו נדבר 20 דקות ונבנה את זה'),
-      h('small', {}, 'קובעים ישר ביומן של אסף'),
+      h('a', { class: 'btn btn--block', href: CAL_URL, onclick: trackBookingClick }, 'בואו נדבר 20 דקות על התהליך הזה'),
+      h('small', {}, 'הבנייה בתשלום. המחיר נקבע אחרי שמבינים את התהליך.'),
+      h('a', { class: 'btn btn--ghost btn--block', href: 'https://wa.me/972547833072', target: '_blank', rel: 'noopener noreferrer' }, 'יש שאלה? כתבו לי בוואטסאפ'),
     ),
   ];
 }

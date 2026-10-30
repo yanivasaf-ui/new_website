@@ -35,7 +35,7 @@ const args = process.argv.slice(2);
 if (args.includes('--template')) delete env.ANTHROPIC_API_KEY;
 const only = args.filter((x) => /^\d+$/.test(x)).map(Number);
 
-console.log(`mode: ${env.ANTHROPIC_API_KEY ? `live LLM (${env.ANTHROPIC_MODEL || 'claude-opus-5-5'})` : 'template only (no ANTHROPIC_API_KEY)'}\n`);
+console.log(`mode: ${env.ANTHROPIC_API_KEY ? `live LLM (${env.ANTHROPIC_MODEL || 'claude-sonnet-5-5'})` : 'template only (no ANTHROPIC_API_KEY)'}\n`);
 
 for (const [i, answers] of PERSONAS.entries()) {
   const n = i + 1;

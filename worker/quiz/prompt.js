@@ -18,7 +18,16 @@ Writing rules (all mandatory):
 - Gender-neutral Hebrew. The reader's gender is unknown. Use plural forms (אתם, לכם, אצלכם), infinitives, impersonal plural (רואים, מקבלים), nouns, or past-tense forms that are spelled the same for both genders (כתבת, סימנת, ציינת). Never use אתה, or verbs/adjectives that mark gender in the second person singular.
 - Use words from their industry (what their customers and staff actually say).
 - If pain_text is provided, quote it briefly or paraphrase it, and connect the product to it.
-- Never invent facts about the business (numbers of customers, revenue, tools, history). Only use what is in the answers.
+- Never invent facts about the business (numbers of customers, revenue, tools, history). Only use what is in the answers. Industry example hints are illustrations, never facts about this owner: use them only as "למשל" or "בעסקים כמו שלכם", never as what this owner does, sells or answers.
+- If the industry was typed as free text ("אחר"), it may describe what they sell, not that they run that kind of business. Speak about their work in general terms, do not assume their role.
+- Keep sentences short and grammatical. Avoid unusual constructions, avoid the "לא X אלא Y" contrast, and never write a second-person singular "את" (for example "זה את", "סימנת את" before an indefinite noun).
+- Do not list their answers back (team size, channels, how customers arrive). They just gave them. what_i_saw opens with their pain or time sink, in their own words when pain_text exists, and adds at most one detail from the other answers, only if it sharpens the point.
+- If pain_text is one vague word (for example "הכל"), ignore it: do not quote it, comment on it or praise it.
+- If pain_text shows doubt or skepticism, do not mention the doubt, quote it or give a verdict. Just make product.week1 concrete and checkable, something they can see for themselves.
+- Do not infer that they have a website form, CRM or any system from how customers arrive. Mention a system only if they selected it as a channel or wrote it.
+- product.does and product.week1 may describe only what the catalog's what_it_does says. Do not add capabilities it does not list (payment links, new integrations, connecting to named systems).
+- Use only real, standard Hebrew words with correct agreement. Re-read every sentence before answering and fix any word that looks coined or garbled.
+- Hours: the monthly range must follow the weekly bucket exactly. Under 2 hours a week: 4-8 a month. 2-5: 8-20. 5-10: 20-40. 10+: 40-60.
 - Never name software, apps or tools they did not mention themselves. You may name the channels they selected.
 - Never promise savings or results. The time estimate must be a rough range in hours, anchored to the weekly hours they marked (convert to a monthly range, and say it is a rough estimate: הערכה גסה).
 - Never mention a quiz, questionnaire, form, AI generation, or that this text was written automatically.
@@ -83,7 +92,7 @@ export function userMessage(a, shortlist, previousErrors) {
   let msg = `Business owner's answers (Hebrew labels as they saw them):
 ${JSON.stringify(answers, null, 2)}
 
-Industry example hints you may use (or a better one from the same industry): typical question "${ex.ask}", typical document "${ex.doc}", typical appointment "${ex.meet}".
+Industry example hints, for illustration only (phrase as "למשל", never as this owner's reality): typical question "${ex.ask}", typical document "${ex.doc}", typical appointment "${ex.meet}".
 
 Shortlist (choose exactly one solution_id from here):
 ${JSON.stringify(options, null, 2)}
