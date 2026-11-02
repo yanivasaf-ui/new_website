@@ -21,15 +21,16 @@ const MSG = {
 };
 /** The guide step. Hebrew copy from udi-guide-capture-copy-2026-11-02.md (ids in the comments). Shown only when the Worker says the guide is on. */
 const GUIDE_TXT = {
-  title: 'המדריך: איך בונים את הסוכן הראשון שלכם', // G1a
-  line: 'שישה שלבים ודף אחד למילוי. נשלח אליכם למייל.', // G1b
+  title: 'איך בונים את הסוכן הראשון שלכם', // G1a
+  line1: 'הכנתי מדריך להתחלה: שישה שלבים ודף אחד למילוי.', // G1b, line 1
+  line2: 'אפשר להוריד אותו עכשיו, בחינם, והקישור מגיע גם למייל.', // G1b, line 2 ("בחינם" is Asaf's own word, only here)
   send: 'לשלוח לי את המדריך', // G1c
   consent: 'מאשרים שאפשר לשלוח לכם את המדריך ומדי פעם מיילים. אפשר להסיר בכל רגע.', // G2, G8b
   privacy: 'הפרטים משמשים כדי לחזור אליכם בנוגע לניתוח. אם סימנתם, גם כדי לשלוח את המדריך ומיילים.', // G3
-  sent: 'שלחתי למייל שהשארתם קישור למדריך. אם הוא לא הגיע, אפשר להוריד אותו מכאן.', // G4a
+  sent: 'שלחתי קישור למדריך למייל שהשארתם. אפשר להוריד אותו גם מכאן.', // G4a
   download: 'להורדת המדריך', // G4b
   error: 'משהו נתקע בשליחה. אפשר לנסות שוב, או להוריד את המדריך מכאן.', // G5
-  needConsent: 'כדי לשלוח את המדריך צריך את האישור שלכם.', // G8a
+  needConsent: 'כדי לקבל את המדריך, סמנו את התיבה:', // G8a
 };
 
 /** Set by GET /api/guide/config. The guide is off until it says otherwise, so nothing changes if the Worker has no GUIDE_URL. */
@@ -491,13 +492,15 @@ function guideConsentLabel() {
 function guideBox() {
   if (!guideCfg?.on) return null;
   const link = (/** @type {string} */ url) => (url ? h('a', { class: 'btn btn--ghost btn--block', href: url, target: '_blank', rel: 'noopener' }, GUIDE_TXT.download) : null);
-  if (S.guide_sent) return h('section', { class: 'guide' }, h('p', {}, GUIDE_TXT.sent), link(S.guide_url || ''));
+  const cover = h('img', { class: 'guide__cover', src: '/quiz/guide-cover.jpg', alt: '', width: '198', height: '280', loading: 'lazy' });
+  if (S.guide_sent) {
+    return h('section', { class: 'guide' }, h('div', { class: 'guide__row' }, cover, h('div', { class: 'guide__text' }, h('p', {}, GUIDE_TXT.sent))), link(S.guide_url || ''));
+  }
   return h(
     'section',
     { class: 'guide' },
-    h('p', { class: 'guide__title' }, GUIDE_TXT.title),
-    h('p', {}, GUIDE_TXT.line),
-    S.c.guide_consent ? null : h('p', {}, GUIDE_TXT.needConsent),
+    h('div', { class: 'guide__row' }, cover, h('div', { class: 'guide__text' }, h('h2', { class: 'guide__title' }, GUIDE_TXT.title), h('p', {}, GUIDE_TXT.line1), h('p', {}, GUIDE_TXT.line2))),
+    S.c.guide_consent ? null : h('p', { class: 'guide__need' }, GUIDE_TXT.needConsent),
     S.c.guide_consent ? null : guideConsentLabel(),
     guideUi.error ? h('p', { class: 'guide__error' }, GUIDE_TXT.error) : null,
     guideUi.error ? link(guideUi.url) : null,

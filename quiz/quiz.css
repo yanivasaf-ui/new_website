@@ -128,11 +128,14 @@ textarea.input { border-radius: var(--r-card); min-height: 112px; }
 .field__hint-btn { border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: var(--wine); text-decoration: underline; cursor: pointer; }
 .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.4; cursor: pointer; min-height: 44px; padding: 2px 6px 0; }
 .consent input { width: 22px; height: 22px; margin: 0; flex: none; accent-color: var(--wine); }
-.guide { display: flex; flex-direction: column; gap: 10px; padding: 16px 20px; border-radius: var(--r-card); box-shadow: inset 0 0 0 1.5px var(--line); }
-.guide p { margin: 0; font-size: 15px; line-height: 1.4; color: var(--ink-soft); }
-.guide .guide__title { font-size: 16px; font-weight: 600; color: inherit; }
+.guide { display: flex; flex-direction: column; gap: 14px; padding: 18px 20px 20px; border-radius: var(--r-card); background: var(--paper); box-shadow: var(--shadow-card); }
+.guide__row { display: flex; align-items: flex-start; gap: 16px; }
+.guide__cover { flex: none; width: 92px; height: auto; border-radius: 10px; box-shadow: 0 6px 18px rgba(46, 43, 39, 0.22); }
+.guide__text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.guide p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--ink-soft); }
+.guide .guide__title { margin: 0; font-size: 20px; line-height: 1.25; font-weight: 700; color: inherit; }
+.guide .guide__need { font-size: 15px; color: inherit; }
 .guide .guide__error { color: var(--danger); font-size: 14px; }
-.guide .btn { min-height: 44px; font-size: 15px; box-shadow: inset 0 0 0 1.5px rgba(107, 43, 58, 0.45); }
 .privacy { font-size: 13px; color: var(--ink-soft); margin: 0; line-height: 1.45; text-align: center; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
