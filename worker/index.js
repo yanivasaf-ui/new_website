@@ -3,7 +3,7 @@
 // asset misses. /api/analyze* is handled here, everything else falls through to ASSETS
 // so the site behaves exactly as it did before the Worker existed.
 import { handleAnalyze, handleClick } from './quiz/handlers.js';
-import { handleGuide, handleGuideConfig, handleGuideUnsubscribe } from './quiz/guide.js';
+import { handleGuide, handleGuideConfig, handleGuideSignup, handleGuideUnsubscribe } from './quiz/guide.js';
 
 export { RateLimiter } from './quiz/ratelimit.js';
 
@@ -39,6 +39,7 @@ export default {
     if (pathname === '/api/analyze') return handleAnalyze(request, env, ctx);
     if (pathname === '/api/analyze/click') return handleClick(request, env, ctx);
     if (pathname === '/api/guide') return handleGuide(request, env, ctx);
+    if (pathname === '/api/guide/signup') return handleGuideSignup(request, env, ctx);
     if (pathname === '/api/guide/config') return handleGuideConfig(request, env);
     if (pathname === '/api/guide/unsubscribe') return handleGuideUnsubscribe(request, env, ctx);
     return env.ASSETS.fetch(request);

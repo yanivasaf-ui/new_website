@@ -1,2 +1,5 @@
 /g/*
   X-Robots-Tag: noindex, nofollow
+
+/next/*
+  X-Robots-Tag: noindex, nofollow

@@ -45,7 +45,10 @@ http
       if (rejectGuide && data.properties && Object.keys(data.properties).some((k) => k.startsWith('guide_'))) return send({ message: 'guide property is not a property that exists' }, 400);
       if (req.method === 'POST' && /\/databases\/[^/]+\/query$/.test(req.url)) {
         const want = data.filter?.rich_text?.equals;
-        const hit = pages.filter((p) => p.properties.session_id?.rich_text?.[0]?.text?.content === want);
+        const wantEmail = data.filter?.email?.equals;
+        const hit = wantEmail
+          ? pages.filter((p) => p.properties.email?.email === wantEmail)
+          : pages.filter((p) => p.properties.session_id?.rich_text?.[0]?.text?.content === want);
         return send({ results: hit.map((p) => ({ ...p, properties: plain(p.properties) })) });
       }
       if (req.method === 'POST' && req.url === '/v1/pages') {

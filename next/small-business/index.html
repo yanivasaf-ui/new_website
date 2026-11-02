@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asaf Yaniv | Your business, with superpowers</title>
+  <link rel="icon" href="/next/favicon.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="/sb-hero-2048.jpg" imagesrcset="/sb-hero-1080.jpg 1080w, /sb-hero-2048.jpg 2048w" imagesizes="70vw">
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #EFE6D8; color: #2E2B27; font-family: "Switzer", "Assistant", sans-serif; overflow-x: clip; }
+    a { color: #22335C; text-decoration: none; }
+    a:hover { color: #C4622D; }
+    @media (max-width: 859px) { html, body { background: #DBC8B1; } }
+    ::selection { background: #22335C; color: #F1EAE0; }
+  </style>
+</helmet>
+<div lang="{{ langAttr }}" dir="{{ dir }}" style="min-height:100vh; color:#2E2B27">
+
+  <nav aria-label="{{ navLabel }}" style="position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:30; display:flex; align-items:center; gap:clamp(14px,2.2vw,36px); width:max-content; max-width:94vw; box-sizing:border-box; height:clamp(56px,7.2vw,66px); padding-inline-start:clamp(17px,2.4vw,26px); padding-inline-end:clamp(7px,1.2vw,10px); border-radius:999px; background:#15130F; box-shadow:0 6px 30px rgba(21,19,15,0.28)">
+    <a href="{{ homeHref }}" dir="ltr" aria-label="ensemble home" style="display:inline-flex; align-items:center; align-self:stretch; flex-shrink:0">
+      <img src="/next/ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(18px,2vw,26px); width:auto; user-select:none">
+    </a>
+    <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; align-items:center; gap:clamp(16px,2vw,30px)">
+        <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="3">
+          <sc-if value="{{ l.active }}" hint-placeholder-val="{{ false }}">
+            <a href="{{ l.href }}" aria-current="page" style="display:inline-flex; flex-direction:column; align-items:center; gap:5px; color:#F1EAE0; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap" style-hover="color:#F1EAE0">{{ l.label }}<span aria-hidden="true" style="width:5px; height:5px; border-radius:50%; background:#F1EAE0; margin-bottom:-10px"></span></a>
+          </sc-if>
+          <sc-if value="{{ l.inactive }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ l.href }}" style="color:#F1EAE0; opacity:0.62; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap; transition:opacity 0.15s ease" style-hover="opacity:1; color:#F1EAE0">{{ l.label }}</a>
+          </sc-if>
+        </sc-for>
+      </div>
+      <div style="display:flex; align-items:center; gap:clamp(4px,0.6vw,8px)">
+        <button type="button" onClick="{{ toggleLang }}" aria-label="{{ langSwitchLabel }}" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border:0; border-radius:50%; background:transparent; color:#F1EAE0; font:inherit; font-weight:600; font-size:13px; cursor:pointer; opacity:0.62" style-hover="opacity:1">{{ langSwitchText }}</button>
+        <a href="https://cal.com/asaf-yaniv-hlwofj/20min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#15130F; background:#F1EAE0; padding:0 clamp(18px,2vw,26px); border-radius:999px; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap" style-hover="background:#FFFFFF; color:#15130F">{{ talkLabel }}</a>
+      </div>
+    </sc-if>
+    <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; align-items:center; gap:6px">
+        <a href="https://cal.com/asaf-yaniv-hlwofj/20min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:44px; color:#15130F; background:#F1EAE0; padding:0 16px; border-radius:999px; font-weight:600; font-size:15px; white-space:nowrap" style-hover="background:#FFFFFF; color:#15130F">{{ talkLabel }}</a>
+        <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="{{ menuLabel }}" style="display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; width:44px; height:44px; flex-shrink:0; border:0; border-radius:50%; background:transparent; box-shadow:inset 0 0 0 1.5px rgba(241,234,224,0.28); cursor:pointer; padding:0">
+          <span ref="{{ bar1Ref }}" aria-hidden="true" style="display:block; width:16px; height:1.5px; border-radius:1px; background:#F1EAE0; transition:transform 0.2s ease"></span>
+          <span ref="{{ bar2Ref }}" aria-hidden="true" style="display:block; width:16px; height:1.5px; border-radius:1px; background:#F1EAE0; transition:transform 0.2s ease"></span>
+        </button>
+      </div>
+    </sc-if>
+  </nav>
+  <sc-if value="{{ showMenu }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenu }}" style="position:fixed; inset:0; z-index:28; background:rgba(21,19,15,0.25)"></div>
+    <div style="position:fixed; top:84px; left:50%; transform:translateX(-50%); z-index:29; width:94vw; box-sizing:border-box; padding:10px 22px 22px; border-radius:28px; background:#15130F; color:#F1EAE0; box-shadow:0 12px 40px rgba(21,19,15,0.35); display:flex; flex-direction:column">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="3">
+        <a href="{{ l.href }}" onClick="{{ closeMenu }}" style="display:flex; align-items:center; justify-content:space-between; min-height:60px; border-bottom:1px solid rgba(241,234,224,0.14); color:#F1EAE0; font-weight:600; font-size:24px; letter-spacing:-0.02em" style-hover="color:#FFFFFF">{{ l.label }}<sc-if value="{{ l.active }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width:7px; height:7px; border-radius:50%; background:#F1EAE0"></span></sc-if></a>
+      </sc-for>
+      <button type="button" onClick="{{ toggleLang }}" aria-label="{{ langSwitchLabel }}" style="align-self:flex-start; margin-top:16px; display:inline-flex; align-items:center; height:44px; padding:0 18px; border:0; border-radius:999px; background:transparent; box-shadow:inset 0 0 0 1.5px rgba(241,234,224,0.28); color:#F1EAE0; font:inherit; font-weight:600; font-size:15px; cursor:pointer">{{ langSwitchLong }}</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+    <section id="hero" data-screen-label="01 Hero" style="position:relative; width:100%; height:max(620px, min(100vh, 60vw)); overflow:hidden">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <img src="/sb-hero-2048.jpg" srcset="/sb-hero-1080.jpg 1080w, /sb-hero-2048.jpg 2048w" sizes="70vw" alt="A textile character in an orange sweater, arms raised, steering a note, a speech bubble, an envelope and a bell on orange wires" draggable="false" fetchpriority="high" style="position:absolute; top:0; right:0; width:68%; height:100%; object-fit:cover; object-position:46% center; user-select:none; -webkit-mask-image:linear-gradient(to right, transparent 0%, #000 16%), linear-gradient(to bottom, #000 84%, transparent 100%); -webkit-mask-composite:source-in; mask-image:linear-gradient(to right, transparent 0%, #000 16%), linear-gradient(to bottom, #000 84%, transparent 100%); mask-composite:intersect">
+        <div style="position:absolute; left:4vw; top:0; bottom:0; width:40vw; display:flex; flex-direction:column; justify-content:center; gap:clamp(22px,2.6vw,44px); padding-top:clamp(60px,8vh,100px); box-sizing:border-box">
+          <h1 style="margin:0; font-weight:600; font-size:clamp(50px,5.4vw,118px); line-height:0.92; letter-spacing:-0.045em; text-wrap:balance">Your business, with <span style="color:#6B2B3A">superpowers</span>.</h1>
+          <div style="display:flex; align-items:flex-start; gap:16px; max-width:min(640px,38vw)">
+            <p style="margin:0; font-weight:500; font-size:clamp(24px,2.25vw,46px); line-height:1.22; letter-spacing:-0.025em; text-wrap:pretty">An assistant in your WhatsApp for the tasks that keep coming back.</p>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <img src="/sb-hero-2048.jpg" srcset="/sb-hero-1080.jpg 1080w, /sb-hero-2048.jpg 2048w" sizes="70vw" alt="דמות בד בסוודר כתום, ידיים למעלה, מכוונת פתק, בועת דיבור, מעטפה ופעמון על חוטים כתומים" draggable="false" fetchpriority="high" style="position:absolute; top:0; left:0; width:68%; height:100%; object-fit:cover; object-position:54% center; user-select:none; -webkit-mask-image:linear-gradient(to left, transparent 0%, #000 16%), linear-gradient(to bottom, #000 84%, transparent 100%); -webkit-mask-composite:source-in; mask-image:linear-gradient(to left, transparent 0%, #000 16%), linear-gradient(to bottom, #000 84%, transparent 100%); mask-composite:intersect">
+        <div style="position:absolute; right:4vw; top:0; bottom:0; width:40vw; display:flex; flex-direction:column; justify-content:center; gap:clamp(22px,2.6vw,44px); padding-top:clamp(60px,8vh,100px); box-sizing:border-box">
+          <h1 style="margin:0; font-weight:700; font-size:clamp(54px,5.8vw,124px); line-height:0.98; text-wrap:balance">העסק שלכם, עם <span style="color:#6B2B3A">כוחות על</span>.</h1>
+          <div style="display:flex; align-items:flex-start; gap:16px; max-width:min(640px,38vw)">
+            <p style="margin:0; font-weight:500; font-size:clamp(25px,2.35vw,48px); line-height:1.3; text-wrap:pretty">עוזר בוואטסאפ למשימות שחוזרות על עצמן.</p>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+  </sc-if>
+  <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+    <section id="hero" data-screen-label="01 Hero" style="position:relative; width:100%">
+      <div style="padding:108px 22px 8px; display:flex; flex-direction:column; gap:18px">
+        <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+          <h1 style="margin:0; font-weight:600; font-size:clamp(42px,11.5vw,62px); line-height:0.95; letter-spacing:-0.045em; text-wrap:balance">Your business, with <span style="color:#6B2B3A">superpowers</span>.</h1>
+          <p style="margin:0; font-weight:500; font-size:23px; line-height:1.3; letter-spacing:-0.015em; text-wrap:pretty">An assistant in your WhatsApp for the tasks that keep coming back.</p>
+        </sc-if>
+        <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+          <h1 style="margin:0; font-weight:700; font-size:clamp(44px,12vw,64px); line-height:1; text-wrap:balance">העסק שלכם, עם <span style="color:#6B2B3A">כוחות על</span>.</h1>
+          <p style="margin:0; font-weight:500; font-size:24px; line-height:1.35; text-wrap:pretty">עוזר בוואטסאפ למשימות שחוזרות על עצמן.</p>
+        </sc-if>
+      </div>
+      <div style="position:relative; width:100%; aspect-ratio:1/1; overflow:hidden">
+        <img src="/sb-hero-1080.jpg" alt="A textile character in an orange sweater, arms raised, steering a note, a speech bubble, an envelope and a bell on orange wires" draggable="false" fetchpriority="high" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% center; user-select:none; -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)">
+      </div>
+    </section>
+  </sc-if>
+
+  <section id="tasks" data-screen-label="02 Carousel" aria-label="{{ tasksLabel }}" style="position:relative; width:100%; padding:clamp(36px,5vh,72px) 0 clamp(56px,8vh,110px)">
+    <sc-if value="{{ moving }}" hint-placeholder-val="{{ true }}">
+      <div dir="ltr" onPointerEnter="{{ pause }}" onPointerLeave="{{ resume }}" style="width:100%; overflow:hidden; -webkit-mask-image:linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); mask-image:linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)">
+        <div ref="{{ trackRef }}" style="display:flex; width:max-content; font-weight:600; font-size:clamp(28px,7vw,40px); line-height:1.25; padding:0.1em 0; letter-spacing:-0.025em; will-change:transform">
+          <div style="display:flex">
+            <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="6">
+              <span style="display:inline-flex; align-items:center; gap:28px; padding-right:28px; white-space:nowrap"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0"><g stroke="#6B2B3A" stroke-width="2.2" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><span dir="auto">{{ t }}</span></span>
+            </sc-for>
+          </div>
+          <div aria-hidden="true" style="display:flex">
+            <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="6">
+              <span style="display:inline-flex; align-items:center; gap:28px; padding-right:28px; white-space:nowrap"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0"><g stroke="#6B2B3A" stroke-width="2.2" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><span dir="auto">{{ t }}</span></span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ still }}" hint-placeholder-val="{{ false }}">
+      <ul style="list-style:none; margin:0 auto; padding:0 22px; max-width:1200px; display:flex; flex-wrap:wrap; justify-content:center; column-gap:28px; row-gap:10px; font-weight:600; font-size:clamp(28px,7vw,40px); line-height:1.25; letter-spacing:-0.025em">
+        <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="6">
+          <li style="display:inline-flex; align-items:center; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0"><g stroke="#6B2B3A" stroke-width="2.2" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><span>{{ t }}</span></li>
+        </sc-for>
+      </ul>
+    </sc-if>
+  </section>
+
+  <section id="how" data-screen-label="03 How it works" style="position:relative; width:100%; display:flex; flex-wrap:wrap; align-items:flex-start">
+    <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1 1 38%; position:sticky; top:0; height:100vh; overflow:hidden">
+        <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+          <img src="/magnific_this-is-great-take-the-ch_rl1UTvVxtc.jpg" alt="A friendly textile character with glasses presenting with an open hand" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:15% bottom; user-select:none; -webkit-mask-image:linear-gradient(to right, #000 60%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%); -webkit-mask-composite:source-in; mask-image:linear-gradient(to right, #000 60%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%); mask-composite:intersect">
+        </sc-if>
+        <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+          <img src="/magnific_this-is-great-take-the-ch_rl1UTvVxtc.jpg" alt="A friendly textile character with glasses presenting with an open hand" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:15% bottom; transform:scaleX(-1); user-select:none; -webkit-mask-image:linear-gradient(to right, #000 60%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%); -webkit-mask-composite:source-in; mask-image:linear-gradient(to right, #000 60%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%); mask-composite:intersect">
+        </sc-if>
+      </div>
+    </sc-if>
+    <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative; width:100%; aspect-ratio:4/5; overflow:hidden">
+        <img src="/magnific_this-is-great-take-the-ch_rl1UTvVxtc.jpg" alt="A friendly textile character with glasses presenting with an open hand" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:22% bottom; user-select:none; -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%)">
+      </div>
+    </sc-if>
+    <div style="flex:1.4 1 460px; min-width:0; box-sizing:border-box; padding-top:clamp(36px,16vh,180px); padding-bottom:clamp(64px,12vh,160px); padding-inline-start:clamp(22px,2vw,40px); padding-inline-end:clamp(22px,7vw,140px)">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <h2 style="margin:0 0 clamp(28px,3.4vw,56px); font-weight:500; font-size:clamp(40px,4.5vw,90px); line-height:0.98; letter-spacing:-0.04em; text-wrap:balance">This is how it works</h2>
+        <ol style="list-style:none; margin:0; padding:0">
+          <li style="display:grid; grid-template-columns:clamp(44px,4.6vw,84px) minmax(0,1fr); gap:clamp(12px,1.6vw,28px); padding:clamp(24px,3vw,44px) 0; border-top:1px solid rgba(46,43,39,0.2)">
+            <span aria-hidden="true" style="font-weight:600; font-size:clamp(34px,3.2vw,60px); line-height:0.9; letter-spacing:-0.04em; color:#8A8578">1</span>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-weight:600; font-size:clamp(24px,2.2vw,40px); line-height:1.1; letter-spacing:-0.03em; text-wrap:balance">We talk.</h3>
+              <p style="margin:0; max-width:34em; font-size:clamp(18px,1.35vw,24px); line-height:1.5; text-wrap:pretty">A short call where you tell me how your business runs and where the time goes.</p>
+            </div>
+          </li>
+          <li style="display:grid; grid-template-columns:clamp(44px,4.6vw,84px) minmax(0,1fr); gap:clamp(12px,1.6vw,28px); padding:clamp(24px,3vw,44px) 0; border-top:1px solid rgba(46,43,39,0.2)">
+            <span aria-hidden="true" style="font-weight:600; font-size:clamp(34px,3.2vw,60px); line-height:0.9; letter-spacing:-0.04em; color:#8A8578">2</span>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-weight:600; font-size:clamp(24px,2.2vw,40px); line-height:1.1; letter-spacing:-0.03em; text-wrap:balance">You get an assistant in WhatsApp <span style="color:#8A8578">(or the app you already prefer).</span></h3>
+              <p style="margin:0; max-width:34em; font-size:clamp(18px,1.35vw,24px); line-height:1.5; text-wrap:pretty">You write to it like you'd write to a person. It keeps your reminders, sorts your messages, handles the small tasks that pop up, and answers when you ask how the business is doing.</p>
+            </div>
+          </li>
+          <li style="display:grid; grid-template-columns:clamp(44px,4.6vw,84px) minmax(0,1fr); gap:clamp(12px,1.6vw,28px); padding:clamp(24px,3vw,44px) 0; border-top:1px solid rgba(46,43,39,0.2)">
+            <span aria-hidden="true" style="font-weight:600; font-size:clamp(34px,3.2vw,60px); line-height:0.9; letter-spacing:-0.04em; color:#8A8578">3</span>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-weight:600; font-size:clamp(24px,2.2vw,40px); line-height:1.1; letter-spacing:-0.03em; text-wrap:balance">Your clients and leads in one place.</h3>
+              <p style="margin:0; max-width:34em; font-size:clamp(18px,1.35vw,24px); line-height:1.5; text-wrap:pretty">Every customer, lead, quote and follow-up sits in one list that the assistant keeps up to date. Nothing stays in a notebook or in your head.</p>
+            </div>
+          </li>
+          <li style="display:grid; grid-template-columns:clamp(44px,4.6vw,84px) minmax(0,1fr); gap:clamp(12px,1.6vw,28px); padding:clamp(24px,3vw,44px) 0; border-top:1px solid rgba(46,43,39,0.2); border-bottom:1px solid rgba(46,43,39,0.2)">
+            <span aria-hidden="true" style="font-weight:600; font-size:clamp(34px,3.2vw,60px); line-height:0.9; letter-spacing:-0.04em; color:#8A8578">4</span>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-weight:600; font-size:clamp(24px,2.2vw,40px); line-height:1.1; letter-spacing:-0.03em; text-wrap:balance">I stay with you.</h3>
+              <p style="margin:0; max-width:34em; font-size:clamp(18px,1.35vw,24px); line-height:1.5; text-wrap:pretty">When it works, I show you how to run it, and I'm around as the business changes.</p>
+            </div>
+          </li>
+        </ol>
+        <p style="margin:clamp(32px,4vw,64px) 0 0; font-weight:600; font-size:clamp(28px,3vw,56px); line-height:1.05; letter-spacing:-0.035em; text-wrap:balance">You still make the calls that matter.</p>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <h2 style="margin:0 0 clamp(28px,3.4vw,56px); font-weight:700; font-size:clamp(42px,4.7vw,94px); line-height:1.02; text-wrap:balance">ככה זה עובד</h2>
+        <ol style="list-style:none; margin:0; padding:0">
+          <li style="display:grid; grid-template-columns:clamp(44px,4.6vw,84px) minmax(0,1fr); gap:clamp(12px,1.6vw,28px); padding:clamp(24px,3vw,44px) 0; border-top:1px solid rgba(46,43,39,0.2)">
+            <span aria-hidden="true" style="font-weight:600; font-size:clamp(34px,3.2vw,60px); line-height:0.9; letter-spacing:-0.04em; color:#8A8578">1</span>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-weight:700; font-size:clamp(25px,2.3vw,42px); line-height:1.15; text-wrap:balance">מדברים.</h3>
+              <p style="margin:0; max-width:34em; font-size:clamp(19px,1.45vw,26px); line-height:1.55; text-wrap:pretty">שיחה קצרה שבה אתם מספרים לי איך העסק עובד ואיפה הזמן הולך.</p>
+            </div>
+          </li>
+          <li style="display:grid; grid-template-columns:clamp(44px,4.6vw,84px) minmax(0,1fr); gap:clamp(12px,1.6vw,28px); padding:clamp(24px,3vw,44px) 0; border-top:1px solid rgba(46,43,39,0.2)">
+            <span aria-hidden="true" style="font-weight:600; font-size:clamp(34px,3.2vw,60px); line-height:0.9; letter-spacing:-0.04em; color:#8A8578">2</span>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-weight:700; font-size:clamp(25px,2.3vw,42px); line-height:1.15; text-wrap:balance">מקבלים עוזר בוואטסאפ <span style="color:#8A8578">(או באפליקציה שנוחה לכם).</span></h3>
+              <p style="margin:0; max-width:34em; font-size:clamp(19px,1.45vw,26px); line-height:1.55; text-wrap:pretty">כותבים לו כמו שכותבים לבן אדם. הוא מחזיק לכם תזכורות, ממיין הודעות, מטפל במשימות הקטנות שצצות, ועונה כשאתם שואלים מה קורה בעסק.</p>
+            </div>
+          </li>
+          <li style="display:grid; grid-template-columns:clamp(44px,4.6vw,84px) minmax(0,1fr); gap:clamp(12px,1.6vw,28px); padding:clamp(24px,3vw,44px) 0; border-top:1px solid rgba(46,43,39,0.2)">
+            <span aria-hidden="true" style="font-weight:600; font-size:clamp(34px,3.2vw,60px); line-height:0.9; letter-spacing:-0.04em; color:#8A8578">3</span>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-weight:700; font-size:clamp(25px,2.3vw,42px); line-height:1.15; text-wrap:balance">הלקוחות והלידים במקום אחד.</h3>
+              <p style="margin:0; max-width:34em; font-size:clamp(19px,1.45vw,26px); line-height:1.55; text-wrap:pretty">כל לקוח, ליד, הצעת מחיר ומעקב נמצאים ברשימה אחת שהעוזר מעדכן. שום דבר לא נשאר במחברת או בראש שלכם.</p>
+            </div>
+          </li>
+          <li style="display:grid; grid-template-columns:clamp(44px,4.6vw,84px) minmax(0,1fr); gap:clamp(12px,1.6vw,28px); padding:clamp(24px,3vw,44px) 0; border-top:1px solid rgba(46,43,39,0.2); border-bottom:1px solid rgba(46,43,39,0.2)">
+            <span aria-hidden="true" style="font-weight:600; font-size:clamp(34px,3.2vw,60px); line-height:0.9; letter-spacing:-0.04em; color:#8A8578">4</span>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-weight:700; font-size:clamp(25px,2.3vw,42px); line-height:1.15; text-wrap:balance">אני נשאר איתכם.</h3>
+              <p style="margin:0; max-width:34em; font-size:clamp(19px,1.45vw,26px); line-height:1.55; text-wrap:pretty">כשזה עובד, אני מראה לכם איך מנהלים את זה, ואני לידכם כשהעסק משתנה.</p>
+            </div>
+          </li>
+        </ol>
+        <p style="margin:clamp(32px,4vw,64px) 0 0; font-weight:700; font-size:clamp(30px,3.2vw,60px); line-height:1.1; text-wrap:balance">ההחלטות שחשובות נשארות אצלכם.</p>
+      </sc-if>
+    </div>
+  </section>
+
+  <sc-if value="{{ proofWide }}" hint-placeholder-val="{{ true }}">
+  <section id="proof" data-screen-label="05 Proof" style="position:relative; width:100%; overflow:hidden">
+    <div aria-hidden="true" style="position:absolute; left:0; right:0; top:-70px; height:140px; pointer-events:none; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 42%, #000 58%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 42%, #000 58%, transparent); z-index:6"></div>
+    <div style="display:grid; min-height:56.25vw">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}"><img src="/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="Three textile characters gathered around a vintage monitor showing this website" loading="lazy" draggable="false" style="grid-area:1/1; width:100%; height:100%; object-fit:cover; object-position:center; user-select:none"></sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}"><img src="/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="שלוש דמויות בד מסביב למסך וינטג' שמציג את האתר הזה" loading="lazy" draggable="false" style="grid-area:1/1; width:100%; height:100%; object-fit:cover; object-position:center; transform:scaleX(-1); user-select:none"></sc-if>
+      <div style="grid-area:1/1; display:flex; align-items:center; padding-inline-start:7vw; z-index:5">
+        <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex; flex-direction:column; align-items:flex-start; gap:clamp(16px,1.6vw,28px); max-width:31vw">
+            <h2 style="margin:0; font-weight:600; font-size:clamp(40px,4.4vw,96px); line-height:1; letter-spacing:-0.04em">What it looks like.</h2>
+            <p style="margin:clamp(8px,1vw,18px) 0 0; font-weight:600; font-size:clamp(15px,1.1vw,19px); letter-spacing:0.1em; text-transform:uppercase">Running in my own operation</p>
+            <h3 style="margin:0; font-weight:600; font-size:clamp(30px,2.8vw,56px); line-height:1.05; letter-spacing:-0.035em; text-wrap:balance">This website, built by agents.</h3>
+            <ul style="list-style:none; margin:clamp(4px,0.6vw,10px) 0 0; padding:0; width:100%; border-bottom:1px solid rgba(46,43,39,0.25)"><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:clamp(22px,2vw,38px); line-height:1.15; letter-spacing:-0.025em">Creative director</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:clamp(22px,2vw,38px); line-height:1.15; letter-spacing:-0.025em">Copywriter</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:clamp(22px,2vw,38px); line-height:1.15; letter-spacing:-0.025em">Designer</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:clamp(22px,2vw,38px); line-height:1.15; letter-spacing:-0.025em">Operations lead</li></ul>
+            <p style="margin:0; font-size:clamp(19px,1.45vw,28px); line-height:1.42; text-wrap:pretty">They’re all agents working from the same context and memory. I stepped in when something needed an actual decision.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+          <div dir="rtl" style="display:flex; flex-direction:column; align-items:flex-start; gap:clamp(16px,1.6vw,28px); max-width:31vw">
+            <h2 style="margin:0; font-weight:700; font-size:clamp(42px,4.6vw,100px); line-height:1.02">איך זה נראה</h2>
+            <p style="margin:clamp(8px,1vw,18px) 0 0; font-weight:700; font-size:clamp(17px,1.25vw,21px)">רץ אצלי בעסק</p>
+            <h3 style="margin:0; font-weight:700; font-size:clamp(32px,2.9vw,58px); line-height:1.12; text-wrap:balance">האתר הזה, נבנה על ידי אייג'נטים.</h3>
+            <ul style="list-style:none; margin:clamp(4px,0.6vw,10px) 0 0; padding:0; width:100%; border-bottom:1px solid rgba(46,43,39,0.25)"><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:clamp(23px,2.1vw,40px); line-height:1.15;">מנהל קריאייטיב</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:clamp(23px,2.1vw,40px); line-height:1.15;">קופירייטר</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:clamp(23px,2.1vw,40px); line-height:1.15;">מעצב</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:clamp(23px,2.1vw,40px); line-height:1.15;">מנהל תפעול</li></ul>
+            <p style="margin:0; font-size:clamp(20px,1.55vw,30px); line-height:1.5; text-wrap:pretty">כולם אייג'נטים, עובדים מאותו הקשר ומאותו זיכרון. אני נכנסתי לתמונה רק כשמשהו באמת דרש הכרעה.</p>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ proofStack }}" hint-placeholder-val="{{ false }}">
+  <section id="proof" data-screen-label="05 Proof" style="position:relative; width:100%">
+    <div style="max-width:760px; padding:52px clamp(22px,5vw,72px) 28px; display:flex; flex-direction:column; gap:16px">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <h2 style="margin:0; font-weight:600; font-size:clamp(34px,9vw,52px); line-height:1.02; letter-spacing:-0.035em">What it looks like.</h2>
+        <p style="margin:8px 0 0; font-weight:600; font-size:15px; letter-spacing:0.1em; text-transform:uppercase">Running in my own operation</p>
+        <h3 style="margin:0; font-weight:600; font-size:29px; line-height:1.1; letter-spacing:-0.025em">This website, built by agents.</h3>
+        <ul style="list-style:none; margin:clamp(4px,0.6vw,10px) 0 0; padding:0; width:100%; border-bottom:1px solid rgba(46,43,39,0.25)"><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:24px; line-height:1.15; letter-spacing:-0.02em">Creative director</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:24px; line-height:1.15; letter-spacing:-0.02em">Copywriter</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:24px; line-height:1.15; letter-spacing:-0.02em">Designer</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:24px; line-height:1.15; letter-spacing:-0.02em">Operations lead</li></ul>
+        <p style="margin:0; font-size:19px; line-height:1.45; text-wrap:pretty">They’re all agents working from the same context and memory. I stepped in when something needed an actual decision.</p>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <h2 style="margin:0; font-weight:700; font-size:clamp(36px,9.5vw,54px); line-height:1.05">איך זה נראה</h2>
+        <p style="margin:8px 0 0; font-weight:700; font-size:17px">רץ אצלי בעסק</p>
+        <h3 style="margin:0; font-weight:700; font-size:30px; line-height:1.15">האתר הזה, נבנה על ידי אייג'נטים.</h3>
+        <ul style="list-style:none; margin:clamp(4px,0.6vw,10px) 0 0; padding:0; width:100%; border-bottom:1px solid rgba(46,43,39,0.25)"><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:25px; line-height:1.15;">מנהל קריאייטיב</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:25px; line-height:1.15;">קופירייטר</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:25px; line-height:1.15;">מעצב</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:25px; line-height:1.15;">מנהל תפעול</li></ul>
+        <p style="margin:0; font-size:20px; line-height:1.5; text-wrap:pretty">כולם אייג'נטים, עובדים מאותו הקשר ומאותו זיכרון. אני נכנסתי לתמונה רק כשמשהו באמת דרש הכרעה.</p>
+      </sc-if>
+    </div>
+    <div style="position:relative; width:100%; aspect-ratio:1/1; max-height:70vh; overflow:hidden">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}"><img src="/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="Three textile characters gathered around a vintage monitor showing this website" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:86% center; user-select:none"></sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}"><img src="/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="שלוש דמויות בד מסביב למסך וינטג' שמציג את האתר הזה" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:86% center; transform:scaleX(-1); user-select:none"></sc-if>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+  <section id="guide-section" data-screen-label="05b Free guide" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(56px,9vh,120px) clamp(22px,7vw,140px) clamp(24px,4vh,48px)">
+    <div id="guide" ref="{{ guideRef }}" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:clamp(24px,4vw,72px); align-items:center; box-sizing:border-box; padding:clamp(28px,4vw,64px); border-radius:clamp(22px,2.4vw,36px); background:#F1EAE0">
+      <div style="display:flex; flex-direction:column; gap:clamp(12px,1.2vw,20px)">
+        <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+          <h2 style="margin:0; font-weight:600; font-size:clamp(34px,3.6vw,68px); line-height:1; letter-spacing:-0.04em; text-wrap:balance">Here’s how I’d start.</h2>
+          <p style="margin:0; max-width:26em; font-size:clamp(19px,1.5vw,27px); line-height:1.4; text-wrap:pretty">Six steps to building your first assistant, no technical knowledge needed. Free, to your inbox.</p>
+        </sc-if>
+        <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+          <h2 style="margin:0; font-weight:700; font-size:clamp(36px,3.8vw,72px); line-height:1.05; text-wrap:balance">ככה הייתי מתחיל.</h2>
+          <p style="margin:0; max-width:26em; font-size:clamp(20px,1.6vw,29px); line-height:1.45; text-wrap:pretty">שישה שלבים לבניית העוזר הראשון שלכם, בלי צורך בידע טכני. בחינם, למייל.</p>
+        </sc-if>
+      </div>
+      <div style="position:relative">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ guideShowForm }}" hint-placeholder-val="{{ true }}">
+          <form noValidate="{{ true }}" onSubmit="{{ guideSubmit }}" onFocus="{{ guideFocus }}" style="display:flex; flex-direction:column; gap:16px; margin:0">
+            <div style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden" aria-hidden="true">
+              <label>Website<input type="text" name="website" tabIndex="-1" autoComplete="off" value="{{ guideHp }}" onChange="{{ guideHpChange }}"></label>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px">
+              <label for="guide-email-en" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap">Email</label>
+              <div style="display:flex; flex-wrap:wrap; gap:10px">
+                <input id="guide-email-en" type="email" name="email" dir="ltr" autoComplete="email" inputMode="email" placeholder="{{ guidePlaceholder }}" value="{{ guideEmail }}" onChange="{{ guideEmailChange }}" aria-invalid="{{ guideInvalid }}" aria-describedby="guide-msg-en" style="flex:1 1 220px; min-width:0; height:48px; box-sizing:border-box; padding:0 16px; border:0; border-radius:12px; background:#F7F1E8; box-shadow:inset 0 0 0 1.5px {{ guideFieldRing }}; color:#2E2B27; font-family:inherit; font-size:17px; outline:none; text-align:left" style-focus="box-shadow:inset 0 0 0 2px #22335C">
+                <button type="submit" disabled="{{ guideDisabled }}" style="flex:0 0 auto; height:48px; padding:0 22px; border:0; border-radius:999px; background:#22335C; color:#F1EAE0; font-family:inherit; font-weight:600; font-size:17px; white-space:nowrap; cursor:{{ guideCursor }}; opacity:{{ guideBtnOpacity }}; transition:background 0.15s ease, opacity 0.15s ease" style-hover="background:#1A2848">{{ guideBtnLabel }}</button>
+              </div>
+              <p id="guide-msg-en" role="alert" style="margin:0; min-height:1.4em; font-size:15px; line-height:1.4; color:#8E2F1F">{{ guideError }}</p>
+            </div>
+            <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer; font-size:15px; line-height:1.45; color:#2E2B27">
+              <input type="checkbox" checked="{{ guideConsent }}" onChange="{{ guideConsentChange }}" style="flex-shrink:0; width:20px; height:20px; margin:1px 0 0; accent-color:#22335C; cursor:pointer">
+              <span style="text-wrap:pretty">Send me the guide and occasional emails. Unsubscribe anytime.</span>
+            </label>
+            <p style="margin:0; font-size:14px; line-height:1.45; color:#5A544B"><a href="{{ privacyHref }}" style="color:#22335C; text-decoration:underline; text-underline-offset:3px" style-hover="color:#1A2848">Privacy policy</a></p>
+          </form>
+        </sc-if>
+        <sc-if value="{{ guideDone }}" hint-placeholder-val="{{ false }}">
+          <div role="status" style="display:flex; flex-direction:column; gap:6px">
+            <h2 style="margin:0; font-weight:600; font-size:clamp(26px,2.2vw,40px); line-height:1.1; letter-spacing:-0.025em;">Thank you.</h2>
+            <p style="margin:0; font-size:clamp(16px,1.15vw,19px); line-height:1.5; color:#4A453E; text-wrap:pretty">The guide is on its way to <bdi dir="ltr">{{ guideEmail }}</bdi>. Check your inbox.</p>
+          </div>
+        </sc-if>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{ guideShowForm }}" hint-placeholder-val="{{ true }}">
+          <form noValidate="{{ true }}" onSubmit="{{ guideSubmit }}" onFocus="{{ guideFocus }}" style="display:flex; flex-direction:column; gap:16px; margin:0">
+            <div style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden" aria-hidden="true">
+              <label>Website<input type="text" name="website" tabIndex="-1" autoComplete="off" value="{{ guideHp }}" onChange="{{ guideHpChange }}"></label>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px">
+              <label for="guide-email-he" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap">מייל</label>
+              <div style="display:flex; flex-wrap:wrap; gap:10px">
+                <input id="guide-email-he" type="email" name="email" dir="ltr" autoComplete="email" inputMode="email" placeholder="{{ guidePlaceholder }}" value="{{ guideEmail }}" onChange="{{ guideEmailChange }}" aria-invalid="{{ guideInvalid }}" aria-describedby="guide-msg-he" style="flex:1 1 220px; min-width:0; height:48px; box-sizing:border-box; padding:0 16px; border:0; border-radius:12px; background:#F7F1E8; box-shadow:inset 0 0 0 1.5px {{ guideFieldRing }}; color:#2E2B27; font-family:inherit; font-size:17px; outline:none; text-align:right" style-focus="box-shadow:inset 0 0 0 2px #22335C">
+                <button type="submit" disabled="{{ guideDisabled }}" style="flex:0 0 auto; height:48px; padding:0 22px; border:0; border-radius:999px; background:#22335C; color:#F1EAE0; font-family:inherit; font-weight:700; font-size:17px; white-space:nowrap; cursor:{{ guideCursor }}; opacity:{{ guideBtnOpacity }}; transition:background 0.15s ease, opacity 0.15s ease" style-hover="background:#1A2848">{{ guideBtnLabel }}</button>
+              </div>
+              <p id="guide-msg-he" role="alert" style="margin:0; min-height:1.4em; font-size:15px; line-height:1.4; color:#8E2F1F">{{ guideError }}</p>
+            </div>
+            <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer; font-size:15px; line-height:1.45; color:#2E2B27">
+              <input type="checkbox" checked="{{ guideConsent }}" onChange="{{ guideConsentChange }}" style="flex-shrink:0; width:20px; height:20px; margin:1px 0 0; accent-color:#22335C; cursor:pointer">
+              <span style="text-wrap:pretty">שלחו לי את המדריך ומיילים מדי פעם. אפשר להסיר בכל רגע.</span>
+            </label>
+            <p style="margin:0; font-size:14px; line-height:1.45; color:#5A544B"><a href="{{ privacyHref }}" style="color:#22335C; text-decoration:underline; text-underline-offset:3px" style-hover="color:#1A2848">מדיניות פרטיות</a></p>
+          </form>
+        </sc-if>
+        <sc-if value="{{ guideDone }}" hint-placeholder-val="{{ false }}">
+          <div role="status" style="display:flex; flex-direction:column; gap:6px">
+            <h2 style="margin:0; font-weight:700; font-size:clamp(26px,2.2vw,40px); line-height:1.1;">תודה.</h2>
+            <p style="margin:0; font-size:clamp(16px,1.15vw,19px); line-height:1.5; color:#4A453E; text-wrap:pretty">המדריך בדרך אל <bdi dir="ltr">{{ guideEmail }}</bdi>. בדקו את תיבת הדואר.</p>
+          </div>
+        </sc-if>
+      </sc-if>
+</div>
+    </div>
+  </section>
+  </sc-if>
+
+  <section id="about" data-screen-label="06 About" style="position:relative; width:100%; padding:clamp(72px,10vh,130px) 0 clamp(72px,10vh,140px); overflow:hidden">
+    <div data-dot-trail-suppress="" style="display:flex; flex-direction:column; align-items:center">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <p style="margin:0; font-size:clamp(22px,2.6vw,36px); font-weight:600; letter-spacing:-0.02em">Hi, I’m</p>
+        <h2 style="margin:clamp(-32px,-1.6vw,-14px) 0 0; font-weight:600; letter-spacing:-0.05em; font-size:clamp(96px,22vw,400px); line-height:0.9; color:#6B2B3A">Asaf</h2>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:0; font-size:clamp(24px,2.8vw,40px); font-weight:600">היי, אני</p>
+        <h2 style="margin:clamp(-24px,-1.2vw,-10px) 0 0; font-weight:700; letter-spacing:-0.02em; font-size:clamp(110px,24vw,430px); line-height:0.9; color:#6B2B3A">אסף</h2>
+      </sc-if>
+    </div>
+    <div style="position:relative; width:min(94%, 75vw + 60px); margin:clamp(-270px,-14vw,-40px) auto 0">
+      <div aria-hidden="true" style="position:absolute; left:50%; bottom:5%; transform:translateX(-50%); width:70%; height:4%; background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(46,43,39,0.32), transparent 72%); filter:blur(10px)"></div>
+      <img src="/asaf-cutout-clean.png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="position:relative; display:block; width:100%; user-select:none">
+    </div>
+    <div data-dot-trail-suppress="" style="width:calc(100% - clamp(44px,14vw,220px)); margin:clamp(24px,3.5vh,48px) auto 0; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap:clamp(28px,5vw,72px); align-items:start; color:#2E2B27; text-wrap:pretty">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:clamp(14px,1.6vw,28px); font-size:clamp(19px,1.75vw,30px); line-height:1.55">
+          <p style="margin:0; font-weight:600">Father of three (husband of one).</p>
+          <p style="margin:0">I started my career performing around the world with <strong style="font-weight:600">Mayumana</strong>. Then I moved into tech, joining <strong style="font-weight:600">Kaltura</strong> and later <strong style="font-weight:600">Artlist</strong>, where I built and led creative and operations teams.</p>
+          <p style="margin:0">Creative and engineering always made sense together to me. So I studied Digital Media at <strong style="font-weight:600">NYU’s School of Engineering</strong>. It wasn’t the obvious choice. I spent years explaining it.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:clamp(20px,2.6vw,44px)">
+          <p style="margin:0; font-weight:600; font-size:clamp(26px,3.2vw,52px); line-height:1.14; letter-spacing:-0.025em">Then <span style="color:#6B2B3A">AI</span> came along, and the two finally became the same job: understand what a business actually needs, then build what makes it work.</p>
+          <p style="margin:0; font-weight:600; font-size:clamp(21px,1.75vw,32px); line-height:1.3">That’s what I do now.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:clamp(14px,1.6vw,28px); font-size:clamp(20px,1.85vw,32px); line-height:1.6">
+          <p style="margin:0; font-weight:600">אבא לשלושה (ובעל לאחת).</p>
+          <p style="margin:0">התחלתי את הקריירה על הבמה, בהופעות מסביב לעולם עם <strong style="font-weight:700">מיומנה</strong>. משם עברתי להייטק, ל<strong style="font-weight:700">קלטורה</strong> ואחר כך ל<strong style="font-weight:700">ארטליסט</strong>, שם בניתי והובלתי צוותי קריאייטיב ותפעול.</p>
+          <p style="margin:0">קריאייטיב והנדסה תמיד הסתדרו לי ביחד. אז הלכתי ללמוד מדיה דיגיטלית בבית הספר להנדסה של <strong lang="en" style="font-weight:600; font-family:Switzer, sans-serif">NYU</strong>. היא לא הייתה בחירה מובנת מאליה. שנים הסברתי אותה.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:clamp(20px,2.6vw,44px)">
+          <p style="margin:0; font-weight:700; font-size:clamp(28px,3.3vw,54px); line-height:1.2; letter-spacing:-0.005em">ואז הגיע ה-<span lang="en" style="font-family:Switzer, sans-serif; font-weight:600; color:#6B2B3A">AI</span>, ושני הדברים סוף סוף הפכו לאותה עבודה: קודם להבין מה עסק באמת צריך, ואז לבנות את מה שמאפשר את זה.</p>
+          <p style="margin:0; font-weight:700; font-size:clamp(22px,1.85vw,34px); line-height:1.35">זה מה שאני עושה עכשיו.</p>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="talk" data-screen-label="07 Let’s talk" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(24px,4vh,60px) clamp(22px,7vw,140px) clamp(56px,8vh,110px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap:clamp(32px,5vw,88px); align-items:center">
+    <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:clamp(20px,2vw,28px); overflow:hidden; background:#15130F">
+      <video data-dot-trail-suppress="" src="/talk-selfie.mp4#t=0.05" preload="metadata" playsInline="{{ true }}" controls="{{ true }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover"></video>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:flex-start; gap:clamp(18px,2vw,32px)">
+    <a data-dot-trail-suppress="" href="https://cal.com/asaf-yaniv-hlwofj/20min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-self:start; background:#22335C; color:#F1EAE0; border-radius:999px; padding:clamp(18px,2vw,34px) clamp(32px,4vw,72px); font-weight:600; font-size:clamp(32px,4.6vw,88px); line-height:1.05; letter-spacing:-0.04em; white-space:nowrap; box-shadow:0 4px 28px rgba(34,51,92,0.22); transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#1A2848; color:#F1EAE0; transform:scale(1.025)">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">Let’s talk.</sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}"><span style="letter-spacing:-0.01em">בואו נדבר.</span></sc-if>
+    </a>
+    <a data-dot-trail-suppress="" href="https://wa.me/972547833072" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:0.45em; color:#2E2B27; font-weight:500; font-size:clamp(17px,1.3vw,22px); line-height:1.3; text-decoration:underline; text-decoration-color:rgba(46,43,39,0.35); text-underline-offset:4px; padding:4px 0" style-hover="color:#15130F; text-decoration-color:#15130F">
+      <svg aria-hidden="true" viewBox="0 0 24 24" style="width:1em; height:1em; flex-shrink:0; fill:#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">or message me on WhatsApp</sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">או כתבו לי בוואטסאפ</sc-if>
+    </a>
+    </div>
+  </section>
+
+  <sc-if value="{{ showQuiz }}" hint-placeholder-val="{{ true }}">
+  <section id="next" data-screen-label="08 Not yet" style="position:relative; width:100%; box-sizing:border-box; padding:0 clamp(22px,7vw,140px) clamp(96px,14vh,190px)">
+    <div style="border-top:1px solid rgba(46,43,39,0.2); padding-top:clamp(48px,7vh,96px)">
+      <sc-if value="{{ showQuiz }}" hint-placeholder-val="{{ true }}">
+  <div id="quiz" style="display:flex; flex-direction:column; align-items:flex-start; gap:clamp(20px,2vw,32px); padding-top:clamp(8px,1vw,16px)">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:12px; max-width:34em">
+          <h2 style="margin:0; font-weight:600; font-size:clamp(32px,3.4vw,64px); line-height:1; letter-spacing:-0.04em; text-wrap:balance">Not sure where to start?</h2>
+          <p style="margin:0; font-size:clamp(19px,1.5vw,27px); line-height:1.4; text-wrap:pretty">Answer a few questions about your business and see what fits.</p>
+        </div>
+        <a href="{{ quizHref }}" style="display:inline-flex; align-items:center; padding:clamp(14px,1.2vw,20px) clamp(28px,2.6vw,46px); border-radius:999px; box-shadow:inset 0 0 0 2.5px #22335C; color:#22335C; font-weight:600; font-size:clamp(20px,1.9vw,34px); line-height:1.1; letter-spacing:-0.02em; white-space:nowrap; transition:background 0.15s ease" style-hover="background:#22335C; color:#F1EAE0">Take the quiz</a>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:12px; max-width:34em">
+          <h2 style="margin:0; font-weight:700; font-size:clamp(34px,3.6vw,68px); line-height:1.05; text-wrap:balance">לא בטוחים מאיפה להתחיל?</h2>
+          <p style="margin:0; font-size:clamp(20px,1.6vw,29px); line-height:1.45; text-wrap:pretty">עונים על כמה שאלות על העסק ורואים מה מתאים.</p>
+        </div>
+        <a href="{{ quizHref }}" style="display:inline-flex; align-items:center; padding:clamp(14px,1.2vw,20px) clamp(28px,2.6vw,46px); border-radius:999px; box-shadow:inset 0 0 0 2.5px #22335C; color:#22335C; font-weight:700; font-size:clamp(21px,2vw,36px); line-height:1.15; white-space:nowrap; transition:background 0.15s ease" style-hover="background:#22335C; color:#F1EAE0">לשאלון</a>
+      </sc-if>
+    </div>
+      </sc-if>
+    </div>
+  </section>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;he&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en' | 'he'&quot;},&quot;quizHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;/quiz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showQuiz&quot;:{&quot;label&quot;:&quot;Show quiz at page end&quot;,&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ending&quot;},&quot;guidePreview&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;live&quot;,&quot;success&quot;,&quot;error&quot;],&quot;default&quot;:&quot;live&quot;,&quot;tsType&quot;:&quot;'live' | 'success' | 'error'&quot;,&quot;section&quot;:&quot;Ending&quot;},&quot;guideEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Ending&quot;}}">
+class Component extends DCLogic {
+  state = { lang: 'en', mobile: window.innerWidth < 860, narrow: window.innerWidth < 1100, menuOpen: false, guide: { email: '', consent: false, hp: '', status: 'idle', err: '' }, reduced: window.matchMedia('(prefers-reduced-motion: reduce)').matches };
+  componentDidMount() {
+    this.onResize = () => { const m = window.innerWidth < 860, n = window.innerWidth < 1100; if (m !== this.state.mobile || n !== this.state.narrow) this.setState({ mobile: m, narrow: n }, () => setTimeout(this.onHowScroll, 30)); };
+    window.addEventListener('resize', this.onResize);
+    this.onResize(); requestAnimationFrame(() => this.onResize()); setTimeout(() => this.onResize(), 250);
+    this.mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this.onMq = () => this.setState({ reduced: this.mq.matches });
+    this.mq.addEventListener('change', this.onMq);
+    this.pos = 0; this.last = performance.now();
+    const tick = (now) => {
+      const dt = Math.min(64, now - this.last); this.last = now;
+      const el = this.track;
+      if (el && el.isConnected && !this.hover && !this.state.reduced) {
+        const half = el.firstElementChild ? el.firstElementChild.offsetWidth : 0;
+        if (half) {
+          this.pos = (this.pos + dt * 0.04) % half;
+          const x = this.isHe ? -this.pos : this.pos - half;
+          el.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
+        }
+      }
+      this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+    this.onHowScroll = () => {
+      if (!this.how || !this.how.isConnected) return;
+      const rect = this.how.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const p = Math.min(1, Math.max(0, -rect.top / total)) * 4;
+      [this.hp0, this.hp1, this.hp2, this.hp3, this.hp4].forEach((el, i) => {
+        if (!el) return;
+        const t = i === 0 ? 0 : Math.min(1, Math.max(0, i - p));
+        const c = i < 4 ? 1 - Math.min(1, Math.max(0, (i + 1) - p)) : 0;
+        el.style.transform = 'translateY(' + (t * 102 - c * 3).toFixed(2) + '%) scale(' + (1 - 0.08 * c).toFixed(4) + ')';
+        el.style.filter = 'brightness(' + (1 - 0.35 * c).toFixed(3) + ')';
+      });
+    };
+    window.addEventListener('scroll', this.onHowScroll, { passive: true });
+    setTimeout(this.onHowScroll, 200);
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('scroll', this.onHowScroll);
+    if (this.mq) this.mq.removeEventListener('change', this.onMq);
+  }
+  syncBars() {
+    const o = this.state.menuOpen;
+    if (this.bar1) this.bar1.style.transform = o ? 'translateY(3.25px) rotate(45deg)' : '';
+    if (this.bar2) this.bar2.style.transform = o ? 'translateY(-3.25px) rotate(-45deg)' : '';
+  }
+  trackEvent(name, extra) {
+    const ok = window.cookieConsentGiven === true || localStorage.getItem('cookie-consent') === 'accepted';
+    if (!ok) return;
+    (window.dataLayer = window.dataLayer || []).push({ event: 'guide_' + name, source: 'before_about', lang: this.lang, ...(extra || {}) });
+  }
+  setGuide(patch) { this.setState(s => ({ guide: { ...s.guide, ...patch } })); }
+  async submitGuide(e) {
+    e.preventDefault();
+    const g = this.state.guide, en = this.lang === 'en';
+    if (!g.consent || g.status === 'sending') return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(g.email.trim())) {
+      this.setGuide({ status: 'invalid', err: en ? 'Please enter a valid email address, like name@example.com.' : 'צריך כתובת מייל תקינה, למשל name@example.com.' });
+      this.trackEvent('error', { reason: 'invalid_email' }); return;
+    }
+    const now = Date.now(), key = 'guide-submits';
+    const recent = JSON.parse(localStorage.getItem(key) || '[]').filter(t => now - t < 3600000);
+    if (g.hp || recent.length >= 3) { this.setGuide({ status: 'done', err: '' }); return; }
+    this.trackEvent('submit');
+    this.setGuide({ status: 'sending', err: '' });
+    const payload = { email: g.email.trim(), consentAt: new Date().toISOString(), lang: this.lang, source: 'before_about', quizResult: null, website: g.hp };
+    try {
+      const url = this.props.guideEndpoint || '/api/guide/signup';
+      if (url) {
+        const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        if (!r.ok) throw new Error(r.status);
+      } else await new Promise(r => setTimeout(r, 700));
+      localStorage.setItem(key, JSON.stringify([...recent, now]));
+      this.setGuide({ status: 'done' });
+      this.trackEvent('success');
+    } catch (err) {
+      this.setGuide({ status: 'error', err: en ? 'Something went wrong on our side. Please try again in a moment.' : 'משהו השתבש אצלנו. נסו שוב בעוד רגע.' });
+      this.trackEvent('error', { reason: 'request_failed' });
+    }
+  }
+  renderVals() {
+    const p = this.props;
+    const lang = this.state.lang ?? p.lang ?? 'en';
+    const en = lang === 'en';
+    this.isHe = !en;
+    const reduced = this.state.reduced;
+    return {
+      en, he: !en, dir: en ? 'ltr' : 'rtl', langAttr: lang,
+      mobile: this.state.mobile, desktop: !this.state.mobile,
+      proofWide: !this.state.narrow, proofStack: this.state.narrow,
+      aboutHref: en ? '/#about' : '/he/#about',
+      quizHref: '/quiz/',
+      showQuiz: !en,
+      showGuide: !(p.showQuiz ?? true),
+      ...(() => {
+        this.lang = lang;
+        const g = this.state.guide, prev = p.guidePreview ?? 'live';
+        const status = prev === 'success' ? 'done' : prev === 'error' ? 'error' : g.status;
+        const err = prev === 'error' ? (en ? 'Something went wrong on our side. Please try again in a moment.' : 'משהו השתבש אצלנו. נסו שוב בעוד רגע.') : g.err;
+        const disabled = !g.consent || status === 'sending';
+        return {
+          privacyHref: '/privacy/',
+          guidePlaceholder: en ? 'Your email' : 'המייל שלכם',
+          guideShowForm: status !== 'done', guideDone: status === 'done',
+          guideEmail: prev === 'success' && !g.email ? 'name@example.com' : g.email,
+          guideConsent: g.consent, guideHp: g.hp,
+          guideError: err, guideInvalid: status === 'invalid' ? 'true' : 'false',
+          guideFieldRing: status === 'invalid' ? '#8E2F1F' : 'rgba(46,43,39,0.28)',
+          guideDisabled: disabled, guideBtnOpacity: disabled ? 0.4 : 1, guideCursor: disabled ? 'not-allowed' : 'pointer',
+          guideBtnLabel: status === 'sending' ? (en ? 'Sending…' : 'שולח…') : (en ? 'Download the guide' : 'להורדת המדריך'),
+          guideEmailChange: (e) => this.setGuide({ email: e.target.value, ...(g.status === 'invalid' || g.status === 'error' ? { status: 'idle', err: '' } : {}) }),
+          guideConsentChange: (e) => this.setGuide({ consent: e.target.checked }),
+          guideHpChange: (e) => this.setGuide({ hp: e.target.value }),
+          guideSubmit: (e) => this.submitGuide(e),
+          guideFocus: (e) => { if (e.target.type === 'email' && !this.focusTracked) { this.focusTracked = true; this.trackEvent('focus'); } },
+          guideRef: (el) => {
+            if (!el || this.guideObs) return;
+            this.guideObs = new IntersectionObserver(es => { if (es[0].isIntersecting) { this.trackEvent('seen'); this.guideObs.disconnect(); } }, { threshold: 0.5 });
+            this.guideObs.observe(el);
+          }
+        };
+      })(),
+      homeHref: en ? '/next/' : '/next/he/',
+      langSwitchText: en ? 'עב' : 'EN',
+      langSwitchLong: en ? 'עברית' : 'English',
+      navLabel: en ? 'Main' : 'ראשי',
+      talkLabel: en ? 'Let’s talk' : 'בואו נדבר',
+      menuLabel: this.state.menuOpen ? (en ? 'Close menu' : 'סגירת תפריט') : (en ? 'Open menu' : 'פתיחת תפריט'),
+      menuOpen: this.state.menuOpen,
+      showMenu: this.state.menuOpen && this.state.mobile,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen }), () => this.syncBars()),
+      closeMenu: () => this.setState({ menuOpen: false }, () => this.syncBars()),
+      bar1Ref: (el) => { this.bar1 = el; this.syncBars(); },
+      bar2Ref: (el) => { this.bar2 = el; this.syncBars(); },
+      navLinks: [
+        { href: en ? '/next/small-business/' : '/next/he/small-business/', label: en ? 'SMB & Independents' : 'עסקים קטנים ועצמאים', key: 'owners' },
+        { href: en ? '/next/startups/' : '/next/he/startups/', label: en ? 'Startups' : 'סטארטאפים', key: 'startups' },
+        { href: en ? '/next/workshops/' : '/next/he/workshops/', label: en ? 'Workshops' : 'סדנאות', key: 'workshops' }
+      ].map(l => ({ ...l, active: l.key === 'owners', inactive: l.key !== 'owners' })),
+      langSwitchLabel: en ? 'גרסה בעברית' : 'English version',
+      toggleLang: () => { window.location.href = en ? '/next/he/small-business/' : '/next/small-business/'; },
+      tasksLabel: en ? 'What the assistant handles' : 'במה העוזר מטפל',
+      tasks: en
+        ? ['WhatsApp assistant', 'Quotes', 'Follow-ups', 'New leads', 'Scheduling and reminders', 'Morning briefing', 'Posts in your style', 'Daily planning', 'Team tasks']
+        : ['עוזר וואטסאפ', 'הצעות מחיר', 'מעקב אחרי לקוחות', 'לידים חדשים', 'תיאום ותזכורות', 'תדריך בוקר', 'פוסטים בסגנון שלכם', 'ניהול היום', 'משימות לצוות'],
+      moving: !reduced, still: reduced,
+      trackRef: (el) => { this.track = el; },
+      pause: () => { this.hover = true; },
+      resume: () => { this.hover = false; this.last = performance.now(); },
+      howRef: (el) => { this.how = el; },
+      hp0Ref: (el) => { this.hp0 = el; }, hp1Ref: (el) => { this.hp1 = el; }, hp2Ref: (el) => { this.hp2 = el; },
+      hp3Ref: (el) => { this.hp3 = el; }, hp4Ref: (el) => { this.hp4 = el; }
+    };
+  }
+}
+</script>
+</body>
+</html>

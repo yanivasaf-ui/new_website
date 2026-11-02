@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asaf Yaniv | I build AI around how you already work</title>
+  <link rel="icon" href="/next/favicon.svg" type="image/svg+xml">
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="/image-slot.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #EFE6D8; color: #2E2B27; font-family: "Switzer", "Assistant", sans-serif; overflow-x: clip; }
+    a { color: #22335C; text-decoration: none; }
+    a:hover { color: #C4622D; }
+    @media (max-width: 859px) { html, body { background: #DBC8B1; } }
+    ::selection { background: #22335C; color: #F1EAE0; }
+  </style>
+</helmet>
+<div lang="{{ langAttr }}" dir="{{ dir }}" style="min-height:100vh">
+
+  <sc-if value="{{ heroFx }}" hint-placeholder-val="{{ true }}">
+    <canvas ref="{{ trailCanvasRef }}" aria-hidden="true" style="position:fixed; inset:0; width:100vw; height:100vh; pointer-events:none; z-index:15"></canvas>
+  </sc-if>
+  <nav data-dot-trail-suppress="" aria-label="{{ navLabel }}" style="position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:30; display:flex; align-items:center; gap:clamp(14px,2.2vw,36px); width:max-content; max-width:94vw; box-sizing:border-box; height:clamp(56px,7.2vw,66px); padding-inline-start:clamp(17px,2.4vw,26px); padding-inline-end:clamp(7px,1.2vw,10px); border-radius:999px; background:#15130F; box-shadow:0 6px 30px rgba(21,19,15,0.28)">
+    <a href="{{ homeHref }}" dir="ltr" aria-label="ensemble home" style="display:inline-flex; align-items:center; align-self:stretch; flex-shrink:0">
+      <img src="/next/ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(18px,2vw,26px); width:auto; user-select:none">
+    </a>
+    <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; align-items:center; gap:clamp(16px,2vw,30px)">
+        <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="3">
+          <sc-if value="{{ l.active }}" hint-placeholder-val="{{ false }}">
+            <a href="{{ l.href }}" aria-current="page" style="display:inline-flex; flex-direction:column; align-items:center; gap:5px; color:#F1EAE0; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap" style-hover="color:#F1EAE0">{{ l.label }}<span aria-hidden="true" style="width:5px; height:5px; border-radius:50%; background:#F1EAE0; margin-bottom:-10px"></span></a>
+          </sc-if>
+          <sc-if value="{{ l.inactive }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ l.href }}" style="color:#F1EAE0; opacity:0.62; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap; transition:opacity 0.15s ease" style-hover="opacity:1; color:#F1EAE0">{{ l.label }}</a>
+          </sc-if>
+        </sc-for>
+      </div>
+      <div style="display:flex; align-items:center; gap:clamp(4px,0.6vw,8px)">
+        <button type="button" onClick="{{ toggleLang }}" aria-label="{{ langSwitchLabel }}" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border:0; border-radius:50%; background:transparent; color:#F1EAE0; font:inherit; font-weight:600; font-size:13px; cursor:pointer; opacity:0.62" style-hover="opacity:1">{{ langSwitchText }}</button>
+        <a href="https://cal.com/asaf-yaniv-hlwofj/20min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#15130F; background:#F1EAE0; padding:0 clamp(18px,2vw,26px); border-radius:999px; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap" style-hover="background:#FFFFFF; color:#15130F">{{ talkLabel }}</a>
+      </div>
+    </sc-if>
+    <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; align-items:center; gap:6px">
+        <a href="https://cal.com/asaf-yaniv-hlwofj/20min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:44px; color:#15130F; background:#F1EAE0; padding:0 16px; border-radius:999px; font-weight:600; font-size:15px; white-space:nowrap" style-hover="background:#FFFFFF; color:#15130F">{{ talkLabel }}</a>
+        <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="{{ menuLabel }}" style="display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; width:44px; height:44px; flex-shrink:0; border:0; border-radius:50%; background:transparent; box-shadow:inset 0 0 0 1.5px rgba(241,234,224,0.28); cursor:pointer; padding:0">
+          <span ref="{{ bar1Ref }}" aria-hidden="true" style="display:block; width:16px; height:1.5px; border-radius:1px; background:#F1EAE0; transition:transform 0.2s ease"></span>
+          <span ref="{{ bar2Ref }}" aria-hidden="true" style="display:block; width:16px; height:1.5px; border-radius:1px; background:#F1EAE0; transition:transform 0.2s ease"></span>
+        </button>
+      </div>
+    </sc-if>
+  </nav>
+  <sc-if value="{{ showMenu }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenu }}" style="position:fixed; inset:0; z-index:28; background:rgba(21,19,15,0.25)"></div>
+    <div data-dot-trail-suppress="" style="position:fixed; top:84px; left:50%; transform:translateX(-50%); z-index:29; width:94vw; box-sizing:border-box; padding:10px 22px 22px; border-radius:28px; background:#15130F; color:#F1EAE0; box-shadow:0 12px 40px rgba(21,19,15,0.35); display:flex; flex-direction:column">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="3">
+        <a href="{{ l.href }}" onClick="{{ closeMenu }}" style="display:flex; align-items:center; justify-content:space-between; min-height:60px; border-bottom:1px solid rgba(241,234,224,0.14); color:#F1EAE0; font-weight:600; font-size:24px; letter-spacing:-0.02em" style-hover="color:#FFFFFF">{{ l.label }}<sc-if value="{{ l.active }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width:7px; height:7px; border-radius:50%; background:#F1EAE0"></span></sc-if></a>
+      </sc-for>
+      <button type="button" onClick="{{ toggleLang }}" aria-label="{{ langSwitchLabel }}" style="align-self:flex-start; margin-top:16px; display:inline-flex; align-items:center; height:44px; padding:0 18px; border:0; border-radius:999px; background:transparent; box-shadow:inset 0 0 0 1.5px rgba(241,234,224,0.28); color:#F1EAE0; font:inherit; font-weight:600; font-size:15px; cursor:pointer">{{ langSwitchLong }}</button>
+    </div>
+  </sc-if>
+
+  <section id="hero" data-screen-label="01 Hero · doors" style="position:relative; width:100%">
+    <div data-dot-trail-suppress="" style="box-sizing:border-box; padding:clamp(100px,14vh,170px) clamp(22px,4vw,72px) clamp(18px,3vw,56px); display:flex; justify-content:center">
+        <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+          <h1 style="margin:0; max-width:15em; font-weight:600; font-size:clamp(34px,5.6vw,112px); line-height:0.95; letter-spacing:-0.045em; color:#2E2B27; text-align:center; text-wrap:balance">I build <span style="color:#6B2B3A">AI</span> around how you already work.</h1>
+        </sc-if>
+        <sc-if value="{{ heA }}" hint-placeholder-val="{{ false }}">
+          <h1 dir="rtl" style="margin:0; max-width:14em; font-weight:700; font-size:clamp(34px,5.6vw,112px); line-height:1; letter-spacing:-0.015em; color:#2E2B27; text-align:center; text-wrap:balance">אני בונה <span lang="en" style="font-family:Switzer, sans-serif; font-weight:600; letter-spacing:-0.04em; color:#6B2B3A">AI</span> שמתאים לאיך שאתם כבר עובדים.</h1>
+        </sc-if>
+        <sc-if value="{{ heB }}" hint-placeholder-val="{{ false }}">
+          <h1 dir="rtl" style="margin:0; max-width:16em; font-weight:700; font-size:clamp(34px,5.6vw,112px); line-height:1; letter-spacing:-0.015em; color:#2E2B27; text-align:center; text-wrap:balance">אתם ממשיכים לעבוד כמו שאתם עובדים. אני בונה את ה-<span lang="en" style="font-family:Switzer, sans-serif; font-weight:600; letter-spacing:-0.04em; color:#6B2B3A">AI</span> סביב זה.</h1>
+        </sc-if>
+    </div>
+    <div ref="{{ doorWrapRef }}" dir="ltr" onPointerMove="{{ doorMove }}" onPointerLeave="{{ doorWrapLeave }}" onClick="{{ doorTap }}" style="position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 13%, #000 91%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0%, #000 13%, #000 91%, transparent 100%)">
+      <img src="/hero-closed-doors-16x9.jpg" alt="Three textile characters standing between two closed wooden doors, two of them pointing at a door each" draggable="false" fetchpriority="high" style="position:absolute; inset:0; width:100%; height:100%; object-fit:fill; user-select:none; -webkit-user-drag:none">
+      <video ref="{{ doorVideoRef }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="none" aria-hidden="true" style="position:absolute; left:0; top:0; width:2px; height:2px; opacity:0; pointer-events:none"></video>
+      <canvas ref="{{ doorCanvasRef }}" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none"></canvas>
+      <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-clip-path:polygon(7.4% 15.9%, 29.9% 15.9%, 29.9% 88.25%, 7.4% 88.25%, 7.4% 15.9%, 70.25% 15.9%, 92.35% 15.9%, 92.35% 88.25%, 70.25% 88.25%, 70.25% 15.9%); clip-path:polygon(7.4% 15.9%, 29.9% 15.9%, 29.9% 88.25%, 7.4% 88.25%, 7.4% 15.9%, 70.25% 15.9%, 92.35% 15.9%, 92.35% 88.25%, 70.25% 88.25%, 70.25% 15.9%)">
+        <canvas ref="{{ doorLensCanvasRef }}" style="position:absolute; inset:0; width:100%; height:100%"></canvas>
+        <div ref="{{ doorRingRef }}" style="position:absolute; left:-90px; top:-90px; width:180px; height:180px; border-radius:50%; border:1.5px solid rgba(34,51,92,0.4); box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 16px rgba(46,43,39,0.10); box-sizing:border-box; opacity:0; will-change:transform, opacity"></div>
+      </div>
+      <div data-dot-trail-suppress="" aria-hidden="true" style="position:absolute; left:7.344%; top:15.833%; width:22.617%; height:72.5%"></div>
+      <div data-dot-trail-suppress="" aria-hidden="true" style="position:absolute; left:70.195%; top:15.833%; width:22.227%; height:72.5%"></div>
+      <img src="/hero-hands.png" alt="" aria-hidden="true" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:fill; pointer-events:none; user-select:none">
+      <div style="position:absolute; left:18.65%; top:17.4%; width:max(17.5%, 84px); transform:translateX(-50%); z-index:5; pointer-events:none; display:flex; flex-direction:column; align-items:center">
+        <div aria-hidden="true" style="width:clamp(5px,0.55vw,11px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #8a7a66, #3a3128 70%); box-shadow:0 1px 2px rgba(0,0,0,0.35); position:relative; z-index:2"></div>
+        <div style="width:100%; display:flex; flex-direction:column; align-items:center; transform:rotate(-2.2deg); transform-origin:50% 0">
+          <svg aria-hidden="true" viewBox="0 0 100 14" preserveAspectRatio="none" style="display:block; width:78%; height:clamp(14px,2.2vw,40px); margin-top:calc(-1 * clamp(2px,0.28vw,5px))"><path d="M50 0 L3 14 M50 0 L97 14" stroke="#5a4a3a" stroke-width="1.1" vector-effect="non-scaling-stroke" fill="none"></path></svg>
+          <a href="{{ smbHref }}" data-dot-trail-suppress="" onClick="{{ doorLinkClick }}" onFocus="{{ door1Focus }}" onBlur="{{ door1Blur }}" aria-disabled="{{ doorLinksOff }}" style="position:relative; width:100%; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:clamp(50px,6.6vw,126px); margin-top:calc(-1 * clamp(2px,0.25vw,4px)); padding:clamp(9px,1.25vw,24px) clamp(5px,1vw,20px); border-radius:clamp(6px,0.7vw,13px); background:#15130F; color:#F2EBDD; text-decoration:none; cursor:pointer; pointer-events:auto; outline:none; box-shadow:0 clamp(4px,0.6vw,10px) clamp(10px,1.4vw,26px) rgba(21,19,15,0.38), inset 0 1px 0 rgba(255,255,255,0.10); text-align:center; transition:transform 0.25s cubic-bezier(.3,1.4,.5,1), background 0.15s ease" style-hover="transform:translateY(clamp(2px,0.3vw,5px)); background:#221F1A; color:#F2EBDD" style-focus="outline:3px solid #22335C; outline-offset:4px">
+            <span aria-hidden="true" style="position:absolute; inset:clamp(3px,0.38vw,7px); border:1.5px solid rgba(242,235,221,0.55); border-radius:clamp(4px,0.45vw,8px); pointer-events:none"></span>
+            <span aria-hidden="true" style="position:absolute; left:6%; top:50%; width:clamp(3px,0.32vw,6px); aspect-ratio:1; border-radius:50%; background:#8A8578; transform:translateY(-50%)"></span>
+            <span aria-hidden="true" style="position:absolute; right:6%; top:50%; width:clamp(3px,0.32vw,6px); aspect-ratio:1; border-radius:50%; background:#8A8578; transform:translateY(-50%)"></span>
+            <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}"><span style="display:block; font-weight:600; font-size:clamp(15px,2.5vw,48px); line-height:0.95; letter-spacing:-0.04em">SMB <span style="color:#D9A13B">&amp;</span></span><span style="display:block; margin-top:0.18em; font-weight:600; font-size:clamp(10px,1.5vw,29px); line-height:1; letter-spacing:-0.025em">Independents</span><span aria-hidden="true" style="display:block; margin-top:0.3em; font-weight:600; font-size:clamp(10px,1.3vw,24px); line-height:1; color:#D9A13B">→</span></sc-if>
+            <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}"><span dir="rtl" style="display:block; font-weight:700; font-size:clamp(14px,2.1vw,40px); line-height:1.02; text-wrap:balance">עסקים קטנים<br>ועצמאים</span><span aria-hidden="true" style="display:block; margin-top:0.3em; font-weight:600; font-size:clamp(10px,1.3vw,24px); line-height:1; color:#D9A13B">←</span></sc-if>
+          </a>
+        </div>
+      </div>
+      <div style="position:absolute; left:81.31%; top:17.4%; width:max(17.5%, 84px); transform:translateX(-50%); z-index:5; pointer-events:none; display:flex; flex-direction:column; align-items:center">
+        <div aria-hidden="true" style="width:clamp(5px,0.55vw,11px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #8a7a66, #3a3128 70%); box-shadow:0 1px 2px rgba(0,0,0,0.35); position:relative; z-index:2"></div>
+        <div style="width:100%; display:flex; flex-direction:column; align-items:center; transform:rotate(1.8deg); transform-origin:50% 0">
+          <svg aria-hidden="true" viewBox="0 0 100 14" preserveAspectRatio="none" style="display:block; width:78%; height:clamp(14px,2.2vw,40px); margin-top:calc(-1 * clamp(2px,0.28vw,5px))"><path d="M50 0 L3 14 M50 0 L97 14" stroke="#5a4a3a" stroke-width="1.1" vector-effect="non-scaling-stroke" fill="none"></path></svg>
+          <a href="{{ startupsHref }}" data-dot-trail-suppress="" onClick="{{ doorLinkClick }}" onFocus="{{ door2Focus }}" onBlur="{{ door2Blur }}" aria-disabled="{{ doorLinksOff }}" style="position:relative; width:100%; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:clamp(50px,6.6vw,126px); margin-top:calc(-1 * clamp(2px,0.25vw,4px)); padding:clamp(9px,1.25vw,24px) clamp(5px,1vw,20px); border-radius:clamp(6px,0.7vw,13px); background:#15130F; color:#F2EBDD; text-decoration:none; cursor:pointer; pointer-events:auto; outline:none; box-shadow:0 clamp(4px,0.6vw,10px) clamp(10px,1.4vw,26px) rgba(21,19,15,0.38), inset 0 1px 0 rgba(255,255,255,0.10); text-align:center; transition:transform 0.25s cubic-bezier(.3,1.4,.5,1), background 0.15s ease" style-hover="transform:translateY(clamp(2px,0.3vw,5px)); background:#221F1A; color:#F2EBDD" style-focus="outline:3px solid #22335C; outline-offset:4px">
+            <span aria-hidden="true" style="position:absolute; inset:clamp(3px,0.38vw,7px); border:1.5px solid rgba(242,235,221,0.55); border-radius:clamp(4px,0.45vw,8px); pointer-events:none"></span>
+            <span aria-hidden="true" style="position:absolute; left:6%; top:50%; width:clamp(3px,0.32vw,6px); aspect-ratio:1; border-radius:50%; background:#8A8578; transform:translateY(-50%)"></span>
+            <span aria-hidden="true" style="position:absolute; right:6%; top:50%; width:clamp(3px,0.32vw,6px); aspect-ratio:1; border-radius:50%; background:#8A8578; transform:translateY(-50%)"></span>
+            <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}"><span style="display:block; font-weight:600; font-size:clamp(15px,2.5vw,48px); line-height:0.95; letter-spacing:-0.04em">Startups</span><span aria-hidden="true" style="display:block; margin-top:0.3em; font-weight:600; font-size:clamp(10px,1.3vw,24px); line-height:1; color:#D9A13B">→</span></sc-if>
+            <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}"><span dir="rtl" style="display:block; font-weight:700; font-size:clamp(14px,2.1vw,40px); line-height:1.02; text-wrap:balance">סטארטאפים</span><span aria-hidden="true" style="display:block; margin-top:0.3em; font-weight:600; font-size:clamp(10px,1.3vw,24px); line-height:1; color:#D9A13B">←</span></sc-if>
+          </a>
+        </div>
+      </div>
+      <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute; left:18.95%; top:51%; width:17.2%; height:33%; transform:translateX(-50%); z-index:4; pointer-events:none; display:flex; align-items:center; justify-content:center">
+          <div style="position:relative; width:100%; box-sizing:border-box; padding:clamp(14px,1.6vw,30px) clamp(12px,1.35vw,26px); border-radius:clamp(3px,0.35vw,7px); background:#F2EBDD; color:#15130F; text-align:center; transform:rotate(-0.8deg); box-shadow:0 1px 0 rgba(255,255,255,0.6) inset, 0 clamp(2px,0.35vw,6px) clamp(6px,0.9vw,16px) rgba(46,43,39,0.28); display:flex; flex-direction:column; align-items:center; gap:clamp(7px,0.75vw,14px)">
+            <span aria-hidden="true" style="position:absolute; inset:clamp(3px,0.32vw,6px); border:1px solid rgba(21,19,15,0.28); border-radius:clamp(2px,0.2vw,4px)"></span>
+            <span style="position:absolute; left:clamp(5px,0.5vw,9px); top:clamp(5px,0.5vw,9px); width:clamp(3px,0.34vw,6px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #B8A684, #6E5F45 75%); box-shadow:0 0.5px 1px rgba(0,0,0,0.35)"></span><span style="position:absolute; right:clamp(5px,0.5vw,9px); top:clamp(5px,0.5vw,9px); width:clamp(3px,0.34vw,6px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #B8A684, #6E5F45 75%); box-shadow:0 0.5px 1px rgba(0,0,0,0.35)"></span><span style="position:absolute; left:clamp(5px,0.5vw,9px); bottom:clamp(5px,0.5vw,9px); width:clamp(3px,0.34vw,6px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #B8A684, #6E5F45 75%); box-shadow:0 0.5px 1px rgba(0,0,0,0.35)"></span><span style="position:absolute; right:clamp(5px,0.5vw,9px); bottom:clamp(5px,0.5vw,9px); width:clamp(3px,0.34vw,6px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #B8A684, #6E5F45 75%); box-shadow:0 0.5px 1px rgba(0,0,0,0.35)"></span>
+            <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+              <span style="display:block; font-weight:600; font-size:clamp(13px,1.5vw,29px); line-height:1.18; letter-spacing:-0.02em; text-wrap:balance">Quotes, follow-ups, new leads, WhatsApp agent.</span>
+              <span aria-hidden="true" style="display:block; width:clamp(14px,1.6vw,30px); height:1.5px; background:#D9A13B"></span>
+              <span style="display:block; font-size:clamp(12px,1.15vw,22px); line-height:1.3; text-wrap:balance">All done with AI.</span>
+            </sc-if>
+            <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+              <span dir="rtl" style="display:block; font-weight:700; font-size:clamp(13px,1.55vw,30px); line-height:1.28; text-wrap:balance">הצעות מחיר, מעקב אחרי לקוחות, לידים חדשים, עוזר וואטסאפ.</span>
+              <span aria-hidden="true" style="display:block; width:clamp(14px,1.6vw,30px); height:1.5px; background:#D9A13B"></span>
+              <span dir="rtl" style="display:block; font-size:clamp(12px,1.2vw,23px); line-height:1.35; text-wrap:balance">הכול עם <span lang="en" style="font-family:Switzer, sans-serif">AI</span>.</span>
+            </sc-if>
+          </div>
+        </div>
+        <div style="position:absolute; left:81.15%; top:51%; width:17.2%; height:33%; transform:translateX(-50%); z-index:4; pointer-events:none; display:flex; align-items:center; justify-content:center">
+          <div style="position:relative; width:100%; box-sizing:border-box; padding:clamp(14px,1.6vw,30px) clamp(12px,1.35vw,26px); border-radius:clamp(3px,0.35vw,7px); background:#F2EBDD; color:#15130F; text-align:center; transform:rotate(0.7deg); box-shadow:0 1px 0 rgba(255,255,255,0.6) inset, 0 clamp(2px,0.35vw,6px) clamp(6px,0.9vw,16px) rgba(46,43,39,0.28); display:flex; flex-direction:column; align-items:center; gap:clamp(7px,0.75vw,14px)">
+            <span aria-hidden="true" style="position:absolute; inset:clamp(3px,0.32vw,6px); border:1px solid rgba(21,19,15,0.28); border-radius:clamp(2px,0.2vw,4px)"></span>
+            <span style="position:absolute; left:clamp(5px,0.5vw,9px); top:clamp(5px,0.5vw,9px); width:clamp(3px,0.34vw,6px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #B8A684, #6E5F45 75%); box-shadow:0 0.5px 1px rgba(0,0,0,0.35)"></span><span style="position:absolute; right:clamp(5px,0.5vw,9px); top:clamp(5px,0.5vw,9px); width:clamp(3px,0.34vw,6px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #B8A684, #6E5F45 75%); box-shadow:0 0.5px 1px rgba(0,0,0,0.35)"></span><span style="position:absolute; left:clamp(5px,0.5vw,9px); bottom:clamp(5px,0.5vw,9px); width:clamp(3px,0.34vw,6px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #B8A684, #6E5F45 75%); box-shadow:0 0.5px 1px rgba(0,0,0,0.35)"></span><span style="position:absolute; right:clamp(5px,0.5vw,9px); bottom:clamp(5px,0.5vw,9px); width:clamp(3px,0.34vw,6px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #B8A684, #6E5F45 75%); box-shadow:0 0.5px 1px rgba(0,0,0,0.35)"></span>
+            <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+              <span style="display:block; font-weight:600; font-size:clamp(13px,1.5vw,29px); line-height:1.18; letter-spacing:-0.02em; text-wrap:balance">One shared brain.</span>
+              <span aria-hidden="true" style="display:block; width:clamp(14px,1.6vw,30px); height:1.5px; background:#D9A13B"></span>
+              <span style="display:block; font-size:clamp(12px,1.15vw,22px); line-height:1.3; text-wrap:balance">Workflows and agents built on it.</span>
+            </sc-if>
+            <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+              <span dir="rtl" style="display:block; font-weight:700; font-size:clamp(13px,1.55vw,30px); line-height:1.28; text-wrap:balance">מוח משותף אחד.</span>
+              <span aria-hidden="true" style="display:block; width:clamp(14px,1.6vw,30px); height:1.5px; background:#D9A13B"></span>
+              <span dir="rtl" style="display:block; font-size:clamp(12px,1.2vw,23px); line-height:1.35; text-wrap:balance">תהליכים ואייג'נטים שנבנים עליו.</span>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ debugMask }}" hint-placeholder-val="{{ false }}">
+        <div aria-hidden="true" style="position:absolute; left:7.344%; top:15.833%; width:22.617%; height:72.5%; background:rgba(255,0,0,0.35); pointer-events:none"></div>
+        <div aria-hidden="true" style="position:absolute; left:70.195%; top:15.833%; width:22.227%; height:72.5%; background:rgba(255,0,0,0.35); pointer-events:none"></div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="doors" data-screen-label="02 Door labels" style="position:relative; width:100%; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; gap:clamp(48px,7vh,96px); padding-bottom:clamp(80px,11vh,150px)">
+    <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+      <div style="width:100%; box-sizing:border-box; padding:20px 22px 0; display:flex; flex-direction:column; gap:44px">
+        <div data-dot-trail-suppress="" dir="{{ dir }}" onPointerEnter="{{ door1Enter }}" onPointerLeave="{{ door1Leave }}" style="display:flex; flex-direction:column; align-items:flex-start; gap:12px; color:#2E2B27">
+          <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+            <h2 style="margin:0; font-weight:600; font-size:clamp(28px,2.6vw,50px); line-height:1.05; letter-spacing:-0.035em; text-wrap:balance"><a href="{{ smbHref }}" onClick="{{ doorLinkClick }}" onFocus="{{ door1Focus }}" onBlur="{{ door1Blur }}" aria-disabled="{{ doorLinksOff }}" style="color:#2E2B27; text-decoration:none; outline:none" style-focus="outline:3px solid #22335C; outline-offset:4px">SMB &amp; Independents <span aria-hidden="true" style="color:#D9A13B">→</span></a></h2>
+            <p style="margin:6px 0 0; font-weight:600; font-size:21px; line-height:1.25; letter-spacing:-0.02em; text-wrap:pretty">Quotes, follow-ups, new leads, WhatsApp agent.</p>
+            <p style="margin:0; font-size:18px; line-height:1.4">All done with AI.</p>
+          </sc-if>
+          <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0; font-weight:700; font-size:clamp(30px,2.8vw,54px); line-height:1.05; letter-spacing:0; text-wrap:balance"><a href="{{ smbHref }}" onClick="{{ doorLinkClick }}" onFocus="{{ door1Focus }}" onBlur="{{ door1Blur }}" aria-disabled="{{ doorLinksOff }}" style="color:#2E2B27; text-decoration:none; outline:none" style-focus="outline:3px solid #22335C; outline-offset:4px">עסקים קטנים ועצמאים <span aria-hidden="true" style="color:#D9A13B">←</span></a></h2>
+            <p style="margin:6px 0 0; font-weight:700; font-size:22px; line-height:1.3; text-wrap:pretty">הצעות מחיר, מעקב אחרי לקוחות, לידים חדשים, עוזר וואטסאפ.</p>
+            <p style="margin:0; font-size:19px; line-height:1.4">הכול עם <span lang="en" style="font-family:Switzer, sans-serif">AI</span>.</p>
+          </sc-if>
+        </div>
+        <div data-dot-trail-suppress="" dir="{{ dir }}" onPointerEnter="{{ door2Enter }}" onPointerLeave="{{ door2Leave }}" style="display:flex; flex-direction:column; align-items:flex-start; gap:12px; color:#2E2B27">
+          <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+            <h2 style="margin:0; font-weight:600; font-size:clamp(28px,2.6vw,50px); line-height:1.05; letter-spacing:-0.035em; text-wrap:balance"><a href="{{ startupsHref }}" onClick="{{ doorLinkClick }}" onFocus="{{ door2Focus }}" onBlur="{{ door2Blur }}" aria-disabled="{{ doorLinksOff }}" style="color:#2E2B27; text-decoration:none; outline:none" style-focus="outline:3px solid #22335C; outline-offset:4px">Startups <span aria-hidden="true" style="color:#D9A13B">→</span></a></h2>
+            <p style="margin:6px 0 0; font-weight:600; font-size:21px; line-height:1.25; letter-spacing:-0.02em; text-wrap:pretty">One shared brain.</p>
+            <p style="margin:0; font-size:18px; line-height:1.4">Workflows and agents built on it.</p>
+          </sc-if>
+          <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0; font-weight:700; font-size:clamp(30px,2.8vw,54px); line-height:1.05; letter-spacing:0; text-wrap:balance"><a href="{{ startupsHref }}" onClick="{{ doorLinkClick }}" onFocus="{{ door2Focus }}" onBlur="{{ door2Blur }}" aria-disabled="{{ doorLinksOff }}" style="color:#2E2B27; text-decoration:none; outline:none" style-focus="outline:3px solid #22335C; outline-offset:4px">סטארטאפים <span aria-hidden="true" style="color:#D9A13B">←</span></a></h2>
+            <p style="margin:6px 0 0; font-weight:700; font-size:22px; line-height:1.3; text-wrap:pretty">מוח משותף אחד.</p>
+            <p style="margin:0; font-size:19px; line-height:1.4">תהליכים ואייג'נטים שנבנים עליו.</p>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+    <p data-dot-trail-suppress="" style="margin:0; padding:0 22px; display:flex; flex-wrap:wrap; justify-content:center; gap:0.35em; font-weight:600; font-size:clamp(20px,1.8vw,32px); letter-spacing:-0.02em; color:#2E2B27; text-align:center">
+      <span>{{ notSureQ }}</span>
+      <a href="https://cal.com/asaf-yaniv-hlwofj/20min" target="_blank" rel="noopener" style="color:#22335C; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:0.18em" style-hover="color:#C4622D">{{ notSureLink }}</a>
+    </p>
+  </section>
+
+  <sc-if value="{{ proofWide }}" hint-placeholder-val="{{ true }}">
+  <section id="proof" data-screen-label="03 My agents built this site" style="position:relative; width:100%; overflow:hidden">
+    <div aria-hidden="true" style="position:absolute; left:0; right:0; top:-70px; height:140px; pointer-events:none; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); -webkit-mask-image:linear-gradient(to bottom, transparent, #000 42%, #000 58%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 42%, #000 58%, transparent); z-index:6"></div>
+    <div style="display:grid; min-height:56.25vw">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}"><img src="/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="Three textile characters gathered around a vintage monitor showing this website" loading="lazy" draggable="false" style="grid-area:1/1; width:100%; height:100%; object-fit:cover; object-position:center; user-select:none"></sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}"><img src="/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="שלוש דמויות בד מסביב למסך וינטג' שמציג את האתר הזה" loading="lazy" draggable="false" style="grid-area:1/1; width:100%; height:100%; object-fit:cover; object-position:center; transform:scaleX(-1); user-select:none"></sc-if>
+      <div style="grid-area:1/1; display:flex; align-items:center; padding-inline-start:7vw; z-index:5">
+        <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+          <div data-dot-trail-suppress="" style="display:flex; flex-direction:column; align-items:flex-start; gap:clamp(16px,1.6vw,28px); max-width:31vw">
+            <h2 style="margin:0; font-weight:600; font-size:clamp(40px,4.4vw,96px); line-height:1; letter-spacing:-0.04em">What it looks like.</h2>
+            <p style="margin:clamp(8px,1vw,18px) 0 0; font-weight:600; font-size:clamp(15px,1.1vw,19px); letter-spacing:0.1em; text-transform:uppercase">Running in my own operation</p>
+            <h3 style="margin:0; font-weight:600; font-size:clamp(30px,2.8vw,56px); line-height:1.05; letter-spacing:-0.035em; text-wrap:balance">This website, built by agents.</h3>
+            <ul style="list-style:none; margin:clamp(4px,0.6vw,10px) 0 0; padding:0; width:100%; border-bottom:1px solid rgba(46,43,39,0.25)"><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:clamp(22px,2vw,38px); line-height:1.15; letter-spacing:-0.025em">Creative director</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:clamp(22px,2vw,38px); line-height:1.15; letter-spacing:-0.025em">Copywriter</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:clamp(22px,2vw,38px); line-height:1.15; letter-spacing:-0.025em">Designer</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:clamp(22px,2vw,38px); line-height:1.15; letter-spacing:-0.025em">Operations lead</li></ul>
+            <p style="margin:0; font-size:clamp(19px,1.45vw,28px); line-height:1.42; text-wrap:pretty">They’re all agents working from the same context and memory. I stepped in when something needed an actual decision.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+          <div data-dot-trail-suppress="" dir="rtl" style="display:flex; flex-direction:column; align-items:flex-start; gap:clamp(16px,1.6vw,28px); max-width:31vw">
+            <h2 style="margin:0; font-weight:700; font-size:clamp(42px,4.6vw,100px); line-height:1.02">איך זה נראה</h2>
+            <p style="margin:clamp(8px,1vw,18px) 0 0; font-weight:700; font-size:clamp(17px,1.25vw,21px)">רץ אצלי בעסק</p>
+            <h3 style="margin:0; font-weight:700; font-size:clamp(32px,2.9vw,58px); line-height:1.12; text-wrap:balance">האתר הזה, נבנה על ידי אייג'נטים.</h3>
+            <ul style="list-style:none; margin:clamp(4px,0.6vw,10px) 0 0; padding:0; width:100%; border-bottom:1px solid rgba(46,43,39,0.25)"><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:clamp(23px,2.1vw,40px); line-height:1.15;">מנהל קריאייטיב</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:clamp(23px,2.1vw,40px); line-height:1.15;">קופירייטר</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:clamp(23px,2.1vw,40px); line-height:1.15;">מעצב</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:clamp(23px,2.1vw,40px); line-height:1.15;">מנהל תפעול</li></ul>
+            <p style="margin:0; font-size:clamp(20px,1.55vw,30px); line-height:1.5; text-wrap:pretty">כולם אייג'נטים, עובדים מאותו הקשר ומאותו זיכרון. אני נכנסתי לתמונה רק כשמשהו באמת דרש הכרעה.</p>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ proofStack }}" hint-placeholder-val="{{ false }}">
+  <section id="proof" data-screen-label="03 My agents built this site" style="position:relative; width:100%">
+    <div data-dot-trail-suppress="" style="max-width:760px; padding:52px clamp(22px,5vw,72px) 28px; display:flex; flex-direction:column; gap:16px">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <h2 style="margin:0; font-weight:600; font-size:clamp(34px,9vw,52px); line-height:1.02; letter-spacing:-0.035em">What it looks like.</h2>
+        <p style="margin:8px 0 0; font-weight:600; font-size:15px; letter-spacing:0.1em; text-transform:uppercase">Running in my own operation</p>
+        <h3 style="margin:0; font-weight:600; font-size:29px; line-height:1.1; letter-spacing:-0.025em">This website, built by agents.</h3>
+        <ul style="list-style:none; margin:clamp(4px,0.6vw,10px) 0 0; padding:0; width:100%; border-bottom:1px solid rgba(46,43,39,0.25)"><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:24px; line-height:1.15; letter-spacing:-0.02em">Creative director</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:24px; line-height:1.15; letter-spacing:-0.02em">Copywriter</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:24px; line-height:1.15; letter-spacing:-0.02em">Designer</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:600; font-size:24px; line-height:1.15; letter-spacing:-0.02em">Operations lead</li></ul>
+        <p style="margin:0; font-size:19px; line-height:1.45; text-wrap:pretty">They’re all agents working from the same context and memory. I stepped in when something needed an actual decision.</p>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <h2 style="margin:0; font-weight:700; font-size:clamp(36px,9.5vw,54px); line-height:1.05">איך זה נראה</h2>
+        <p style="margin:8px 0 0; font-weight:700; font-size:17px">רץ אצלי בעסק</p>
+        <h3 style="margin:0; font-weight:700; font-size:30px; line-height:1.15">האתר הזה, נבנה על ידי אייג'נטים.</h3>
+        <ul style="list-style:none; margin:clamp(4px,0.6vw,10px) 0 0; padding:0; width:100%; border-bottom:1px solid rgba(46,43,39,0.25)"><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:25px; line-height:1.15;">מנהל קריאייטיב</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:25px; line-height:1.15;">קופירייטר</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:25px; line-height:1.15;">מעצב</li><li style="padding:clamp(10px,0.9vw,16px) 0; border-top:1px solid rgba(46,43,39,0.25); font-weight:700; font-size:25px; line-height:1.15;">מנהל תפעול</li></ul>
+        <p style="margin:0; font-size:20px; line-height:1.5; text-wrap:pretty">כולם אייג'נטים, עובדים מאותו הקשר ומאותו זיכרון. אני נכנסתי לתמונה רק כשמשהו באמת דרש הכרעה.</p>
+      </sc-if>
+    </div>
+    <div style="position:relative; width:100%; aspect-ratio:1/1; max-height:70vh; overflow:hidden">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}"><img src="/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="Three textile characters gathered around a vintage monitor showing this website" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:86% center; user-select:none"></sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}"><img src="/magnific_keep-as-img2-is.-inserst-_62NY9lfiJO.jpg" alt="שלוש דמויות בד מסביב למסך וינטג' שמציג את האתר הזה" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:86% center; transform:scaleX(-1); user-select:none"></sc-if>
+    </div>
+  </section>
+  </sc-if>
+
+  <section id="about" data-screen-label="04 About" style="position:relative; width:100%; padding:clamp(72px,10vh,130px) 0 clamp(72px,10vh,140px); overflow:hidden">
+    <div data-dot-trail-suppress="" style="display:flex; flex-direction:column; align-items:center">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <p style="margin:0; font-size:clamp(22px,2.6vw,36px); font-weight:600; letter-spacing:-0.02em">Hi, I’m</p>
+        <h2 style="margin:clamp(-32px,-1.6vw,-14px) 0 0; font-weight:600; letter-spacing:-0.05em; font-size:clamp(96px,22vw,400px); line-height:0.9; color:#6B2B3A">Asaf</h2>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:0; font-size:clamp(24px,2.8vw,40px); font-weight:600">היי, אני</p>
+        <h2 style="margin:clamp(-24px,-1.2vw,-10px) 0 0; font-weight:700; letter-spacing:-0.02em; font-size:clamp(110px,24vw,430px); line-height:0.9; color:#6B2B3A">אסף</h2>
+      </sc-if>
+    </div>
+    <div style="position:relative; width:min(94%, 75vw + 60px); margin:clamp(-270px,-14vw,-40px) auto 0">
+      <div aria-hidden="true" style="position:absolute; left:50%; bottom:5%; transform:translateX(-50%); width:70%; height:4%; background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(46,43,39,0.32), transparent 72%); filter:blur(10px)"></div>
+      <img src="/asaf-cutout-clean.png" alt="Asaf sitting on a sofa with the three textile characters" draggable="false" style="position:relative; display:block; width:100%; user-select:none">
+    </div>
+    <div data-dot-trail-suppress="" style="width:calc(100% - clamp(44px,14vw,220px)); margin:clamp(24px,3.5vh,48px) auto 0; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap:clamp(28px,5vw,72px); align-items:start; color:#2E2B27; text-wrap:pretty">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:clamp(14px,1.6vw,28px); font-size:clamp(19px,1.75vw,30px); line-height:1.55">
+          <p style="margin:0; font-weight:600">Father of three (husband of one).</p>
+          <p style="margin:0">I started my career performing around the world with <strong style="font-weight:600">Mayumana</strong>. Then I moved into tech, joining <strong style="font-weight:600">Kaltura</strong> and later <strong style="font-weight:600">Artlist</strong>, where I built and led creative and operations teams.</p>
+          <p style="margin:0">Creative and engineering always made sense together to me. So I studied Digital Media at <strong style="font-weight:600">NYU’s School of Engineering</strong>. It wasn’t the obvious choice. I spent years explaining it.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:clamp(20px,2.6vw,44px)">
+          <p style="margin:0; font-weight:600; font-size:clamp(26px,3.2vw,52px); line-height:1.14; letter-spacing:-0.025em">Then <span style="color:#6B2B3A">AI</span> came along, and the two finally became the same job: understand what a {{ aboutNoun }} actually needs, then build {{ aboutObject }}.</p>
+          <p style="margin:0; font-weight:600; font-size:clamp(21px,1.75vw,32px); line-height:1.3">That’s what I do now.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:clamp(14px,1.6vw,28px); font-size:clamp(20px,1.85vw,32px); line-height:1.6">
+          <p style="margin:0; font-weight:600">אבא לשלושה (ובעל לאחת).</p>
+          <p style="margin:0">התחלתי את הקריירה על הבמה, בהופעות מסביב לעולם עם <strong style="font-weight:700">מיומנה</strong>. משם עברתי להייטק, ל<strong style="font-weight:700">קלטורה</strong> ואחר כך ל<strong style="font-weight:700">ארטליסט</strong>, שם בניתי והובלתי צוותי קריאייטיב ותפעול.</p>
+          <p style="margin:0">קריאייטיב והנדסה תמיד הסתדרו לי ביחד. אז הלכתי ללמוד מדיה דיגיטלית בבית הספר להנדסה של <strong lang="en" style="font-weight:600; font-family:Switzer, sans-serif">NYU</strong>. היא לא הייתה בחירה מובנת מאליה. שנים הסברתי אותה.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:clamp(20px,2.6vw,44px)">
+          <p style="margin:0; font-weight:700; font-size:clamp(28px,3.3vw,54px); line-height:1.2; letter-spacing:-0.005em">ואז הגיע ה-<span lang="en" style="font-family:Switzer, sans-serif; font-weight:600; color:#6B2B3A">AI</span>, ושני הדברים סוף סוף הפכו לאותה עבודה: {{ aboutHe }}</p>
+          <p style="margin:0; font-weight:700; font-size:clamp(22px,1.85vw,34px); line-height:1.35">זה מה שאני עושה עכשיו.</p>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="talk" data-screen-label="05 Talk to me" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(24px,4vh,60px) clamp(22px,7vw,140px) clamp(80px,13vh,180px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap:clamp(32px,5vw,88px); align-items:center">
+    <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:clamp(20px,2vw,28px); overflow:hidden; background:#15130F">
+      <video data-dot-trail-suppress="" src="/talk-selfie.mp4#t=0.05" preload="metadata" playsInline="{{ true }}" controls="{{ true }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover"></video>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:flex-start; gap:clamp(18px,2vw,32px)">
+    <a data-dot-trail-suppress="" href="https://cal.com/asaf-yaniv-hlwofj/20min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-self:start; background:#22335C; color:#F1EAE0; border-radius:999px; padding:clamp(18px,2vw,34px) clamp(32px,4vw,72px); font-weight:600; font-size:clamp(32px,4.6vw,88px); line-height:1.05; letter-spacing:-0.04em; white-space:nowrap; box-shadow:0 4px 28px rgba(34,51,92,0.22); transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#1A2848; color:#F1EAE0; transform:scale(1.025)">
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">Talk to me.</sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}"><span style="letter-spacing:-0.01em">דברו איתי.</span></sc-if>
+    </a>
+    <a data-dot-trail-suppress="" href="https://wa.me/972547833072" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:0.55em; padding:clamp(12px,1.1vw,18px) clamp(24px,2.2vw,40px); border-radius:999px; box-shadow:inset 0 0 0 2.5px #25D366; color:#15130F; font-weight:600; font-size:clamp(20px,1.9vw,34px); line-height:1.1; letter-spacing:-0.02em; text-decoration:none; white-space:nowrap; transition:background 0.15s ease" style-hover="background:rgba(37,211,102,0.10); color:#15130F">
+      <svg aria-hidden="true" viewBox="0 0 24 24" style="width:1.1em; height:1.1em; flex-shrink:0; fill:#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+      <sc-if value="{{ en }}" hint-placeholder-val="{{ true }}">Chat on WhatsApp</sc-if>
+      <sc-if value="{{ he }}" hint-placeholder-val="{{ false }}">דברו איתי בוואטסאפ</sc-if>
+    </a>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;he&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en'|'he'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;debugMask&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero doors&quot;},&quot;doorLinksLive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero doors&quot;},&quot;heHeadline&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;A&quot;,&quot;B&quot;],&quot;default&quot;:&quot;A&quot;,&quot;tsType&quot;:&quot;'A'|'B'&quot;,&quot;section&quot;:&quot;Pending decisions&quot;},&quot;notSureLink&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Let’s talk&quot;,&quot;Book a call&quot;],&quot;default&quot;:&quot;Let’s talk&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Pending decisions&quot;},&quot;aboutCopy&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;New (business)&quot;,&quot;Original (company)&quot;],&quot;default&quot;:&quot;New (business)&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Pending decisions&quot;}}">
+class Component extends DCLogic {
+  state = { lang: 'he', mobile: window.innerWidth < 860, menuOpen: false, revealAll: false, coarse: false, hintVisible: true, used: false };
+  componentDidMount() {
+    this.onResize = () => {
+      const m = window.innerWidth < 860, n = window.innerWidth < 1100;
+      if (m !== this.state.mobile || n !== this.state.narrow) this.setState({ mobile: m, narrow: n });
+    };
+    window.addEventListener('resize', this.onResize);
+    setTimeout(() => this.setupDoors(), 0);
+    this.hero = null; this.tx = -500; this.ty = -500; this.cx = -500; this.cy = -500;
+    this.tr = 0; this.cr = 0; this.active = false;
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.setState({ coarse: window.matchMedia('(pointer: coarse)').matches });
+    this.tick = this.tick.bind(this);
+    this.raf = requestAnimationFrame(this.tick);
+    this.onScrollHide = () => {
+      if (!this.hero || this.lastY === undefined) return;
+      const rect = this.hero.getBoundingClientRect();
+      if (this.lastY > rect.bottom || this.lastY < rect.top) { this.tr = 0; this.active = false; }
+    };
+    window.addEventListener('scroll', this.onScrollHide, { passive: true });
+    requestAnimationFrame(() => {
+      this.desktopEffects = this.fx;
+      if (this.desktopEffects) this.setupDotEffects();
+      else {
+        if (this.xray) { this.xray.pause(); this.xray.removeAttribute('src'); this.xray.load(); }
+        if (this.state.hintVisible) this.setState({ hintVisible: false });
+      }
+    });
+  }
+  componentDidUpdate(prev) {
+    if (prev.lang !== this.props.lang && this.state.lang !== null) this.setState({ lang: null });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+    cancelAnimationFrame(this.raf);
+    cancelAnimationFrame(this.doorRaf); clearTimeout(this.doorCycleT); clearTimeout(this.doorPauseT);
+    if (this.doorIO) this.doorIO.disconnect();
+    if (this.doorResize) window.removeEventListener('resize', this.doorResize);
+    if (this.doorLensResize) window.removeEventListener('resize', this.doorLensResize);
+    if (this.doorLens) this.doorLens.destroy();
+    window.removeEventListener('scroll', this.onScrollHide);
+    if (this.onDotResize) window.removeEventListener('resize', this.onDotResize);
+    if (this.onTrailMove) window.removeEventListener('pointermove', this.onTrailMove);
+    if (this.onTrailLeave) window.removeEventListener('pointerleave', this.onTrailLeave);
+    if (this.heroLens) this.heroLens.destroy();
+    if (this.trail) this.trail.destroy();
+  }
+  async setupDotEffects() {
+    const { DotImageLens } = await import('./dot-image-lens.js');
+    const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
+
+    // 1. HERO — dots reveal the real x-ray footage. drawImage ignores CSS
+    // transforms and object-fit, so the canvas sits on the video's RENDERED
+    // rect and is fed a cover-cropped offscreen frame each tick.
+    if (this.lensCanvas && this.xray && this.hero) {
+      this.lensSrc = document.createElement('canvas');
+      this.lensSrcCtx = this.lensSrc.getContext('2d');
+      this.heroLens = new DotImageLens(this.lensCanvas, this.lensSrc, { lensRadiusPx: 90, lensFeatherPx: 30, splatRadiusPx: 44 });
+      this.resizeHeroLens = () => {
+        const hr = this.hero.getBoundingClientRect();
+        const vr = this.xray.getBoundingClientRect();
+        // the video's rect only decides WHERE the canvas is placed, so the dots
+        // register with the surface photo…
+        this.lensCanvas.style.transform = 'translate(' + (vr.left - hr.left) + 'px,' + (vr.top - hr.top) + 'px)';
+        this.lensCanvas.style.width = vr.width + 'px';
+        this.lensCanvas.style.height = vr.height + 'px';
+        // …but resolution and cursor mapping come from the canvas's OWN box.
+        const cr = this.lensCanvas.getBoundingClientRect();
+        this.lensBox = { x: cr.left - hr.left, y: cr.top - hr.top };
+        const dpr = DPR();
+        this.lensSrc.width = Math.max(1, Math.round(cr.width * dpr));
+        this.lensSrc.height = Math.max(1, Math.round(cr.height * dpr));
+        this.heroLens.resize(cr.width, cr.height, dpr);
+      };
+      this.resizeHeroLens();
+      this.lastLensTime = performance.now();
+    }
+
+    // 2. SITEWIDE — no image, so dots render in the wine accent colour.
+    if (this.trailCanvas) {
+      this.trail = new DotImageLens(this.trailCanvas, null, { showIdleLens: false, gridDensity: 140, splatRadiusPx: 40, lensRadiusPx: 40 });
+      this.resizeTrail = () => this.trail.resize(window.innerWidth, window.innerHeight, DPR());
+      this.resizeTrail();
+      this.onTrailMove = (e) => {
+        this.trail.setCursor(e.clientX, e.clientY, true);
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        this.trail.setSuppressed(!!(el && el.closest('[data-dot-trail-suppress]')));
+      };
+      window.addEventListener('pointermove', this.onTrailMove);
+      this.onTrailLeave = () => this.trail.setCursor(0, 0, false);
+      window.addEventListener('pointerleave', this.onTrailLeave);
+      this.lastTrailTime = performance.now();
+    }
+
+    this.onDotResize = () => { if (this.resizeHeroLens) this.resizeHeroLens(); if (this.resizeTrail) this.resizeTrail(); };
+    window.addEventListener('resize', this.onDotResize);
+  }
+  drawLensSource() {
+    const v = this.xray, c = this.lensSrc, ctx = this.lensSrcCtx;
+    if (!v || !c || !ctx || !v.videoWidth) return;
+    // object-fit: cover — crop the source to the destination aspect
+    const sa = v.videoWidth / v.videoHeight, da = c.width / c.height;
+    let sw = v.videoWidth, sh = v.videoHeight, sx = 0, sy = 0;
+    if (sa > da) { sw = v.videoHeight * da; sx = (v.videoWidth - sw) / 2; }
+    else { sh = v.videoWidth / da; sy = (v.videoHeight - sh) / 2; }
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.drawImage(v, sx, sy, sw, sh, 0, 0, c.width, c.height);
+  }
+  inHotspot(e, rect) { return true; } // lens works across the whole hero
+  overStructure(e, rect) {
+    // structure + characters occupy the right ~44% of the frame
+    return (e.clientX - rect.left) / rect.width > 0.56;
+  }
+  point(e) {
+    if (!this.hero) return;
+    const rect = this.hero.getBoundingClientRect();
+    this.lastX = e.clientX; this.lastY = e.clientY;
+    if (e.clientY > rect.bottom || e.clientY < rect.top) { this.tr = 0; this.active = false; return; }
+    this.tx = e.clientX - rect.left; this.ty = e.clientY - rect.top;
+    if (this.cr < 4) { this.cx = this.tx; this.cy = this.ty; } // appear at pointer, not fly in
+    this.tr = this.overStructure(e, rect) ? 100 : 78; // grows over the structure
+    this.active = true;
+    if (!this.state.used) this.setState({ used: true });
+    if (this.state.hintVisible && this.state.coarse === false) this.setState({ hintVisible: false });
+  }
+  tickTrail() {
+    if (!this.trail) return;
+    const now = performance.now();
+    const dt = Math.min((now - (this.lastTrailTime || now)) / 1000, 1 / 15);
+    this.lastTrailTime = now;
+    this.trail.tick(dt);
+  }
+  tick() {
+    this.tickTrail();
+    const ease = this.reduced ? 1 : 0.22;
+    const moving = Math.abs(this.tx - this.cx) >= 0.1 || Math.abs(this.ty - this.cy) >= 0.1 || Math.abs(this.tr - this.cr) >= 0.1;
+    if (!moving && this.cr < 0.5) {
+      if (this.heroLens) {
+        this.lastLensTime = performance.now();
+        const b = this.lensBox || { x: 0, y: 0 };
+        this.drawLensSource();
+        this.heroLens.setCursor(this.cx - b.x, this.cy - b.y, false);
+        this.heroLens.tick(1 / 60);
+      }
+      this.raf = requestAnimationFrame(this.tick); return;
+    }
+    this.cx += (this.tx - this.cx) * ease;
+    this.cy += (this.ty - this.cy) * ease;
+    this.cr += (this.tr - this.cr) * (this.reduced ? 1 : 0.18);
+    if (this.hero && !this.state.revealAll) {
+      this.hero.style.setProperty('--mx', this.cx + 'px');
+      this.hero.style.setProperty('--my', this.cy + 'px');
+      this.hero.style.setProperty('--lr', Math.max(0, this.cr) + 'px');
+      if (this.idle) this.idle.style.opacity = String(this.state.used ? 0 : Math.max(0, 1 - this.cr / 30)); // idle indicator hands off to the live lens
+      if (this.ring) {
+        this.ring.style.transform = 'translate(' + this.cx + 'px,' + this.cy + 'px) scale(' + Math.max(0.001, this.cr / 110) + ')';
+        // ring base is 220px; scale tracks current radius so ring matches mask edge
+        this.ring.style.opacity = String(Math.min(1, this.cr / 100) * 0.7);
+      }
+    }
+    if (this.heroLens && !this.state.revealAll) {
+      const now = performance.now();
+      const dt = Math.min((now - (this.lastLensTime || now)) / 1000, 1 / 15);
+      this.lastLensTime = now;
+      this.drawLensSource();
+      const b = this.lensBox || { x: 0, y: 0 };
+      this.heroLens.cfg.lensRadiusPx = Math.max(0, this.cr);
+      this.heroLens.setCursor(this.cx - b.x, this.cy - b.y, this.active && this.cr > 2);
+      this.heroLens.tick(dt);
+    }
+    this.raf = requestAnimationFrame(this.tick);
+  }
+  get fx() {
+    // not cached — a page's very first synchronous tick can read pointer/media
+    // queries before the browser has fully settled them, and caching that on
+    // first access risked permanently locking in a wrong answer. Cheap to
+    // recompute; every call reflects the current real state.
+    return !(window.matchMedia('(pointer: coarse)').matches
+      || window.innerWidth < 1024
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+  setupDoors() {
+    this.doorRects = [[188, 228, 767, 1272], [1797, 228, 2366, 1272]].map(([l, t, r, b]) => [l / 2560, t / 1440, r / 2560, b / 1440]);
+    this.doorTarget = [false, false]; this.doorHover = [false, false]; this.doorFocus = [false, false]; this.doorCycle = [false, false];
+    this.doorAlpha = [0, 0]; this.doorLast = performance.now();
+    this.doorReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.doorTouch = window.matchMedia('(hover: none)').matches;
+    this.doorVisible = false;
+    const wrap = this.doorWrap;
+    if (!wrap) return;
+    this.doorIO = new IntersectionObserver(([e]) => {
+      this.doorVisible = e.isIntersecting;
+      if (e.isIntersecting) {
+        const idle = window.requestIdleCallback || ((f) => setTimeout(f, 600));
+        idle(() => this.loadDoorVideo());
+        if (this.doorTouch && !this.doorReduced) this.startDoorCycle();
+      } else {
+        this.stopDoorCycle();
+        if (this.doorVideo) this.doorVideo.pause();
+      }
+    }, { threshold: 0.15 });
+    this.doorIO.observe(wrap);
+    this.doorResize = () => {
+      const c = this.doorCanvas; if (!c) return;
+      const r = c.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      c.width = Math.max(1, Math.round(r.width * dpr)); c.height = Math.max(1, Math.round(r.height * dpr));
+      this.doorDirty = true;
+    };
+    this.doorResize();
+    window.addEventListener('resize', this.doorResize);
+    this.lensX = -500; this.lensY = -500; this.lensTX = -500; this.lensTY = -500; this.lensR = 0; this.lensTR = 0; this.lensOn = false;
+    if (!this.doorTouch && !this.doorReduced) {
+      import('./dot-image-lens.js').then(({ DotImageLens }) => {
+        if (!this.doorLensCanvas) return;
+        this.lensSrc = document.createElement('canvas');
+        this.lensSrcCtx = this.lensSrc.getContext('2d');
+        this.doorLens = new DotImageLens(this.doorLensCanvas, this.lensSrc, { lensRadiusPx: 0, lensFeatherPx: 30, splatRadiusPx: 44 });
+        this.doorLensResize = () => {
+          const r = this.doorLensCanvas.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+          this.lensSrc.width = Math.max(1, Math.round(r.width * dpr)); this.lensSrc.height = Math.max(1, Math.round(r.height * dpr));
+          this.doorLens.resize(r.width, r.height, dpr);
+        };
+        this.doorLensResize();
+        window.addEventListener('resize', this.doorLensResize);
+      });
+    }
+    const loop = (now) => { this.doorFrame(now); this.doorRaf = requestAnimationFrame(loop); };
+    this.doorRaf = requestAnimationFrame(loop);
+  }
+  loadDoorVideo() {
+    const v = this.doorVideo;
+    if (!v || v.dataset.loaded) return;
+    v.dataset.loaded = '1';
+    v.preload = 'auto';
+    v.src = '/hero-inside-loop.mp4';
+    if (this.doorReduced) {
+      v.addEventListener('loadeddata', () => { v.currentTime = 2; }, { once: true });
+      v.addEventListener('seeked', () => { this.doorDirty = true; }, { once: true });
+    }
+    v.load();
+  }
+  startDoorCycle() {
+    if (this.doorCycleT) return;
+    let step = 0;
+    const seq = [[true, false, 3000], [false, false, 2000], [false, true, 3000], [false, false, 2000]];
+    const run = () => {
+      const [l, r, ms] = seq[step % 4]; step++;
+      this.doorCycle = [l, r]; this.updateDoors();
+      this.doorCycleT = setTimeout(run, ms);
+    };
+    this.doorCycleT = setTimeout(run, 800);
+  }
+  stopDoorCycle() { clearTimeout(this.doorCycleT); this.doorCycleT = null; this.doorCycle = [false, false]; this.updateDoors(); }
+  updateDoors() {
+    this.doorTarget = [0, 1].map((i) => this.doorHover[i] || this.doorFocus[i] || this.doorCycle[i]);
+    const any = this.doorTarget[0] || this.doorTarget[1] || this.lensOn;
+    const v = this.doorVideo;
+    if (any) {
+      this.loadDoorVideo();
+      clearTimeout(this.doorPauseT);
+      if (v && !this.doorReduced && v.paused && this.doorVisible !== false) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+    } else if (v) {
+      clearTimeout(this.doorPauseT);
+      this.doorPauseT = setTimeout(() => { if (!(this.doorTarget[0] || this.doorTarget[1] || this.lensOn)) v.pause(); }, 2000);
+    }
+  }
+  lensFrame(dt) {
+    const L = this.doorLens;
+    if (!L) return;
+    const idle = Math.abs(this.lensTR - this.lensR) < 0.1 && this.lensR < 0.5;
+    if (idle && !this.lensTrailLeft) return;
+    if (this.lensR < 4 && this.lensTR > 0) { this.lensX = this.lensTX; this.lensY = this.lensTY; }
+    this.lensX += (this.lensTX - this.lensX) * 0.22;
+    this.lensY += (this.lensTY - this.lensY) * 0.22;
+    this.lensR += (this.lensTR - this.lensR) * 0.18;
+    const v = this.doorVideo;
+    if (v && v.readyState >= 2) {
+      const c = this.lensSrc;
+      this.lensSrcCtx.drawImage(v, 0, 0, c.width, c.height);
+    }
+    L.cfg.lensRadiusPx = Math.max(0, this.lensR);
+    L.setCursor(this.lensX, this.lensY, this.lensOn && this.lensR > 2);
+    L.tick(Math.min(dt / 1000, 1 / 15));
+    this.lensTrailLeft = this.lensR > 0.5 || this.lensOn;
+    if (!this.lensTrailLeft) { this.lensTrailFrames = (this.lensTrailFrames || 0) + 1; if (this.lensTrailFrames < 90) this.lensTrailLeft = true; } else this.lensTrailFrames = 0;
+    const ring = this.doorRing;
+    if (ring) {
+      ring.style.transform = 'translate(' + this.lensX.toFixed(1) + 'px,' + this.lensY.toFixed(1) + 'px) scale(' + Math.max(0.001, this.lensR / 90).toFixed(3) + ')';
+      ring.style.opacity = String(Math.min(1, this.lensR / 90) * 0.8);
+    }
+  }
+  doorAt(e) {
+    const r = this.doorWrap.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    return this.doorRects.findIndex(([l, t, rr, b]) => x >= l && x <= rr && y >= t && y <= b);
+  }
+  doorFrame(now) {
+    const dt = Math.min(64, now - this.doorLast); this.doorLast = now;
+    this.lensFrame(dt);
+    let changed = this.doorDirty; this.doorDirty = false;
+    for (let i = 0; i < 2; i++) {
+      const a = this.doorAlpha[i], t = this.doorTarget[i] ? 1 : 0;
+      if (a === t) continue;
+      const step = dt / (t ? 300 : 400);
+      this.doorAlpha[i] = t ? Math.min(1, a + step) : Math.max(0, a - step);
+      changed = true;
+    }
+    const open = this.doorAlpha[0] > 0 || this.doorAlpha[1] > 0;
+    const v = this.doorVideo, c = this.doorCanvas;
+    if (!c || (!changed && !(open && v && !v.paused))) return;
+    const ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, c.width, c.height);
+    if (!open || !v || v.readyState < 2) return;
+    const inset = 1.5 * (c.width / c.getBoundingClientRect().width || 1);
+    for (let i = 0; i < 2; i++) {
+      const a = this.doorAlpha[i]; if (!a) continue;
+      const [l, t, r, b] = this.doorRects[i];
+      ctx.save();
+      ctx.globalAlpha = this.doorTarget[i] ? 1 - Math.pow(1 - a, 3) : a * a * (3 - 2 * a);
+      ctx.beginPath();
+      ctx.rect(l * c.width + inset, t * c.height + inset, (r - l) * c.width - 2 * inset, (b - t) * c.height - 2 * inset);
+      ctx.clip();
+      ctx.drawImage(v, 0, 0, c.width, c.height);
+      ctx.restore();
+    }
+  }
+  syncBars() {
+    const o = this.state.menuOpen;
+    if (this.bar1) this.bar1.style.transform = o ? 'translateY(3.25px) rotate(45deg)' : '';
+    if (this.bar2) this.bar2.style.transform = o ? 'translateY(-3.25px) rotate(-45deg)' : '';
+  }
+  renderVals() {
+    const p = { ...this.props, doorLinksLive: this.props.doorLinksLive ?? true };
+    const lang = this.state.lang ?? p.lang ?? 'en';
+    const en = lang === 'en';
+    const smbHref = en ? '/next/small-business/' : '/next/he/small-business/';
+    const startupsHref = en ? '/next/startups/' : '/next/he/startups/';
+    const book = (p.notSureLink ?? 'Let’s talk') === 'Book a call';
+    const aboutNew = (p.aboutCopy ?? 'New (business)') === 'New (business)';
+    const heB = (p.heHeadline ?? 'A') === 'B';
+    const revealAll = this.state.revealAll;
+    return {
+      en, he: !en, heA: !en && !heB, heB: !en && heB,
+      dir: en ? 'ltr' : 'rtl', langAttr: lang,
+      mobile: this.state.mobile, desktop: !this.state.mobile,
+      proofWide: !(this.state.narrow ?? window.innerWidth < 1100), proofStack: (this.state.narrow ?? window.innerWidth < 1100),
+      homeHref: en ? '/next/' : '/next/he/',
+      langSwitchText: en ? 'עב' : 'EN',
+      langSwitchLong: en ? 'עברית' : 'English',
+      navLabel: en ? 'Main' : 'ראשי',
+      talkLabel: en ? 'Let’s talk' : 'בואו נדבר',
+      menuLabel: this.state.menuOpen ? (en ? 'Close menu' : 'סגירת תפריט') : (en ? 'Open menu' : 'פתיחת תפריט'),
+      menuOpen: this.state.menuOpen,
+      showMenu: this.state.menuOpen && this.state.mobile,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen }), () => this.syncBars()),
+      closeMenu: () => this.setState({ menuOpen: false }, () => this.syncBars()),
+      bar1Ref: (el) => { this.bar1 = el; this.syncBars(); },
+      bar2Ref: (el) => { this.bar2 = el; this.syncBars(); },
+      navLinks: [
+        { href: en ? '/next/small-business/' : '/next/he/small-business/', label: en ? 'SMB & Independents' : 'עסקים קטנים ועצמאים', key: 'owners' },
+        { href: en ? '/next/startups/' : '/next/he/startups/', label: en ? 'Startups' : 'סטארטאפים', key: 'startups' },
+        { href: en ? '/next/workshops/' : '/next/he/workshops/', label: en ? 'Workshops' : 'סדנאות', key: 'workshops' }
+      ].map(l => ({ ...l, active: l.key === 'home', inactive: l.key !== 'home' })),
+      langSwitchLabel: en ? 'גרסה בעברית' : 'English version',
+      toggleLang: () => { window.location.href = en ? '/next/he/' : '/next/'; },
+      notSureQ: en ? 'Not sure which one?' : 'לא בטוחים?',
+      notSureLink: en ? (book ? 'Book a call.' : 'Let’s talk.') : (book ? 'קבעו שיחה.' : 'בואו נדבר.'),
+      aboutNoun: aboutNew ? 'business' : 'company',
+      aboutObject: aboutNew ? 'what makes it work' : 'the system that makes it possible',
+      aboutHe: aboutNew ? 'קודם להבין מה עסק באמת צריך, ואז לבנות את מה שמאפשר את זה.' : 'קודם להבין מה חברה באמת צריכה, ואז לבנות את המערכת שמאפשרת את זה.',
+      doorWrapRef: (el) => { this.doorWrap = el; },
+      doorCanvasRef: (el) => { this.doorCanvas = el; },
+      doorVideoRef: (el) => { this.doorVideo = el; },
+      debugMask: !!p.debugMask || /[?&]debug=mask/.test(window.location.search),
+      doorLinksOff: !p.doorLinksLive,
+      smbHref, startupsHref,
+      doorLinkClick: (e) => { if (!p.doorLinksLive) e.preventDefault(); },
+      doorMove: (e) => {
+        if (!this.doorRects || e.pointerType === 'touch') return;
+        const i = this.doorAt(e);
+        const r = this.doorWrap.getBoundingClientRect();
+        this.lensTX = e.clientX - r.left; this.lensTY = e.clientY - r.top;
+        const inDoor = i >= 0;
+        if (!this.doorLens) {
+          const next = [i === 0, i === 1];
+          if (next[0] !== this.doorHover[0] || next[1] !== this.doorHover[1]) { this.doorHover = next; this.updateDoors(); }
+        } else {
+          this.lensTR = inDoor ? 90 : 0;
+          if (inDoor !== this.lensOn) { this.lensOn = inDoor; this.updateDoors(); }
+        }
+        if (this.doorWrap) this.doorWrap.style.cursor = i >= 0 && p.doorLinksLive ? 'pointer' : 'default';
+      },
+      doorWrapLeave: () => { if (!this.doorHover) return; this.doorHover = [false, false]; this.lensTR = 0; this.lensOn = false; this.updateDoors(); },
+      doorLensCanvasRef: (el) => { this.doorLensCanvas = el; },
+      doorRingRef: (el) => { this.doorRing = el; },
+      doorTap: (e) => {
+        if (!this.doorRects || !p.doorLinksLive) return;
+        const i = this.doorAt(e);
+        if (i >= 0) window.location.href = i === 0 ? smbHref : startupsHref;
+      },
+      door1Enter: () => { this.doorHover[0] = true; this.updateDoors(); }, door1Leave: () => { this.doorHover[0] = false; this.updateDoors(); },
+      door2Enter: () => { this.doorHover[1] = true; this.updateDoors(); }, door2Leave: () => { this.doorHover[1] = false; this.updateDoors(); },
+      door1Focus: () => { this.doorFocus[0] = true; this.updateDoors(); }, door1Blur: () => { this.doorFocus[0] = false; this.updateDoors(); },
+      door2Focus: () => { this.doorFocus[1] = true; this.updateDoors(); }, door2Blur: () => { this.doorFocus[1] = false; this.updateDoors(); },
+      revealAll,
+      showTouchHint: this.state.coarse && this.state.hintVisible && !revealAll && !this.state.mobile,
+      heroRef: (el) => { this.hero = el; },
+      idleRef: (el) => { this.idle = el; },
+      ringRef: (el) => { this.ring = el; },
+      lensCanvasRef: (el) => { this.lensCanvas = el; },
+      trailCanvasRef: (el) => { this.trailCanvas = el; },
+      xrayRef: (el) => { this.xray = el; },
+      heroFx: this.fx,
+      xrayPreload: this.fx ? 'auto' : 'none',
+      onMove: (e) => {
+        if (!this.desktopEffects || this.state.revealAll) return;
+        if (e.pointerType === 'touch' && !this.touchActive) return;
+        this.point(e);
+      },
+      onDown: (e) => {
+        if (!this.desktopEffects || this.state.revealAll) return;
+        if (e.pointerType !== 'touch') return;
+        const rect = this.hero.getBoundingClientRect();
+        if (this.inHotspot(e, rect)) {
+          this.touchActive = !this.touchActive;
+          if (this.touchActive) {
+            this.hero.style.touchAction = 'none';
+            this.point(e);
+            if (this.state.hintVisible) this.setState({ hintVisible: false });
+          } else { this.tr = 0; this.hero.style.touchAction = ''; }
+        } else if (this.touchActive) {
+          this.touchActive = false; this.tr = 0; this.hero.style.touchAction = '';
+        }
+      },
+      onLeave: () => { this.tr = 0; this.active = false; }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>AI Workshops · Ensemble</title>
+  <meta name="description" content="Hands-on AI workshops for managers, creative and marketing teams, and founders. Build AI systems around your team's real work.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://ensemble-ai.io/workshops">
+  <link rel="icon" href="/next/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #EFE6D8; color: #2E2B27; font-family: "PP Neue Montreal", "Switzer", sans-serif; overflow-x: clip; }
+    @media (max-width: 859px) { html, body { background: #DBC8B1; } }
+    a { color: #22335C; text-decoration: none; }
+    a:hover { color: #C4622D; }
+    ::selection { background: #22335C; color: #F1EAE0; }
+  </style>
+</helmet>
+<div style="min-height:100vh">
+  <sc-if value="{{ heroFx }}" hint-placeholder-val="{{ false }}">
+    <canvas ref="{{ trailCanvasRef }}" aria-hidden="true" style="position:fixed; inset:0; width:100vw; height:100vh; pointer-events:none; z-index:15"></canvas>
+  </sc-if>
+
+  <nav data-dot-trail-suppress="" aria-label="Main" style="position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:30; display:flex; align-items:center; gap:clamp(14px,2.2vw,36px); width:max-content; max-width:94vw; box-sizing:border-box; height:clamp(56px,7.2vw,66px); padding-inline-start:clamp(17px,2.4vw,26px); padding-inline-end:clamp(7px,1.2vw,10px); border-radius:999px; background:#15130F; box-shadow:0 6px 30px rgba(21,19,15,0.28)">
+    <a href="/next/" dir="ltr" aria-label="ensemble home" style="display:inline-flex; align-items:center; align-self:stretch; flex-shrink:0">
+      <img src="/next/ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(18px,2vw,26px); width:auto; user-select:none">
+    </a>
+    <sc-if value="{{ showLangChip }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; align-items:center; gap:clamp(16px,2vw,30px)">
+        <a href="/next/small-business/" style="color:#F1EAE0; opacity:0.62; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap; transition:opacity 0.15s ease" style-hover="opacity:1; color:#F1EAE0">SMB &amp; Independents</a>
+        <a href="/next/startups/" style="color:#F1EAE0; opacity:0.62; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap; transition:opacity 0.15s ease" style-hover="opacity:1; color:#F1EAE0">Startups</a>
+        <a href="/next/workshops/" aria-current="page" style="display:inline-flex; flex-direction:column; align-items:center; gap:5px; color:#F1EAE0; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap" style-hover="color:#F1EAE0">Workshops<span aria-hidden="true" style="width:5px; height:5px; border-radius:50%; background:#F1EAE0; margin-bottom:-10px"></span></a>
+      </div>
+      <div style="display:flex; align-items:center; gap:clamp(4px,0.6vw,8px)">
+        <a href="/next/he/workshops/" hreflang="he" lang="he" aria-label="גרסה בעברית" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border-radius:50%; color:#F1EAE0; font-weight:600; font-size:13px; opacity:0.62" style-hover="opacity:1; color:#F1EAE0">עב</a>
+        <a href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:clamp(44px,5.4vw,48px); color:#15130F; background:#F1EAE0; padding:0 clamp(18px,2vw,26px); border-radius:999px; font-weight:600; font-size:clamp(14px,1.15vw,16.5px); white-space:nowrap" style-hover="background:#FFFFFF; color:#15130F">Let’s talk</a>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showLangInline }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; align-items:center; gap:6px">
+        <a href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; height:44px; color:#15130F; background:#F1EAE0; padding:0 16px; border-radius:999px; font-weight:600; font-size:15px; white-space:nowrap" style-hover="background:#FFFFFF; color:#15130F">Let’s talk</a>
+        <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="{{ menuLabel }}" style="display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; width:44px; height:44px; flex-shrink:0; border:0; border-radius:50%; background:transparent; box-shadow:inset 0 0 0 1.5px rgba(241,234,224,0.28); cursor:pointer; padding:0">
+          <span ref="{{ bar1Ref }}" aria-hidden="true" style="display:block; width:16px; height:1.5px; border-radius:1px; background:#F1EAE0; transition:transform 0.2s ease"></span>
+          <span ref="{{ bar2Ref }}" aria-hidden="true" style="display:block; width:16px; height:1.5px; border-radius:1px; background:#F1EAE0; transition:transform 0.2s ease"></span>
+        </button>
+      </div>
+    </sc-if>
+  </nav>
+  <sc-if value="{{ showMenu }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenu }}" style="position:fixed; inset:0; z-index:28; background:rgba(21,19,15,0.25)"></div>
+    <div data-dot-trail-suppress="" style="position:fixed; top:84px; left:50%; transform:translateX(-50%); z-index:29; width:94vw; box-sizing:border-box; padding:10px 22px 22px; border-radius:28px; background:#15130F; color:#F1EAE0; box-shadow:0 12px 40px rgba(21,19,15,0.35); display:flex; flex-direction:column">
+      <a href="/next/small-business/" onClick="{{ closeMenu }}" style="display:flex; align-items:center; justify-content:space-between; min-height:60px; border-bottom:1px solid rgba(241,234,224,0.14); color:#F1EAE0; font-weight:600; font-size:24px; letter-spacing:-0.02em" style-hover="color:#FFFFFF">SMB &amp; Independents</a>
+      <a href="/next/startups/" onClick="{{ closeMenu }}" style="display:flex; align-items:center; justify-content:space-between; min-height:60px; border-bottom:1px solid rgba(241,234,224,0.14); color:#F1EAE0; font-weight:600; font-size:24px; letter-spacing:-0.02em" style-hover="color:#FFFFFF">Startups</a>
+      <a href="/next/workshops/" aria-current="page" onClick="{{ closeMenu }}" style="display:flex; align-items:center; justify-content:space-between; min-height:60px; border-bottom:1px solid rgba(241,234,224,0.14); color:#F1EAE0; font-weight:600; font-size:24px; letter-spacing:-0.02em" style-hover="color:#FFFFFF">Workshops<span aria-hidden="true" style="width:7px; height:7px; border-radius:50%; background:#F1EAE0"></span></a>
+      <a href="/next/he/workshops/" hreflang="he" lang="he" style="align-self:flex-start; margin-top:16px; display:inline-flex; align-items:center; height:44px; padding:0 18px; border-radius:999px; box-shadow:inset 0 0 0 1.5px rgba(241,234,224,0.28); color:#F1EAE0; font-weight:600; font-size:15px" style-hover="color:#FFFFFF">עברית</a>
+    </div>
+  </sc-if>
+
+  <section id="w-hero" data-screen-label="Workshops hero" style="position:relative; width:100%">
+    <div data-dot-trail-suppress="" style="position:relative; z-index:2; box-sizing:border-box; padding:clamp(120px,17vh,180px) clamp(22px,3.5vw,64px) 0; display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(16px,2.4vh,30px)">
+      <h1 data-reveal-words="" style="max-width:16em; margin:0; font-weight:600; font-size:clamp(42px,5.4vw,108px); line-height:0.94; letter-spacing:-0.045em; color:#2E2B27; text-wrap:balance">Learn how to use <span style="color:#6B2B3A">AI</span> in a way that fits your work</h1>
+      <p data-reveal-words="" style="margin:0; font-weight:500; font-size:clamp(20px,1.8vw,32px); line-height:1.25; letter-spacing:-0.02em; color:#2E2B27; text-wrap:balance">Hands-on workshops, built around your team’s real needs</p>
+    </div>
+    <div ref="{{ heroFrameRef }}" style="position:relative; z-index:1; width:100%; aspect-ratio:1360/768; min-height:420px; margin-top:clamp(-60px,-3vw,-8px); overflow:hidden; -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 14%, #000 30%, #000 84%, transparent 100%), linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%); -webkit-mask-composite:source-in; mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 14%, #000 30%, #000 84%, transparent 100%), linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%); mask-composite:intersect">
+      <div ref="{{ heroInnerRef }}" style="position:absolute; left:0; top:-6%; width:100%; height:112%; will-change:transform">
+        <img src="/workshop-red-pill.png" alt="A textile character presenting a whiteboard that reads “It’s time to take the red pill” to a team around a table" draggable="false" fetchpriority="high" style="display:block; width:100%; height:100%; object-fit:cover; object-position:56% center; filter:sepia(0.12) saturate(0.96); user-select:none; -webkit-user-drag:none">
+      </div>
+    </div>
+  </section>
+
+  <section id="w-who" data-screen-label="Who it's for" aria-roledescription="carousel" aria-label="Who the workshops are for" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(24px,4vh,64px) 0 clamp(40px,6vh,80px); display:flex; flex-direction:column; gap:clamp(18px,2.4vw,32px)">
+    <div data-dot-trail-suppress="" data-reveal-up="" ref="{{ carouselRef }}" style="width:100%; overflow:hidden; touch-action:pan-y; cursor:grab; user-select:none">
+      <div ref="{{ trackRef }}" style="display:flex; align-items:stretch; gap:clamp(14px,1.6vw,28px); padding:0 clamp(22px,3.5vw,64px)">
+        <div role="group" aria-roledescription="slide" aria-label="1 of 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#7B4A72; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(32px,2.8vw,54px); line-height:0.95; color:#F6EFE6"><span style="display:block; color:#DDBFD4">For</span>managers</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F6EFE6" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.3; color:#F6EFE6; text-wrap:pretty">AI changes what a team looks like. Work out how to adapt yours.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="2 of 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#D9A13B; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(32px,2.8vw,54px); line-height:0.95; color:#1F1A14"><span style="display:block; color:#6E4A0E">For</span>creative &amp; marketing teams</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#1F1A14" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.3; color:#1F1A14; text-wrap:pretty">See what creative freedom looks like with AI.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="3 of 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#5B84A8; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(32px,2.8vw,54px); line-height:0.95; color:#10161F"><span style="display:block; color:#1F3651">For</span>founders &amp; small businesses</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#10161F" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.3; color:#10161F; text-wrap:pretty">Put AI in the foundations while the company is small.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="4 of 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#7B4A72; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(32px,2.8vw,54px); line-height:0.95; color:#F6EFE6"><span style="display:block; color:#DDBFD4">For</span>recruiting</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F6EFE6" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.3; color:#F6EFE6; text-wrap:pretty">AI takes care of the pipeline. You focus on the candidates.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="5 of 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#D9A13B; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(32px,2.8vw,54px); line-height:0.95; color:#1F1A14"><span style="display:block; color:#6E4A0E">For</span>finance</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#1F1A14" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.3; color:#1F1A14; text-wrap:pretty">AI is best with numbers: it runs reports, forecasts and scenarios.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="6 of 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#5B84A8; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(32px,2.8vw,54px); line-height:0.95; color:#10161F"><span style="display:block; color:#1F3651">For</span>operations</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#10161F" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.3; color:#10161F; text-wrap:pretty">Rethink how workflows are shaped with AI.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="7 of 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#7B4A72; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(32px,2.8vw,54px); line-height:0.95; color:#F6EFE6"><span style="display:block; color:#DDBFD4">For</span>sales &amp; GTM</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#F6EFE6" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.3; color:#F6EFE6; text-wrap:pretty">Use AI to research, enrich and prepare, and make every customer experience personal.</p></div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="8 of 8" style="flex:0 0 auto; width:clamp(280px,30vw,520px); min-height:clamp(320px,26vw,460px); background:#D9A13B; border-radius:clamp(26px,2.8vw,40px); padding:clamp(26px,2.8vw,48px); box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; gap:36px; will-change:transform">
+          <h3 style="margin:0; font-weight:600; letter-spacing:-0.035em; font-size:clamp(32px,2.8vw,54px); line-height:0.95; color:#1F1A14"><span style="display:block; color:#6E4A0E">For</span>agencies</h3>
+          <div style="display:flex; align-items:flex-start; gap:16px"><svg width="24" height="24" viewBox="0 0 38 38" aria-hidden="true" style="flex-shrink:0; margin-top:4px"><g stroke="#1F1A14" stroke-width="1.7" stroke-linecap="round"><line x1="19" y1="2" x2="19" y2="11"></line><line x1="19" y1="27" x2="19" y2="36"></line><line x1="2" y1="19" x2="11" y2="19"></line><line x1="27" y1="19" x2="36" y2="19"></line><line x1="7" y1="7" x2="13.4" y2="13.4"></line><line x1="24.6" y1="24.6" x2="31" y2="31"></line><line x1="7" y1="31" x2="13.4" y2="24.6"></line><line x1="24.6" y1="13.4" x2="31" y2="7"></line></g></svg><p style="margin:0; font-size:clamp(20px,1.6vw,30px); line-height:1.3; color:#1F1A14; text-wrap:pretty">Build a system that works with many brands and keeps the quality of each.</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:10px; padding:0 clamp(22px,3.5vw,64px)">
+      <button type="button" aria-label="Previous" onClick="{{ carouselPrev }}" style="display:inline-flex; align-items:center; justify-content:center; width:56px; height:56px; border:0; border-radius:50%; background:#15130F; color:#F1EAE0; cursor:pointer; padding:0; transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#2E2B27; transform:scale(1.05)"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <button type="button" aria-label="Next" onClick="{{ carouselNext }}" style="display:inline-flex; align-items:center; justify-content:center; width:56px; height:56px; border:0; border-radius:50%; background:#15130F; color:#F1EAE0; cursor:pointer; padding:0; transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#2E2B27; transform:scale(1.05)"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    </div>
+  </section>
+
+  <section id="w-how" data-screen-label="How it works" style="position:relative; width:100%; box-sizing:border-box; padding:clamp(72px,12vh,160px) clamp(22px,7vw,140px) clamp(40px,6vh,80px)">
+    <h2 data-reveal-words="" style="margin:0; font-weight:500; letter-spacing:-0.04em; font-size:clamp(38px,4.5vw,90px); line-height:0.98; color:#2E2B27">How it works</h2>
+    <div data-dot-trail-suppress="" style="margin-top:clamp(40px,7vh,96px); display:flex; flex-direction:column">
+      <div data-reveal-up="" style="display:flex; flex-wrap:wrap; align-items:baseline; gap:clamp(12px,4vw,72px); padding:clamp(28px,4.5vh,52px) 0; border-top:1.5px solid rgba(46,43,39,0.16)">
+        <h3 style="flex:0 1 clamp(260px,32vw,600px); margin:0; font-weight:600; font-size:clamp(30px,3.2vw,56px); line-height:1.02; letter-spacing:-0.03em; color:#2E2B27">A short call.</h3>
+        <p style="flex:1 1 340px; max-width:36ch; margin:0; font-weight:400; font-size:clamp(20px,1.8vw,30px); line-height:1.5; color:#2E2B27; text-wrap:pretty">You tell me what’s hard right now and where you want to get. I build the workshop around that.</p>
+      </div>
+      <div data-reveal-up="" style="display:flex; flex-wrap:wrap; align-items:baseline; gap:clamp(12px,4vw,72px); padding:clamp(28px,4.5vh,52px) 0; border-top:1.5px solid rgba(46,43,39,0.16)">
+        <h3 style="flex:0 1 clamp(260px,32vw,600px); margin:0; font-weight:600; font-size:clamp(30px,3.2vw,56px); line-height:1.02; letter-spacing:-0.03em; color:#2E2B27">The workshop.</h3>
+        <p style="flex:1 1 340px; max-width:36ch; margin:0; font-weight:400; font-size:clamp(20px,1.8vw,30px); line-height:1.5; color:#2E2B27; text-wrap:pretty">Hands-on, with the people who do the work. They learn the tools and leave confident enough to keep getting better on their own.</p>
+      </div>
+      <div data-reveal-up="" style="display:flex; flex-wrap:wrap; align-items:baseline; gap:clamp(12px,4vw,72px); padding:clamp(28px,4.5vh,52px) 0; border-top:1.5px solid rgba(46,43,39,0.16); border-bottom:1.5px solid rgba(46,43,39,0.16)">
+        <h3 style="flex:0 1 clamp(260px,32vw,600px); margin:0; font-weight:600; font-size:clamp(30px,3.2vw,56px); line-height:1.02; letter-spacing:-0.03em; color:#2E2B27">Then it’s yours.</h3>
+        <p style="flex:1 1 340px; max-width:36ch; margin:0; font-weight:400; font-size:clamp(20px,1.8vw,30px); line-height:1.5; color:#2E2B27; text-wrap:pretty">Keep going on your own, or we keep working together: on the full system, or on one use case.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="w-talk" data-screen-label="Talk to me" style="position:relative; width:100%; box-sizing:border-box; padding-top:clamp(56px,9vh,120px); overflow:hidden">
+    <div data-dot-trail-suppress="" style="position:relative; z-index:2; box-sizing:border-box; max-width:calc(100% - clamp(0px, (100vw - 859px) * 999, 50vw)); min-height:clamp(0px, (100vw - 859px) * 999, 56.25vw); padding:0 7vw; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:clamp(14px,2vh,24px)">
+      <h2 data-reveal-words="" style="margin:0; max-width:20ch; font-weight:600; font-size:clamp(36px,4.2vw,80px); line-height:0.98; letter-spacing:-0.045em; color:#2E2B27; text-wrap:balance">Let’s figure out what fits your team and your work,</h2>
+      <p data-reveal-words="" style="margin:0; font-weight:500; font-size:clamp(22px,2.2vw,38px); line-height:1.2; letter-spacing:-0.025em; color:#2E2B27">then build the workshop around it.</p>
+      <a data-reveal-words="" href="https://cal.com/asaf-yaniv-hlwofj/30min" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; margin-top:clamp(16px,3vh,40px); background:#B3312C; color:#F6EFE6; border-radius:999px; padding:clamp(16px,1.6vw,28px) clamp(28px,3.2vw,56px); font-weight:600; font-size:clamp(26px,3.2vw,60px); line-height:1.05; letter-spacing:-0.04em; white-space:nowrap; text-decoration:none; transform-origin:left center; box-shadow:0 4px 28px rgba(179,49,44,0.28); transition:background 0.18s ease, transform 0.18s ease" style-hover="background:#97261F; color:#F6EFE6; transform:scale(1.025)">Take the red pill</a>
+    </div>
+    <div style="position:relative; z-index:1; width:100%; aspect-ratio:2048/1152; min-height:360px; margin-top:calc(-1 * clamp(0px, (100vw - 859px) * 999, 56.25vw)); overflow:hidden; -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%)">
+      <img src="/workshop-cta-pills.jpg" alt="A textile character in a long black coat and round sunglasses holding out a red pill and a blue pill" draggable="false" loading="lazy" style="display:block; width:100%; height:100%; object-fit:cover; object-position:72% center; filter:sepia(0.12) saturate(0.96); user-select:none; -webkit-user-drag:none">
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false, mobile: window.innerWidth < 860 };
+  syncBars() {
+    const o = this.state.menuOpen;
+    if (this.bar1) this.bar1.style.transform = o ? 'translateY(3.25px) rotate(45deg)' : '';
+    if (this.bar2) this.bar2.style.transform = o ? 'translateY(-3.25px) rotate(-45deg)' : '';
+  }
+  componentDidMount() {
+    this.onBp = () => { const m = window.innerWidth < 860; if (m !== this.state.mobile) this.setState(m ? { mobile: m } : { mobile: m, menuOpen: false }, () => this.syncBars()); };
+    window.addEventListener('resize', this.onBp);
+    this.onBp(); requestAnimationFrame(() => this.onBp()); setTimeout(() => this.onBp(), 250);
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.navCopy = [['w-hero', 'It’s time'], ['w-who', 'It’s probably for you'], ['w-how', 'That’s how it works'], ['w-talk', 'Let’s figure it out']];
+    this.onNavScroll = () => {
+      if (!this.navLabel) return;
+      this.navLabel.style.display = window.innerWidth < 760 ? 'none' : '';
+      const nav = this.navLabel.closest('nav');
+      const probe = window.innerHeight * 0.45;
+      let active = this.navCopy[0];
+      this.navCopy.forEach((e) => { const el = document.getElementById(e[0]); if (el && el.getBoundingClientRect().top <= probe) active = e; });
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) active = this.navCopy[this.navCopy.length - 1];
+      if (active[0] === this.navActive) return;
+      const first = this.navActive === undefined;
+      this.navActive = active[0];
+      if (first && this.navLabel.textContent.trim() === active[1]) return;
+      this.swapNavLabel(active[1]);
+    };
+    this.onParallax = () => {
+      const f = this.heroFrame, inner = this.heroInner;
+      if (!f || !inner || this.reduced) return;
+      const H = window.innerHeight, r = f.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > H + 200) return;
+      const p = Math.max(0, Math.min(1, (H - r.top) / (H + r.height)));
+      inner.style.transform = 'translate3d(0,' + ((0.5 - p) * r.height * 0.1).toFixed(2) + 'px,0)';
+    };
+    window.addEventListener('scroll', this.onNavScroll, { passive: true });
+    window.addEventListener('resize', this.onNavScroll);
+    window.addEventListener('scroll', this.onParallax, { passive: true });
+    window.addEventListener('resize', this.onParallax);
+    setTimeout(() => { this.onNavScroll(); this.onParallax(); this.setupWordReveals(); this.setupRevealUp(); }, 60);
+    if (this.fx) this.setupTrail();
+    this.setupCarousel();
+  }
+  setupCarousel() {
+    const vp = this.carouselVp, track = this.carouselTrack;
+    if (!vp || !track) return;
+    const cards = [...track.children];
+    const st = { pos: 0, anim: null, pauseUntil: 0, hover: false, drag: null, last: performance.now() };
+    this.car = st;
+    const measure = () => {
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      st.step = cards[0].offsetWidth + gap;
+      st.total = st.step * cards.length;
+    };
+    const place = () => {
+      cards.forEach((c, i) => {
+        const base = i * st.step;
+        let x = ((base - st.pos) % st.total + st.total) % st.total;
+        if (x > st.total - st.step) x -= st.total;
+        c.style.transform = 'translate3d(' + (x - base).toFixed(2) + 'px,0,0)';
+      });
+    };
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    const tick = (now) => {
+      const dt = Math.min(64, now - st.last); st.last = now;
+      if (st.anim) {
+        const t = Math.min(1, (now - st.anim.t0) / st.anim.dur);
+        st.pos = st.anim.from + (st.anim.to - st.anim.from) * ease(t);
+        if (t >= 1) st.anim = null;
+      } else if (!this.reduced && !st.drag && !st.hover && now > st.pauseUntil) {
+        st.pos -= dt * 0.024;
+      }
+      place();
+      st.raf = requestAnimationFrame(tick);
+    };
+    st.go = (dir) => {
+      const from = st.pos;
+      const to = (Math.round(from / st.step) + dir) * st.step;
+      st.anim = { from, to, t0: performance.now(), dur: this.reduced ? 1 : 750 };
+      st.pauseUntil = performance.now() + 4500;
+    };
+    const down = (e) => { if (e.button > 0) return; st.anim = null; st.drag = { x: e.clientX, pos: st.pos, id: e.pointerId, moved: false }; vp.style.cursor = 'grabbing'; };
+    const move = (e) => { if (!st.drag || e.pointerId !== st.drag.id) return; const dx = e.clientX - st.drag.x; if (Math.abs(dx) > 4 && !st.drag.moved) { st.drag.moved = true; try { vp.setPointerCapture(e.pointerId); } catch (_) {} } st.pos = st.drag.pos - dx; };
+    const up = (e) => { if (!st.drag || e.pointerId !== st.drag.id) return; st.drag = null; vp.style.cursor = 'grab'; st.pauseUntil = performance.now() + 3000; };
+    const enter = (e) => { if (e.pointerType === 'mouse') st.hover = true; };
+    const leave = () => { st.hover = false; };
+    vp.addEventListener('pointerdown', down); vp.addEventListener('pointermove', move);
+    vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
+    vp.addEventListener('pointerenter', enter); vp.addEventListener('pointerleave', leave);
+    const onResize = () => { const k = st.step ? st.pos / st.step : 0; measure(); st.pos = k * st.step; };
+    window.addEventListener('resize', onResize);
+    measure(); place();
+    st.raf = requestAnimationFrame(tick);
+    st.cleanup = () => { cancelAnimationFrame(st.raf); window.removeEventListener('resize', onResize); };
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onBp);
+    if (this.car && this.car.cleanup) this.car.cleanup();
+    window.removeEventListener('scroll', this.onNavScroll); window.removeEventListener('resize', this.onNavScroll);
+    window.removeEventListener('scroll', this.onParallax); window.removeEventListener('resize', this.onParallax);
+    if (this.revealIO) this.revealIO.disconnect();
+    if (this.upIO) this.upIO.disconnect();
+    clearTimeout(this.navSwapT);
+    cancelAnimationFrame(this.raf);
+    if (this.onTrailMove) window.removeEventListener('pointermove', this.onTrailMove);
+    if (this.onTrailLeave) window.removeEventListener('pointerleave', this.onTrailLeave);
+    if (this.onTrailResize) window.removeEventListener('resize', this.onTrailResize);
+    if (this.trail) this.trail.destroy();
+  }
+  get fx() {
+    if (this._fx === undefined) {
+      this._fx = !(window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }
+    return this._fx;
+  }
+  async setupTrail() {
+    const { DotImageLens } = await import('./dot-image-lens.js');
+    if (!this.trailCanvas) return;
+    const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
+    this.trail = new DotImageLens(this.trailCanvas, null, { showIdleLens: false, gridDensity: 140, splatRadiusPx: 40, lensRadiusPx: 40 });
+    this.onTrailResize = () => this.trail.resize(window.innerWidth, window.innerHeight, DPR());
+    this.onTrailResize();
+    this.onTrailMove = (e) => {
+      this.trail.setCursor(e.clientX, e.clientY, true);
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      this.trail.setSuppressed(!!(el && el.closest('[data-dot-trail-suppress]')));
+    };
+    this.onTrailLeave = () => this.trail.setCursor(0, 0, false);
+    window.addEventListener('pointermove', this.onTrailMove);
+    window.addEventListener('pointerleave', this.onTrailLeave);
+    window.addEventListener('resize', this.onTrailResize);
+    let last = performance.now();
+    const tick = () => {
+      const now = performance.now();
+      this.trail.tick(Math.min((now - last) / 1000, 1 / 15));
+      last = now;
+      this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+  }
+  swapNavLabel(text) {
+    const el = this.navLabel;
+    if (!el) return;
+    const BELOW = 'inset(-10% -10% 120% -10%)', ABOVE = 'inset(120% -10% -10% -10%)', SHOWN = 'inset(-10%)';
+    const EASE = 'cubic-bezier(0.16,1,0.3,1)';
+    clearTimeout(this.navSwapT);
+    if (this.reduced) { el.textContent = text; return; }
+    el.style.transition = 'transform 420ms ' + EASE + ', clip-path 420ms ' + EASE;
+    el.style.clipPath = ABOVE; el.style.transform = 'translateY(-100%)';
+    this.navSwapT = setTimeout(() => {
+      if (!this.navLabel) return;
+      el.style.transition = 'none';
+      el.textContent = text;
+      el.style.clipPath = BELOW; el.style.transform = 'translateY(100%)';
+      void el.offsetWidth;
+      el.style.transition = 'transform 460ms ' + EASE + ', clip-path 460ms ' + EASE;
+      el.style.clipPath = SHOWN; el.style.transform = 'translateY(0)';
+    }, 360);
+  }
+  setupWordReveals() {
+    const HIDDEN = 'inset(-10% -10% 120% -10%)', SHOWN = 'inset(-10%)';
+    this.revealIO = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        const g = e.target.__wrGroup;
+        if (!g || g.played || !e.isIntersecting) return;
+        g.played = true; g.play(); this.revealIO.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
+    document.querySelectorAll('[data-reveal-words]').forEach((root) => {
+      if (root.__wrGroup) return;
+      const words = [];
+      const split = (node) => {
+        Array.from(node.childNodes).forEach((child) => {
+          if (child.nodeType === 3) {
+            const parts = child.textContent.split(/(\s+)/);
+            if (!parts.some((p) => p.trim())) return;
+            const frag = document.createDocumentFragment();
+            parts.forEach((part) => {
+              if (!part) return;
+              if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
+              const w = document.createElement('span'); w.textContent = part; words.push(w); frag.appendChild(w);
+            });
+            node.replaceChild(frag, child);
+          } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+            if (!child.querySelector('*') && child.textContent.trim() && !child.textContent.trim().includes(' ')) words.push(child);
+            else split(child);
+          }
+        });
+      };
+      split(root);
+      if (!words.length) return;
+      if (/flex|grid/.test(getComputedStyle(root).display)) {
+        words.forEach((w, i) => {
+          const next = w.nextSibling;
+          if (i < words.length - 1 && next && next.nodeType === 3 && !next.textContent.trim()) {
+            w.appendChild(document.createTextNode('\u00A0'));
+            next.remove();
+          }
+        });
+      }
+      words.forEach((w) => {
+        w.style.display = 'inline-block';
+        if (this.reduced) return;
+        w.style.willChange = 'transform, clip-path';
+        w.style.clipPath = HIDDEN; w.style.transform = 'translateY(100%)';
+      });
+      if (this.reduced) return;
+      const step = Math.max(16, Math.min(50, Math.round(620 / words.length)));
+      root.__wrGroup = {
+        played: false,
+        play: () => words.forEach((w, i) => {
+          const d = i * step;
+          w.style.transition = 'transform 660ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms, clip-path 660ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms';
+          w.style.clipPath = SHOWN; w.style.transform = 'translateY(0)';
+        })
+      };
+      const r = root.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.88 && r.bottom > 0) { root.__wrGroup.played = true; root.__wrGroup.play(); }
+      else this.revealIO.observe(root);
+    });
+  }
+  setupRevealUp() {
+    if (this.reduced) return;
+    const els = Array.from(document.querySelectorAll('[data-reveal-up]'));
+    els.forEach((el) => { el.style.opacity = '0'; el.style.transform = 'translateY(28px)'; });
+    this.upIO = new IntersectionObserver((entries) => {
+      const shown = entries.filter((e) => e.isIntersecting);
+      shown.forEach((e, i) => {
+        const el = e.target, d = i * 110;
+        el.style.transition = 'opacity 700ms cubic-bezier(0.22,0.61,0.36,1) ' + d + 'ms, transform 900ms cubic-bezier(0.16,1,0.3,1) ' + d + 'ms';
+        el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+        this.upIO.unobserve(el);
+        setTimeout(() => { el.style.transition = ''; el.style.transform = ''; }, 1000 + d);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+    els.forEach((el) => this.upIO.observe(el));
+  }
+  startTalkVideo() {
+    const v = this.talkVideo;
+    if (!v) return;
+    this.showPlayBtn(false);
+    v.volume = 1;
+    v.muted = false;
+    const guard = () => {
+      const t0 = v.currentTime;
+      setTimeout(() => {
+        if (v.paused || v.currentTime > t0 + 0.03) return;
+        v.muted = true; v.controls = true; v.play();
+      }, 900);
+    };
+    const pr = v.play();
+    if (pr && pr.then) pr.then(guard).catch(() => this.showPlayBtn(true));
+    else guard();
+  }
+  showPlayBtn(visible) {
+    if (!this.playBtn) return;
+    this.playBtn.style.opacity = visible ? '1' : '0';
+    this.playBtn.style.pointerEvents = visible ? 'auto' : 'none';
+  }
+  renderVals() {
+    return {
+      heroFx: this.fx,
+      showLangChip: !this.state.mobile,
+      showLangInline: this.state.mobile,
+      menuOpen: this.state.menuOpen,
+      showMenu: this.state.menuOpen && this.state.mobile,
+      menuLabel: this.state.menuOpen ? 'Close menu' : 'Open menu',
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen }), () => this.syncBars()),
+      closeMenu: () => this.setState({ menuOpen: false }, () => this.syncBars()),
+      bar1Ref: (el) => { this.bar1 = el; this.syncBars(); },
+      bar2Ref: (el) => { this.bar2 = el; this.syncBars(); },
+      trailCanvasRef: (el) => { this.trailCanvas = el; },
+      navLabelRef: (el) => { this.navLabel = el; },
+      carouselRef: (el) => { this.carouselVp = el; },
+      trackRef: (el) => { this.carouselTrack = el; },
+      carouselPrev: () => { if (this.car) this.car.go(-1); },
+      carouselNext: () => { if (this.car) this.car.go(1); },
+      heroFrameRef: (el) => { this.heroFrame = el; },
+      heroInnerRef: (el) => { this.heroInner = el; },
+      talkVideoRef: (el) => {
+        this.talkVideo = el;
+        if (el && !el.dataset.wired) {
+          el.dataset.wired = '1';
+          const sync = () => this.showPlayBtn(el.paused);
+          el.addEventListener('play', sync);
+          el.addEventListener('pause', sync);
+          el.addEventListener('ended', () => { el.currentTime = 0; sync(); });
+        }
+      },
+      playBtnRef: (el) => { this.playBtn = el; },
+      onTalkPlay: () => this.startTalkVideo(),
+      onTalkVideoClick: () => { const v = this.talkVideo; if (!v) return; if (v.paused) this.startTalkVideo(); else v.pause(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

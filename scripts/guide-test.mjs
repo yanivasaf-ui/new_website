@@ -121,6 +121,31 @@ let last;
 for (let i = 0; i < 7; i++) last = await call(on, 'POST', '/api/guide', { session_id: sid(1), consent: true }, '9.9.9.9');
 ok('guide: rate limited after 5 per hour per IP', last.status === 429);
 
+// 11. the guide form on the small business page: POST /api/guide/signup
+const sign = (body, env = on, ip = '5.5.5.5') => call(env, 'POST', '/api/guide/signup', { consentAt: new Date().toISOString(), lang: 'he', source: 'before_about', website: '', ...body }, ip);
+const mailsBefore = emails.length;
+r = await sign({ email: 'new@example.com' }, base, '5.5.5.1');
+ok('signup: off when the guide is off', r.status === 404);
+r = await sign({ email: 'bot@example.com', website: 'http://spam' }, on, '5.5.5.2');
+ok('signup: a filled honeypot gets ok, nothing is sent or stored', r.json?.ok === true && emails.length === mailsBefore && !(await dump()).some((p) => p.email === 'bot@example.com'));
+r = await sign({ email: 'not-an-email' }, on, '5.5.5.3');
+ok('signup: an invalid email is refused', r.status === 400 && r.json?.error === 'invalid_email');
+r = await sign({ email: 'late@example.com', consentAt: '2020-01-01T00:00:00Z' }, on, '5.5.5.4');
+ok('signup: a missing or stale consent time is refused', r.status === 400 && r.json?.error === 'consent_required' && emails.length === mailsBefore);
+r = await sign({ email: 'new@example.com' }, on, '5.5.5.5');
+const signMail = emails.slice(mailsBefore);
+ok('signup: ok, one email to the address', r.json?.ok === true && signMail.length === 1 && signMail[0].to?.[0] === 'new@example.com', JSON.stringify(r.json));
+ok('signup: the email greets without a name and carries the unsubscribe link', (signMail[0]?.text || '').startsWith('שלום,') && /unsubscribe\?t=/.test(signMail[0]?.text || ''));
+const row = (await dump()).find((p) => p.email === 'new@example.com');
+ok('signup: a lead row with status guide-signup, consent and the sent date', row?.status === 'guide-signup' && row?.guide_consent === true && Boolean(row?.guide_sent_at), JSON.stringify(row));
+r = await sign({ email: 'new@example.com' }, on, '5.5.5.5');
+ok('signup: the same address again does not get a second email', r.json?.ok === true && emails.length === mailsBefore + 1);
+r = await sign({ email: 'visitor@example.com' }, on, '5.5.5.6');
+ok('signup: an address that already got the guide through the quiz does not get a second email', r.json?.ok === true && emails.length === mailsBefore + 1);
+const tok = (signMail[0]?.text || '').match(/unsubscribe\?t=([^\s]+)/)?.[1];
+r = await call(on, 'GET', `/api/guide/unsubscribe?t=${tok}`);
+ok('signup: its unsubscribe link works', r.status === 200 && r.text.includes('הוסרתם מהרשימה') && (await dump()).find((p) => p.email === 'new@example.com')?.guide_unsubscribed_at !== undefined);
+
 console.log(`\n${n - bad}/${n} passed`);
 notionProc.kill();
 resend.close();

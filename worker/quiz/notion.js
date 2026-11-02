@@ -116,6 +116,16 @@ export async function findLeadBySession(env, sessionId) {
   return r.results?.[0] || null;
 }
 
+/** The newest lead row with this email address, or null. @param {import('../index.js').Env} env @param {string} email */
+export async function findLeadByEmail(env, email) {
+  if (!notionConfigured(env)) return null;
+  const r = await notion(env, `/databases/${env.NOTION_QUIZ_DB_ID}/query`, 'POST', {
+    filter: { property: 'email', email: { equals: email } },
+    page_size: 1,
+  });
+  return r.results?.[0] || null;
+}
+
 /** @param {import('../index.js').Env} env @param {string} pageId @param {Record<string, any>} properties */
 export async function updateLead(env, pageId, properties) {
   if (!notionConfigured(env)) return null;

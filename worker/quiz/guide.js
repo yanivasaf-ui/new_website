@@ -6,7 +6,7 @@
 //   GET  /api/guide/unsubscribe  ?t=<signed token> -> a small Hebrew page
 import { json, guard, limited, readJson, clientIp, logErr } from './handlers.js';
 import { rateLimit } from './ratelimit.js';
-import { findLeadBySession, updateLeadStrict, pageToLead, guideProps } from './notion.js';
+import { findLeadBySession, findLeadByEmail, upsertLead, updateLeadStrict, pageToLead, guideProps } from './notion.js';
 import { sendToVisitor, sendOwnerNote } from './email.js';
 
 /** All visitor-facing strings, from udi-guide-capture-copy-2026-11-02.md (Gatekeeper-approved for Asaf's choice). */
@@ -133,6 +133,60 @@ export async function handleGuide(request, env, ctx) {
     ctx.waitUntil(updateLeadStrict(env, page.id, guideProps({ consent: true, sentAt: new Date().toISOString() })).catch(logErr('notion guide sent record')));
   }
   return json({ ok: true, url });
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]{1,200}\.[^\s@]{2,}$/;
+
+/**
+ * POST /api/guide/signup  { email, consentAt, lang, source, website }
+ * The guide form on the small business page: the visitor leaves an email and ticks the consent box. Creates (or
+ * finds) the lead row, sends the one guide email, records the sent date. A filled honeypot gets a silent "ok".
+ * @param {Request} request @param {import('../index.js').Env} env @param {import('../index.js').Ctx} ctx
+ */
+export async function handleGuideSignup(request, env, ctx) {
+  const blocked = guard(request);
+  if (blocked) return blocked;
+  if (!guideOn(env)) return json({ ok: false, error: 'guide_off' }, 404);
+  const body = await readJson(request);
+  if (!body || typeof body !== 'object') return json({ ok: false, error: 'invalid_json' }, 400);
+  if (body.website) return json({ ok: true }); // honeypot: nothing stored or sent
+  const email = String(body.email ?? '').trim().slice(0, 254);
+  if (!EMAIL_RE.test(email)) return json({ ok: false, error: 'invalid_email', field: 'email' }, 400);
+  const consentAt = new Date(String(body.consentAt ?? ''));
+  if (Number.isNaN(consentAt.getTime()) || Math.abs(Date.now() - consentAt.getTime()) > 36e5) return json({ ok: false, error: 'consent_required' }, 400);
+  const rl = await rateLimit(env, 'guide', clientIp(request));
+  if (!rl.allowed) return limited(rl);
+
+  // reuse a lead that already has this address (for example from the quiz); otherwise make a new row
+  let page = await findLeadByEmail(env, email).catch(logErr('notion email lookup'));
+  let sid = page ? pageToLead(page).session_id : '';
+  if (!UUID_RE.test(sid)) sid = crypto.randomUUID();
+  let pageId = page?.id;
+  if (!page) {
+    const src = String(body.source ?? '').slice(0, 60);
+    const created = await upsertLead(env, sid, {
+      name: { title: [{ text: { content: email } }] },
+      session_id: { rich_text: [{ text: { content: sid } }] },
+      email: { email },
+      status: { select: { name: 'guide-signup' } },
+      utm_source: { rich_text: [{ text: { content: src ? `guide:${src}` : 'guide' } }] },
+      guide_consent: { checkbox: true },
+    }).catch(logErr('notion guide signup'));
+    pageId = created?.id;
+  }
+  if (page && pageToLead(page).guide_sent_at) return json({ ok: true }); // already got it: no second email
+
+  const origin = new URL(request.url).origin;
+  const unsubUrl = `${origin}/api/guide/unsubscribe?t=${encodeURIComponent(await unsubToken(env, sid))}`;
+  try {
+    if (!(await sendGuideEmail(env, email, '', unsubUrl))) return json({ ok: false, error: 'email_not_configured' }, 502);
+  } catch (e) {
+    console.error('[quiz] guide signup email failed:', /** @type {any} */ (e)?.message || e);
+    return json({ ok: false, error: 'send_failed' }, 502);
+  }
+  sentMemory.set(sid, Date.now());
+  if (pageId) ctx.waitUntil(updateLeadStrict(env, pageId, guideProps({ consent: true, sentAt: new Date().toISOString() })).catch(logErr('notion guide sent record')));
+  return json({ ok: true });
 }
 
 /** @param {string} line @param {number} status */
