@@ -25,7 +25,13 @@ const flat = (p) => ({
   booking_clicked: p.properties.booking_clicked?.checkbox,
   analysis_source: p.properties.analysis_source?.select?.name,
   has_analysis: Boolean(p.properties.analysis?.rich_text?.length),
+  guide_consent: p.properties.guide_consent?.checkbox,
+  guide_sent_at: p.properties.guide_sent_at?.date?.start,
+  guide_unsubscribed_at: p.properties.guide_unsubscribed_at?.date?.start,
 });
+
+// GET /_reject?on=1 makes the fake refuse writes that carry guide_* properties, like Notion does when they do not exist yet.
+let rejectGuide = false;
 
 http
   .createServer((req, res) => {
@@ -35,6 +41,8 @@ http
       const send = (obj, code = 200) => (res.writeHead(code, { 'content-type': 'application/json' }), res.end(JSON.stringify(obj)));
       const data = body ? JSON.parse(body) : {};
       if (req.url === '/_dump') return send(pages.map(flat));
+      if (req.url.startsWith('/_reject')) return send({ reject: (rejectGuide = req.url.includes('on=1')) });
+      if (rejectGuide && data.properties && Object.keys(data.properties).some((k) => k.startsWith('guide_'))) return send({ message: 'guide property is not a property that exists' }, 400);
       if (req.method === 'POST' && /\/databases\/[^/]+\/query$/.test(req.url)) {
         const want = data.filter?.rich_text?.equals;
         const hit = pages.filter((p) => p.properties.session_id?.rich_text?.[0]?.text?.content === want);

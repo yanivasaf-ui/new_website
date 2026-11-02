@@ -2,6 +2,7 @@
 // Quiz page. Vanilla JS, no dependencies. All text is set with textContent (never innerHTML).
 import { question, LIMITS } from './questions.js';
 import { normalizeIlMobile } from './phone.js';
+import { suggestEmailFix } from './email-hint.js';
 
 const CAL_URL = 'https://cal.com/asaf-yaniv-hlwofj/20min';
 const SITE_URL = 'https://ensemble-ai.io/he/';
@@ -18,6 +19,33 @@ const MSG = {
   emailMissing: 'צריך להכניס כתובת מייל',
   emailInvalid: 'כתובת המייל לא נראית תקינה',
 };
+/** The guide step. Hebrew copy from udi-guide-capture-copy-2026-11-02.md (ids in the comments). Shown only when the Worker says the guide is on. */
+const GUIDE_TXT = {
+  title: 'המדריך: איך בונים את הסוכן הראשון שלכם', // G1a
+  line: 'שישה שלבים ודף אחד למילוי. נשלח אליכם למייל.', // G1b
+  send: 'לשלוח לי את המדריך', // G1c
+  consent: 'מאשרים שאפשר לשלוח לכם את המדריך ומדי פעם מיילים. אפשר להסיר בכל רגע.', // G2, G8b
+  privacy: 'הפרטים משמשים כדי לחזור אליכם בנוגע לניתוח. אם סימנתם, גם כדי לשלוח את המדריך ומיילים.', // G3
+  sent: 'שלחתי למייל שהשארתם קישור למדריך. אם הוא לא הגיע, אפשר להוריד אותו מכאן.', // G4a
+  download: 'להורדת המדריך', // G4b
+  error: 'משהו נתקע בשליחה. אפשר לנסות שוב, או להוריד את המדריך מכאן.', // G5
+  needConsent: 'כדי לשלוח את המדריך צריך את האישור שלכם.', // G8a
+};
+
+/** Set by GET /api/guide/config. The guide is off until it says otherwise, so nothing changes if the Worker has no GUIDE_URL. */
+let guideCfg = /** @type {{ on: boolean } | null} */ (null);
+/** The guide link comes only from POST /api/guide (after the visitor's email and consent), never from the config. */
+const guideUi = { busy: false, error: false, url: '' };
+fetch('/api/guide/config', { cache: 'no-store' })
+  .then((r) => (r.ok ? r.json() : null))
+  .then((j) => {
+    if (j?.on === true) {
+      guideCfg = { on: true };
+      if (S.step === 7 || S.step === 'result') refresh();
+    }
+  })
+  .catch(() => {});
+
 /** answer field -> question step, for recovering from a server-side "invalid option" */
 const FIELD_STEP = { industry: 1, size: 2, channels: 3, acquisition: 4, sink: 5, hours: 5 };
 
@@ -65,14 +93,16 @@ function uuid() {
  * @property {string} sid
  * @property {number|'result'} step  0 hero, 1-6 questions, 7 contact, 'result'
  * @property {Record<string, any>} a answers
- * @property {{ name: string, whatsapp: string, email: string, consent: boolean }} c
+ * @property {{ name: string, whatsapp: string, email: string, consent: boolean, guide_consent: boolean }} c guide_consent: the separate box for the guide and emails
  * @property {{ source: string, medium: string, campaign: string }} utm
  * @property {any} result
+ * @property {boolean} [guide_sent] the guide email was sent for this session (persisted, so the button is not offered again)
+ * @property {string} [guide_url] the download link the Worker returned after the email was sent (persisted with the state)
  * @property {boolean} [lead] Meta Pixel Lead already fired for this quiz session (persisted, so reload/back/resubmit never re-fire)
  */
 
 /** @returns {State} */
-const blank = () => ({ sid: uuid(), step: 0, a: {}, c: { name: '', whatsapp: '', email: '', consent: false }, utm: { source: '', medium: '', campaign: '' }, result: null });
+const blank = () => ({ sid: uuid(), step: 0, a: {}, c: { name: '', whatsapp: '', email: '', consent: false, guide_consent: false }, utm: { source: '', medium: '', campaign: '' }, result: null });
 
 function load() {
   const fresh = blank();
@@ -438,6 +468,66 @@ function painScreen() {
   return [header(6), h('main', { class: 'screen' }, headline(q.text), area, counter), h('div', { class: 'dock' }, cont, skip)];
 }
 
+/** The separate, unchecked box for the guide and occasional emails (contact step and, when it was not ticked, the guide box on the result page). */
+function guideConsentLabel() {
+  return h(
+    'label',
+    { class: 'consent' },
+    h('input', {
+      type: 'checkbox',
+      name: 'guide_consent',
+      checked: S.c.guide_consent,
+      onchange: (/** @type {Event} */ e) => {
+        S.c.guide_consent = /** @type {HTMLInputElement} */ (e.target).checked;
+        save();
+        if (S.step === 'result') refresh();
+      },
+    }),
+    GUIDE_TXT.consent,
+  );
+}
+
+/** The guide box on the result page: lighter than the booking button, and only when the Worker has the guide on. */
+function guideBox() {
+  if (!guideCfg?.on) return null;
+  const link = (/** @type {string} */ url) => (url ? h('a', { class: 'btn btn--ghost btn--block', href: url, target: '_blank', rel: 'noopener' }, GUIDE_TXT.download) : null);
+  if (S.guide_sent) return h('section', { class: 'guide' }, h('p', {}, GUIDE_TXT.sent), link(S.guide_url || ''));
+  return h(
+    'section',
+    { class: 'guide' },
+    h('p', { class: 'guide__title' }, GUIDE_TXT.title),
+    h('p', {}, GUIDE_TXT.line),
+    S.c.guide_consent ? null : h('p', {}, GUIDE_TXT.needConsent),
+    S.c.guide_consent ? null : guideConsentLabel(),
+    guideUi.error ? h('p', { class: 'guide__error' }, GUIDE_TXT.error) : null,
+    guideUi.error ? link(guideUi.url) : null,
+    h('button', { class: 'btn btn--ghost btn--block', type: 'button', disabled: !S.c.guide_consent || guideUi.busy, onclick: sendGuide }, GUIDE_TXT.send),
+  );
+}
+
+async function sendGuide() {
+  if (!S.c.guide_consent || guideUi.busy) return;
+  guideUi.busy = true;
+  guideUi.error = false;
+  refresh();
+  try {
+    const res = await post('/api/guide', { session_id: S.sid, consent: true });
+    const j = await res.json().catch(() => null);
+    guideUi.url = typeof j?.url === 'string' ? j.url : '';
+    if (res.ok && j?.ok) {
+      S.guide_sent = true;
+      S.guide_url = guideUi.url;
+      save();
+    } else {
+      guideUi.error = true;
+    }
+  } catch {
+    guideUi.error = true;
+  }
+  guideUi.busy = false;
+  refresh();
+}
+
 /** Contact step. */
 function contactScreen() {
   /** @type {Record<string, HTMLElement>} */
@@ -474,6 +564,41 @@ function contactScreen() {
     document.getElementById(`f-${name}`)?.setAttribute('aria-invalid', 'true');
   };
 
+  // email field with a typo hint (gmil.com -> gmail.com). Only a hint: it never blocks the submit.
+  const emailField = field('email', 'מייל', { type: 'email', inputmode: 'email', autocomplete: 'email', dir: 'ltr', enterkeyhint: 'done', 'aria-required': 'true' });
+  const emailInput = /** @type {HTMLInputElement} */ (emailField.querySelector('input'));
+  const emailHint = h('div', { class: 'field__hint', hidden: true, 'aria-live': 'polite' });
+  emailField.append(emailHint);
+  const updateEmailHint = () => {
+    const fix = suggestEmailFix(S.c.email);
+    emailHint.hidden = !fix;
+    if (!fix || (emailHint.childNodes.length && emailHint.dataset.fix === fix)) return; // same suggestion: keep the button, a re-render on blur would swallow the click
+    emailHint.dataset.fix = fix;
+    emailHint.replaceChildren(
+      'התכוונתם ל-',
+      h('bdi', { dir: 'ltr' }, fix),
+      '? ',
+      h(
+        'button',
+        {
+          type: 'button',
+          class: 'field__hint-btn',
+          onclick: () => {
+            S.c.email = fix;
+            emailInput.value = fix;
+            save();
+            clearError('email');
+            updateEmailHint();
+          },
+        },
+        'כן, לתקן',
+      ),
+    );
+  };
+  emailInput.addEventListener('input', updateEmailHint);
+  emailInput.addEventListener('blur', updateEmailHint);
+  queueMicrotask(updateEmailHint);
+
   const form = h(
     'form',
     {
@@ -498,7 +623,7 @@ function contactScreen() {
     },
     field('name', 'שם', { autocomplete: 'name', enterkeyhint: 'next', 'aria-required': 'true' }),
     field('whatsapp', 'מספר וואטסאפ', { type: 'tel', inputmode: 'tel', autocomplete: 'tel', dir: 'ltr', placeholder: '050-1234567', enterkeyhint: 'next' }, 'לא חובה'),
-    field('email', 'מייל', { type: 'email', inputmode: 'email', autocomplete: 'email', dir: 'ltr', enterkeyhint: 'done', 'aria-required': 'true' }),
+    emailField,
     h('div', { class: 'hp', 'aria-hidden': 'true' }, h('label', {}, 'Website ', h('input', { name: 'website', tabindex: '-1', autocomplete: 'off' }))),
     h(
       'label',
@@ -507,6 +632,7 @@ function contactScreen() {
       'מאשרים שאפשר לחזור אליכם בנוגע לניתוח. ',
       h('a', { href: '/privacy/', target: '_blank', rel: 'noopener', onclick: (/** @type {Event} */ e) => e.stopPropagation() }, 'מדיניות פרטיות'),
     ),
+    guideCfg?.on ? guideConsentLabel() : null,
   );
   // a server-side rejection (rare) is shown on the field it names
   if (pendingFieldError) {
@@ -517,7 +643,7 @@ function contactScreen() {
   return [
     header(7),
     h('main', { class: 'screen' }, headline('מעולה. לאן לשלוח את הניתוח?'), form),
-    h('div', { class: 'dock' }, h('button', { class: 'btn btn--block', type: 'submit', form: 'contact-form' }, 'לקבלת הניתוח'), h('p', { class: 'privacy' }, 'הפרטים משמשים רק כדי לחזור אליכם בנוגע לניתוח.')),
+    h('div', { class: 'dock' }, h('button', { class: 'btn btn--block', type: 'submit', form: 'contact-form' }, 'לקבלת הניתוח'), h('p', { class: 'privacy' }, guideCfg?.on ? GUIDE_TXT.privacy : 'הפרטים משמשים רק כדי לחזור אליכם בנוגע לניתוח.')),
   ];
 }
 
@@ -569,6 +695,7 @@ function resultScreen(r) {
           h('dl', {}, h('dt', {}, 'זמן בנייה'), h('dd', {}, daysLabel(r.product.days)), h('dt', {}, 'בשבוע הראשון'), h('dd', {}, r.product.week1)),
         ),
       ),
+      guideBox(),
       h('p', { class: 'foot' }, 'הניתוח נוצר אוטומטית מהתשובות שלכם, ולכן הוא עדיין לא יודע באילו כלים אתם עובדים ואיך התהליך נראה בפועל. את זה בודקים יחד בשיחה.'),
       h('footer', { class: 'foot' }, 'Ensemble AI · בונים AI לתוך הדרך שבה העסק כבר עובד.', h('br'), h('a', { href: SITE_URL }, 'ensemble-ai.io')),
     ),

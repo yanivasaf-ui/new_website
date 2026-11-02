@@ -21,7 +21,7 @@ export function safeTemplate(a, shortlist) {
   for (const answers of [a, { ...a, pain: '', industry_other: '' }]) {
     try {
       const result = templateResult(answers, shortlist);
-      if (checkResult(result, shortlist).ok) return result;
+      if (checkResult(result, shortlist, answers).ok) return result;
     } catch (e) {
       console.error('[quiz] template failed:', e?.message || e);
     }
@@ -110,7 +110,7 @@ export async function analyze(env, sub) {
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
       const out = await callModel(env, userMessage(a, shortlist, previous), shortlist, perAttempt);
-      const check = checkResult(out, shortlist);
+      const check = checkResult(out, shortlist, a, { modelOutput: true });
       if (check.ok) {
         const { reason, ...result } = out;
         // the build time is Ensemble's commitment, never the model's

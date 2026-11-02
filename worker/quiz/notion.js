@@ -33,10 +33,45 @@ const text = (s) => ({
 const select = (s) => ({ select: s ? { name: s } : null });
 
 /**
+ * The three guide properties are created by hand in Notion. Until they exist, a write that carries them
+ * would be rejected, so such a write is retried once without them and lead saving never breaks.
+ */
+const GUIDE_KEYS = ['guide_consent', 'guide_sent_at', 'guide_unsubscribed_at'];
+/** @param {Record<string, any>} p */
+const hasGuide = (p) => GUIDE_KEYS.some((k) => k in p);
+/** @param {Record<string, any>} p */
+const withoutGuide = (p) => Object.fromEntries(Object.entries(p).filter(([k]) => !GUIDE_KEYS.includes(k)));
+/**
+ * @template T
+ * @param {Record<string, any>} properties @param {(p: Record<string, any>) => Promise<T>} write
+ * @returns {Promise<T>}
+ */
+async function guardGuide(properties, write) {
+  try {
+    return await write(properties);
+  } catch (e) {
+    if (!hasGuide(properties)) throw e;
+    console.warn('[quiz] notion write with guide properties failed, retrying without them (are the three properties created?):', /** @type {any} */ (e)?.message || e);
+    return write(withoutGuide(properties));
+  }
+}
+
+/** Guide properties for an update. Only used when GUIDE_NOTION_PROPS=1.
+ * @param {{ consent?: boolean, sentAt?: string, unsubscribedAt?: string }} g */
+export function guideProps(g) {
+  /** @type {Record<string, any>} */
+  const p = {};
+  if (g.consent != null) p.guide_consent = { checkbox: g.consent };
+  if (g.sentAt) p.guide_sent_at = { date: { start: g.sentAt } };
+  if (g.unsubscribedAt) p.guide_unsubscribed_at = { date: { start: g.unsubscribedAt } };
+  return p;
+}
+
+/**
  * Builds Notion properties from a submission. Option ids (not Hebrew labels) are stored
  * in selects because Notion option names cannot contain commas.
  * @param {import('./validate.js').Submission} sub
- * @param {{ status?: string, recommended_solution?: string, analysis?: string, analysis_source?: string, booking_clicked?: boolean }} extra
+ * @param {{ status?: string, recommended_solution?: string, analysis?: string, analysis_source?: string, booking_clicked?: boolean, guideProps?: boolean }} extra guideProps: also store guide_consent (only when the property exists)
  */
 export function leadProps(sub, extra = {}) {
   const a = sub.answers;
@@ -61,6 +96,7 @@ export function leadProps(sub, extra = {}) {
     p.whatsapp = { phone_number: sub.contact.whatsapp_e164 || null };
     p.email = { email: sub.contact.email };
     p.consent = { checkbox: sub.contact.consent };
+    if (extra.guideProps) p.guide_consent = { checkbox: sub.contact.guide_consent };
   }
   if (extra.status) p.status = select(extra.status);
   if (extra.recommended_solution) p.recommended_solution = select(extra.recommended_solution);
@@ -83,6 +119,16 @@ export async function findLeadBySession(env, sessionId) {
 /** @param {import('../index.js').Env} env @param {string} pageId @param {Record<string, any>} properties */
 export async function updateLead(env, pageId, properties) {
   if (!notionConfigured(env)) return null;
+  return guardGuide(properties, (p) => notion(env, `/pages/${pageId}`, 'PATCH', { properties: p }));
+}
+
+/**
+ * Like updateLead, but a rejected write is NOT retried without the guide properties: the caller must know the record
+ * was not stored (a consent or an unsubscribe record must never be dropped silently).
+ * @param {import('../index.js').Env} env @param {string} pageId @param {Record<string, any>} properties
+ */
+export async function updateLeadStrict(env, pageId, properties) {
+  if (!notionConfigured(env)) throw new Error('notion not configured');
   return notion(env, `/pages/${pageId}`, 'PATCH', { properties });
 }
 
@@ -126,7 +172,7 @@ export async function upsertLead(env, sessionId, properties) {
   /** @type {Record<string, any>} */
   const props = { ...properties, created: { date: { start: new Date().toISOString() } } };
   if (!props.name) props.name = { title: [{ text: { content: `anon-${sessionId.slice(0, 8)}` } }] };
-  const page = await notion(env, '/pages', 'POST', { parent: { database_id: env.NOTION_QUIZ_DB_ID }, properties: props });
+  const page = await guardGuide(props, (p) => notion(env, '/pages', 'POST', { parent: { database_id: env.NOTION_QUIZ_DB_ID }, properties: p }));
   return { id: page.id, status: incoming };
 }
 
@@ -136,12 +182,16 @@ export function pageToLead(page) {
   const plain = (prop) => (prop?.title || prop?.rich_text || []).map((t) => t.plain_text).join('');
   return {
     name: plain(p.name),
+    session_id: plain(p.session_id),
+    guide_consent: p.guide_consent?.checkbox === true,
     whatsapp: p.whatsapp?.phone_number || '',
     email: p.email?.email || '',
     industry: p.industry?.select?.name || '',
     size: p.size?.select?.name || '',
     sink: p.sink?.select?.name || '',
     recommended_solution: p.recommended_solution?.select?.name || '',
+    guide_sent_at: p.guide_sent_at?.date?.start || '',
+    guide_unsubscribed_at: p.guide_unsubscribed_at?.date?.start || '',
     url: page?.url || '',
   };
 }

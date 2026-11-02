@@ -27,12 +27,17 @@ async function send(env, subject, html, textBody) {
     console.warn('email not configured (RESEND_API_KEY / LEAD_EMAIL_FROM); skipped:', subject);
     return false;
   }
-  const res = await fetch('https://api.resend.com/emails', {
+  return resend(env, env.LEAD_EMAIL_TO || 'asaf@ensemble-ai.io', subject, html, textBody);
+}
+
+/** @param {import('../index.js').Env} env @param {string} to @param {string} subject @param {string} html @param {string} textBody */
+async function resend(env, to, subject, html, textBody) {
+  const res = await fetch(`${env.RESEND_BASE_URL || 'https://api.resend.com'}/emails`, {
     method: 'POST',
     headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
     body: JSON.stringify({
       from: env.LEAD_EMAIL_FROM,
-      to: [env.LEAD_EMAIL_TO || 'asaf@ensemble-ai.io'],
+      to: [to],
       subject,
       html: `<div dir="rtl">${html}</div>`,
       text: textBody,
@@ -41,6 +46,27 @@ async function send(env, subject, html, textBody) {
   });
   if (!res.ok) throw new Error(`resend ${res.status}: ${(await res.text()).slice(0, 300)}`);
   return true;
+}
+
+/**
+ * An email to the visitor (not to Asaf). Only the guide email uses it.
+ * @param {import('../index.js').Env} env @param {string} to @param {string} subject @param {string} html @param {string} textBody
+ */
+export async function sendToVisitor(env, to, subject, html, textBody) {
+  if (!emailConfigured(env)) {
+    console.warn('email not configured (RESEND_API_KEY / LEAD_EMAIL_FROM); visitor email skipped:', subject);
+    return false;
+  }
+  return resend(env, to, subject, html, textBody);
+}
+
+/**
+ * A short note to Asaf (for example: someone unsubscribed and the Notion property is not set up yet).
+ * @param {import('../index.js').Env} env @param {string} subject @param {[string, string][]} rows plain-text rows
+ */
+export async function sendOwnerNote(env, subject, rows) {
+  const safe = rows.map(([k, v]) => /** @type {[string, string]} */ ([k, esc(v)]));
+  return send(env, subject, table(safe), rows.map(([k, v]) => `${k}: ${v}`).join('\n'));
 }
 
 /**

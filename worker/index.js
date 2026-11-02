@@ -3,6 +3,7 @@
 // asset misses. /api/analyze* is handled here, everything else falls through to ASSETS
 // so the site behaves exactly as it did before the Worker existed.
 import { handleAnalyze, handleClick } from './quiz/handlers.js';
+import { handleGuide, handleGuideConfig, handleGuideUnsubscribe } from './quiz/guide.js';
 
 export { RateLimiter } from './quiz/ratelimit.js';
 
@@ -23,6 +24,10 @@ export { RateLimiter } from './quiz/ratelimit.js';
  * @property {string} [RESEND_API_KEY]
  * @property {string} [LEAD_EMAIL_FROM]
  * @property {string} [LEAD_EMAIL_TO]
+ * @property {string} [RESEND_BASE_URL] tests only (a fake Resend)
+ * @property {string} [GUIDE_URL] public link to the guide PDF. Unset = the whole guide feature is off
+ * @property {string} [GUIDE_UNSUB_SECRET] signs the unsubscribe links. Unset = the guide feature is off
+ * @property {string} [GUIDE_NOTION_PROPS] "1" once the Notion properties guide_consent, guide_sent_at and guide_unsubscribed_at exist
  */
 
 /** @typedef {{ waitUntil: (p: Promise<any>) => void }} Ctx */
@@ -33,6 +38,9 @@ export default {
     const { pathname } = new URL(request.url);
     if (pathname === '/api/analyze') return handleAnalyze(request, env, ctx);
     if (pathname === '/api/analyze/click') return handleClick(request, env, ctx);
+    if (pathname === '/api/guide') return handleGuide(request, env, ctx);
+    if (pathname === '/api/guide/config') return handleGuideConfig(request, env);
+    if (pathname === '/api/guide/unsubscribe') return handleGuideUnsubscribe(request, env, ctx);
     return env.ASSETS.fetch(request);
   },
 };

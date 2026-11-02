@@ -9,23 +9,23 @@ const MAX_BODY = 16_000;
 const ALLOWED_ORIGINS = [/^https:\/\/(www\.)?ensemble-ai\.io$/, /^https:\/\/[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev$/, /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/];
 
 /** @param {any} data @param {number} [status] @param {Record<string, string>} [headers] */
-const json = (data, status = 200, headers = {}) =>
+export const json = (data, status = 200, headers = {}) =>
   new Response(JSON.stringify(data), {
     status,
     headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex', ...headers },
   });
 
 /** @param {string} what */
-const logErr = (what) => (/** @type {any} */ e) => {
+export const logErr = (what) => (/** @type {any} */ e) => {
   console.error(`[quiz] ${what} failed:`, e?.message || e);
   return null;
 };
 
 /** @param {Request} request */
-const clientIp = (request) => request.headers.get('cf-connecting-ip') || 'local';
+export const clientIp = (request) => request.headers.get('cf-connecting-ip') || 'local';
 
 /** Method and origin checks. Returns a Response to short-circuit, or null. @param {Request} request */
-function guard(request) {
+export function guard(request) {
   if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405);
   const origin = request.headers.get('origin');
   if (origin && !ALLOWED_ORIGINS.some((re) => re.test(origin))) return json({ ok: false, error: 'forbidden_origin' }, 403);
@@ -33,10 +33,10 @@ function guard(request) {
 }
 
 /** @param {{ allowed: boolean, retryAfter: number }} r */
-const limited = (r) => json({ ok: false, error: 'rate_limited', retry_after: r.retryAfter }, 429, { 'retry-after': String(r.retryAfter) });
+export const limited = (r) => json({ ok: false, error: 'rate_limited', retry_after: r.retryAfter }, 429, { 'retry-after': String(r.retryAfter) });
 
 /** @param {Request} request */
-async function readJson(request) {
+export async function readJson(request) {
   if (Number(request.headers.get('content-length') || 0) > MAX_BODY) return null;
   const raw = await request.text();
   if (raw.length > MAX_BODY) return null;
@@ -78,15 +78,17 @@ export async function handleAnalyze(request, env, ctx) {
     return json({ ok: true });
   }
 
-  const lead = await upsertLead(env, sub.session_id, leadProps(sub, { status: 'complete' })).catch(logErr('notion create'));
+  // the guide consent is stored only once the Notion property exists (GUIDE_NOTION_PROPS=1)
+  const guideProps = env.GUIDE_NOTION_PROPS === '1';
+  const lead = await upsertLead(env, sub.session_id, leadProps(sub, { status: 'complete', guideProps })).catch(logErr('notion create'));
   const pageId = lead?.id;
   const analysis = await analyze(env, sub);
 
   const writeBack = async (/** @type {Record<string, any>} */ extra) => {
     // a lead that already clicked "book a call" keeps that status when it is re-submitted
     if (lead?.status === 'booked-click') extra = { ...extra, status: undefined };
-    if (pageId) await updateLead(env, pageId, leadProps(sub, extra)).catch(logErr('notion analysis update'));
-    else await upsertLead(env, sub.session_id, leadProps(sub, extra)).catch(logErr('notion late create'));
+    if (pageId) await updateLead(env, pageId, leadProps(sub, { ...extra, guideProps })).catch(logErr('notion analysis update'));
+    else await upsertLead(env, sub.session_id, leadProps(sub, { ...extra, guideProps })).catch(logErr('notion late create'));
   };
 
   if (!analysis.ok || !analysis.result) {

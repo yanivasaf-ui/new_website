@@ -43,7 +43,7 @@ for (const [i, answers] of PERSONAS.entries()) {
   const an = await analyze(env, { stage: 'complete', session_id: '00000000-0000-4000-8000-000000000000', answers, contact: null, utm: { source: '', medium: '', campaign: '' }, device: 'test' });
   if (!an.ok) { console.log(`━━━━━━━━ #${n} FAILED: ${an.errors.join(' | ')}\n`); continue; }
   const r = an.result;
-  const check = checkResult(r, an.shortlist);
+  const check = checkResult(r, an.shortlist, answers, { modelOutput: an.source === "llm" });
   console.log(`━━━━━━━━ #${n} ${optionLabel('industry', answers.industry)}${answers.industry_other ? ` (${answers.industry_other})` : ''} · ${optionLabel('size', answers.size)} · ${optionLabel('sink', answers.sink)} · ${optionLabel('hours', answers.hours)} ש׳`);
   console.log(`channels: ${answers.channels.map((c) => optionLabel('channels', c)).join(', ')} · acquisition: ${optionLabel('acquisition', answers.acquisition)}`);
   console.log(`pain: ${answers.pain || '—'}`);

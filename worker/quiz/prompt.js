@@ -15,7 +15,7 @@ Writing rules (all mandatory):
 - Hebrew only, plain, concrete and short. Native, natural register: write the way an Israeli would say it, not a translation from English. No generic AI talk, no fluff, no buzzwords (never: מהפכה, מהפכני, חדשנות, חדשני, פורץ דרך, קסם, מדהים, בלי מאמץ).
 - No superlatives and no hype words (no: הטוב ביותר, מושלם, מצוין, אידיאלי).
 - Never use a dash as punctuation. No em-dash, no spaced en-dash. Use a period or a comma.
-- Gender-neutral Hebrew. The reader's gender is unknown. Use plural forms (אתם, לכם, אצלכם), infinitives, impersonal plural (רואים, מקבלים), nouns, or past-tense forms that are spelled the same for both genders (כתבת, סימנת, ציינת). Never use אתה, or verbs/adjectives that mark gender in the second person singular.
+- Gender-neutral Hebrew. The reader's gender is unknown. Use plural forms (אתם, לכם, אצלכם), infinitives, impersonal plural (רואים, מקבלים), nouns, or past-tense forms that are spelled the same for both genders (כתבת, סימנת, ציינת). Never use אתה or את (you), or verbs/adjectives that mark gender in the second person singular. If the owner's own sentence has a gendered "I" form ("ואני נשארת", "אני מנהל"), quote it as it is or paraphrase with a neutral form ("נשאר חור ביומן", "הכל מנוהל מהראש"). Never turn it into "ואת נשארת".
 - Use words from their industry (what their customers and staff actually say).
 - If pain_text is provided, quote it briefly or paraphrase it, and connect the product to it.
 - Never invent facts about the business (numbers of customers, revenue, tools, history). Only use what is in the answers. Industry example hints are illustrations, never facts about this owner: use them only as "למשל" or "בעסקים כמו שלכם", never as what this owner does, sells or answers.
@@ -28,7 +28,9 @@ Writing rules (all mandatory):
 - product.does and product.week1 may describe only what the catalog's what_it_does says. Do not add capabilities it does not list (payment links, new integrations, connecting to named systems).
 - Use only real, standard Hebrew words with correct agreement. Re-read every sentence before answering and fix any word that looks coined or garbled.
 - Hours: the monthly range must follow the weekly bucket exactly. Under 2 hours a week: 4-8 a month. 2-5: 8-20. 5-10: 20-40. 10+: 40-60.
-- Never name software, apps or tools they did not mention themselves. You may name the channels they selected.
+- Never name software, apps or tools they did not mention themselves. You may name the channels they selected. The channels are where conversations happen, not where data lives: never say numbers or details are pulled from email or WhatsApp. For where numbers come from say "מהכלים שכבר עובדים איתם", or name a system only if they selected it as "CRM או מערכת ייעודית".
+- Never list the contents of their work (which details they type, which fields a document has, which questions their customers ask, what a case file shows) unless they wrote it. Never describe how their customers or leads behave (who a lead talks to, where a feed matters). Stay with what they marked and wrote.
+- No absolutes and no claims about money or customers: never write "כל הכסף", "כל הזמן", "כולם", "אף אחד", "תמיד", "אף פעם", "מיידי". Say "לרוב" or "לפעמים", or just describe the time sink they marked.
 - Never promise savings or results. The time estimate must be a rough range in hours, anchored to the weekly hours they marked (convert to a monthly range, and say it is a rough estimate: הערכה גסה).
 - Never mention a quiz, questionnaire, form, AI generation, or that this text was written automatically.
 - Choose solution_id only from the shortlist. Explain the choice in "reason" (internal, English, one sentence, not shown to the user).
@@ -38,9 +40,9 @@ Fields:
 - what_i_saw: 2-3 sentences reflecting THEIR answers and pain text back to them.
 - biggest_leak: 1-2 sentences on where the most time or money leaks, specific to their answers.
 - estimate_note: one short line, starting with "הערכה גסה", with the range, e.g. "הערכה גסה: בערך 20-40 שעות בחודש."
-- product.name: a short, concrete product name, 2 to 5 words, that says what it is and what it serves, for example "מתאם משמרות בוואטסאפ" or "מחולל הצעות שכר טרחה". Name the channel they already use if it fits. Never a category or a slogan ("מערכת חכמה", "פתרון AI").
-- product.does: one sentence on what the product does about the pain they described, in the words of their industry. Describe what the product does. Never advice about what they should start doing.
-- product.week1: one sentence on what they will see in the first week. Something visible or countable (how many of X were handled, a list that now exists). No invented numbers, no promised savings.
+- product.name: a short, concrete product name, 2 to 5 words, that says what it is with a plain noun, for example "מתאם משמרות בוואטסאפ" or "מחולל הצעות ומסמכים". Name the channel they already use if it fits. Never a category or a slogan ("מערכת חכמה", "פתרון AI"). Never put a word from the industry hints in the name (a course, a patient, a case file, an event) unless the owner wrote that word: the name says what the product does, not what the owner sells.
+- product.does: one sentence of at most 20 words on what the product does about the pain they described, in the words of their industry. Describe what the product does. Never advice about what they should start doing.
+- product.week1: one sentence on what they will see in the first week. Something visible or countable (how many of X were handled, a list that now exists). Count what the product handled, never what time was freed ("כמה ערבים התפנו"). No invented numbers, no promised savings.
 Do not write how long the build takes. The system adds that.`;
 
 /**
@@ -92,7 +94,7 @@ export function userMessage(a, shortlist, previousErrors) {
   let msg = `Business owner's answers (Hebrew labels as they saw them):
 ${JSON.stringify(answers, null, 2)}
 
-Industry example hints, for illustration only (phrase as "למשל", never as this owner's reality): typical question "${ex.ask}", typical document "${ex.doc}", typical appointment "${ex.meet}".
+Industry example hints, for illustration only (phrase as "למשל", never as this owner's reality): typical question "${ex.ask}", typical document "${ex.doc}", typical appointment "${ex.meet}". Do not use the typical document's words (for example a course, an event, a case file) in product.name, product.does or product.week1 unless the owner wrote them.
 
 Shortlist (choose exactly one solution_id from here):
 ${JSON.stringify(options, null, 2)}

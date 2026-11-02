@@ -8,6 +8,7 @@ export const LIMITS = {
   analyze: { limit: 5, windowMs: HOUR }, // completed submissions (LLM call)
   partial: { limit: 60, windowMs: HOUR }, // anonymous progress saves
   click: { limit: 30, windowMs: HOUR }, // booking-click beacons
+  guide: { limit: 5, windowMs: HOUR }, // guide emails
 };
 
 /** Sliding-window hit log for one key. */
@@ -36,7 +37,7 @@ const memory = new Map();
 
 /**
  * @param {import('../index.js').Env} env
- * @param {'analyze'|'partial'|'click'} bucket
+ * @param {'analyze'|'partial'|'click'|'guide'} bucket
  * @param {string} ip
  * @returns {Promise<{ allowed: boolean, retryAfter: number }>}
  */

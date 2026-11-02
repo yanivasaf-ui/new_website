@@ -38,7 +38,7 @@ const fail = (field, error) => ({ ok: /** @type {const} */ (false), field, error
  * @property {'partial'|'complete'} stage
  * @property {string} session_id
  * @property {Answers} answers
- * @property {{ name: string, whatsapp: string, whatsapp_e164: string, email: string, consent: boolean } | null} contact  email always set; whatsapp is '' when not given
+ * @property {{ name: string, whatsapp: string, whatsapp_e164: string, email: string, consent: boolean, guide_consent: boolean } | null} contact  email always set; whatsapp is '' when not given; guide_consent = the separate box for the guide and emails (false for old clients)
  * @property {{ source: string, medium: string, campaign: string }} utm
  * @property {string} device
  * @property {number|null} step  last step the visitor reached (1-7), null when not sent
@@ -103,7 +103,7 @@ export function validateSubmission(body) {
     const rawPhone = cleanText(c.whatsapp, 40);
     const phone = rawPhone ? normalizeIlMobile(rawPhone) : null;
     if (rawPhone && !phone) return fail('whatsapp', 'invalid_phone');
-    contact = { name, whatsapp: phone?.local || '', whatsapp_e164: phone?.e164 || '', email, consent: c.consent === true };
+    contact = { name, whatsapp: phone?.local || '', whatsapp_e164: phone?.e164 || '', email, consent: c.consent === true, guide_consent: c.guide_consent === true };
   }
 
   const u = body.utm && typeof body.utm === 'object' ? body.utm : {};
