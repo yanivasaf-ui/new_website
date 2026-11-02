@@ -2,3 +2,6 @@ node_modules/
 .dev.vars
 .wrangler/
 .build/
+
+# the guide PDF is deployed but never committed (public repo): see the guide step notes
+g/
