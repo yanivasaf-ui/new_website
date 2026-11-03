@@ -14,15 +14,39 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/"/>
   </url>
   <url>
-    <loc>https://ensemble-ai.io/workshops</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/workshops"/>
-    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/workshops"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/workshops"/>
+    <loc>https://ensemble-ai.io/small-business/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/small-business/"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/small-business/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/small-business/"/>
   </url>
   <url>
-    <loc>https://ensemble-ai.io/he/workshops</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/workshops"/>
-    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/workshops"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/workshops"/>
+    <loc>https://ensemble-ai.io/he/small-business/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/small-business/"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/small-business/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/small-business/"/>
+  </url>
+  <url>
+    <loc>https://ensemble-ai.io/startups/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/startups/"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/startups/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/startups/"/>
+  </url>
+  <url>
+    <loc>https://ensemble-ai.io/he/startups/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/startups/"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/startups/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/startups/"/>
+  </url>
+  <url>
+    <loc>https://ensemble-ai.io/workshops/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/workshops/"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/workshops/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/workshops/"/>
+  </url>
+  <url>
+    <loc>https://ensemble-ai.io/he/workshops/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ensemble-ai.io/workshops/"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ensemble-ai.io/he/workshops/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ensemble-ai.io/workshops/"/>
   </url>
 </urlset>

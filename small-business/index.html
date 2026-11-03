@@ -42,7 +42,7 @@
   <meta name="twitter:description" content="An assistant in your WhatsApp for the tasks that keep coming back: quotes, follow-ups, new leads. Built around how your business already works.">
   <meta name="twitter:image" content="https://ensemble-ai.io/sb-hero-2048.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="/next/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preload" as="image" href="/sb-hero-2048.jpg" imagesrcset="/sb-hero-1080.jpg 1080w, /sb-hero-2048.jpg 2048w" imagesizes="70vw">
   <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -58,7 +58,7 @@
 
   <nav aria-label="{{ navLabel }}" style="position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:30; display:flex; align-items:center; gap:clamp(14px,2.2vw,36px); width:max-content; max-width:94vw; box-sizing:border-box; height:clamp(56px,7.2vw,66px); padding-inline-start:clamp(17px,2.4vw,26px); padding-inline-end:clamp(7px,1.2vw,10px); border-radius:999px; background:#15130F; box-shadow:0 6px 30px rgba(21,19,15,0.28)">
     <a href="{{ homeHref }}" dir="ltr" aria-label="ensemble home" style="display:inline-flex; align-items:center; align-self:stretch; flex-shrink:0">
-      <img src="/next/ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(18px,2vw,26px); width:auto; user-select:none">
+      <img src="/ensemble-lockup-dark.svg" alt="ensemble" draggable="false" style="height:clamp(18px,2vw,26px); width:auto; user-select:none">
     </a>
     <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex; align-items:center; gap:clamp(16px,2vw,30px)">
@@ -588,7 +588,7 @@ class Component extends DCLogic {
           }
         };
       })(),
-      homeHref: en ? '/next/' : '/next/he/',
+      homeHref: en ? '/' : '/he/',
       langSwitchText: en ? 'עב' : 'EN',
       langSwitchLong: en ? 'עברית' : 'English',
       navLabel: en ? 'Main' : 'ראשי',
@@ -601,12 +601,12 @@ class Component extends DCLogic {
       bar1Ref: (el) => { this.bar1 = el; this.syncBars(); },
       bar2Ref: (el) => { this.bar2 = el; this.syncBars(); },
       navLinks: [
-        { href: en ? '/next/small-business/' : '/next/he/small-business/', label: en ? 'SMB & Independents' : 'עסקים קטנים ועצמאים', key: 'owners' },
-        { href: en ? '/next/startups/' : '/next/he/startups/', label: en ? 'Startups' : 'סטארטאפים', key: 'startups' },
-        { href: en ? '/next/workshops/' : '/next/he/workshops/', label: en ? 'Workshops' : 'סדנאות', key: 'workshops' }
+        { href: en ? '/small-business/' : '/he/small-business/', label: en ? 'SMB & Independents' : 'עסקים קטנים ועצמאים', key: 'owners' },
+        { href: en ? '/startups/' : '/he/startups/', label: en ? 'Startups' : 'סטארטאפים', key: 'startups' },
+        { href: en ? '/workshops/' : '/he/workshops/', label: en ? 'Workshops' : 'סדנאות', key: 'workshops' }
       ].map(l => ({ ...l, active: l.key === 'owners', inactive: l.key !== 'owners' })),
       langSwitchLabel: en ? 'גרסה בעברית' : 'English version',
-      toggleLang: () => { window.location.href = en ? '/next/he/small-business/' : '/next/small-business/'; },
+      toggleLang: () => { window.location.href = en ? '/he/small-business/' : '/small-business/'; },
       tasksLabel: en ? 'What the assistant handles' : 'במה העוזר מטפל',
       tasks: en
         ? ['WhatsApp assistant', 'Quotes', 'Follow-ups', 'New leads', 'Scheduling and reminders', 'Morning briefing', 'Posts in your style', 'Daily planning', 'Team tasks']
