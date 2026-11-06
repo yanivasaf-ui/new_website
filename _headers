@@ -3,3 +3,6 @@
 
 /next/*
   X-Robots-Tag: noindex, nofollow
+
+/decks/*
+  X-Robots-Tag: noindex, nofollow
